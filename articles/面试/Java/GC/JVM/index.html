@@ -7,9 +7,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
 <meta property="article:published_time" content="2023-07-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-07-13T15:08:58.164Z">
+<meta property="article:modified_time" content="2023-07-27T14:11:01.124Z">
 <meta property="article:author" content="Nemesis">
-<meta property="article:tag" content="ACM">
+<meta property="article:tag" content="博客">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://chenxiangcheng1.github.io/articles/%E9%9D%A2%E8%AF%95/Java/GC/JVM/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
   root: '/',
@@ -57,7 +57,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-07-13 23:08:58'
+  postUpdate: '2023-07-27 22:11:01'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -161,7 +161,8 @@
       }
     }
     detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JVM</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-13T15:08:58.164Z" title="更新于 2023-07-13 23:08:58">2023-07-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/GC/">GC</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JVM"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="JVM主要考点"><a href="#JVM主要考点" class="headerlink" title="JVM主要考点"></a>JVM主要考点</h1><h2 id="平台无关性如何实现？"><a href="#平台无关性如何实现？" class="headerlink" title="平台无关性如何实现？"></a>平台无关性如何实现？</h2><p>平台无关性：Compile Once, Run Anywhere<br>Java源码首先被编译成二进制<strong>字节码</strong>，再<strong>由不同平台的JVM进行解析成机器指令</strong>。<br>Java语言在不同的平台上运行时不需要进行重新编译，Java虚拟机在执行字节码的时候，把字节码转换成具体平台上的机器指令。</p>
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JVM</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-27T14:11:01.124Z" title="更新于 2023-07-27 22:11:01">2023-07-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/GC/">GC</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JVM"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="JVM主要考点"><a href="#JVM主要考点" class="headerlink" title="JVM主要考点"></a>JVM主要考点</h1><h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/">Java Language and Virtual Machine Specifications (Java 语言和虚拟机规范)</a></p>
+<h2 id="平台无关性如何实现？"><a href="#平台无关性如何实现？" class="headerlink" title="平台无关性如何实现？"></a>平台无关性如何实现？</h2><p>平台无关性：Compile Once, Run Anywhere<br>Java源码首先被编译成二进制<strong>字节码</strong>，再<strong>由不同平台的JVM进行解析成机器指令</strong>。<br>Java语言在不同的平台上运行时不需要进行重新编译，Java虚拟机在执行字节码的时候，把字节码转换成具体平台上的机器指令。</p>
 <p>字节码优点：<br>准备工作方面：因为直接解析每次执行都需要各种检查效率低，而字节码进行多次执行的效率更高<br>兼容性方面：也可以将别的语言scala、Kotlin解析成字节码，增加了兼容扩展能力</p>
 <p>命令：<br><strong>javac -encoding utf-8</strong> 编译java源代码为字节码，同时自动将源代码中的类名转换成相应的<strong>静态常量属性 <code>Classname.class</code><strong>，用于</strong>指向该类的Class对象</strong>，同时添加无参构造方法<br>java 全类名(不需要后缀)，执行</p>
 <h3 id="如何查看字节码"><a href="#如何查看字节码" class="headerlink" title="如何查看字节码"></a>如何查看字节码</h3><p>javap -verbose &lt;classes&gt;是JDK自带的反汇编器</p>
@@ -171,148 +172,245 @@
 
 
 
-<h2 id="1-HotSpot-JVM架构"><a href="#1-HotSpot-JVM架构" class="headerlink" title="1 HotSpot JVM架构"></a>1 HotSpot JVM架构</h2><p>JVM是内存中的虚拟机主要由Class Loader[ˈloʊdər]、Runtime Data Area[ˈeriə]、Execution Engine[ˈendʒɪn]、Native Interface四部分构成，主要通过Class Loader将符合格式要求的class文件加载到内存，并通过Execution Engine解析里面的字节码。</p>
+<h2 id="1-HotSpot-JVM架构"><a href="#1-HotSpot-JVM架构" class="headerlink" title="1 HotSpot JVM架构"></a>1 HotSpot JVM架构</h2><p>JVM是内存中的虚拟机主要由 Class Loader 类加载器、Runtime Data Area 运行时数据区、Execution Engine 执行引擎、Native Interface 本地接口四部分构成，主要通过 Class Loader 将符合格式要求的class文件加载到内存，并通过 Execution Engine 解析里面的字节码。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_13_14_00.png" alt="image-20230513140058796"></p>
 <ul>
-<li><p><strong>Class Loader</strong>[ˈloʊdər]：将符合格式要求的class文件加载到内存</p>
+<li><p><strong>Class Loader</strong>：类加载器，将符合格式要求的 class 字节码文件加载到内存</p>
 </li>
-<li><p><strong>Execution Engine</strong>[ˈendʒɪn]：对命令进行解析</p>
+<li><p><strong>Execution Engine</strong>：执行引擎，对命令进行解析</p>
 </li>
-<li><p><strong>Native Interface</strong>：融合不同开发语言的原生库为Java所用 (例把C&#x2F;C++编译成了DLL)，通过<strong>native原生方法</strong>调用，例如Class.forname就调用了原生方法forName0</p>
+<li><p><strong>Native Interface</strong>：本地方法接口，融合不同开发语言的原生库为Java所用 (例把C&#x2F;C++编译成了DLL)，通过 native 本地方法调用，例如 Class.forname 就调用了原生方法 forName0</p>
 </li>
-<li><p><strong>Runtime Data Area</strong>[ˈeriə]：Java 内存空间结构模型</p>
+<li><p><strong>Runtime Data Area</strong>：运行时数据区，Java 内存空间结构模型</p>
 </li>
 </ul>
-<h3 id="类从编译到执行的过程？"><a href="#类从编译到执行的过程？" class="headerlink" title="类从编译到执行的过程？"></a>类从编译到执行的过程？</h3><ol>
-<li>编译器将 ClassName.java源文件<strong>编译</strong>为 ClassName.class字节码文件</li>
-<li><strong>ClassLoader</strong> 将字节码转换为 <strong>JVM 中的 Class&lt;ClassName&gt;对象</strong></li>
-<li>JVM 利用 Class&lt;ClassName&gt;对象<strong>实例化</strong>为ClassName对象</li>
+<h3 id="类从编译到执行的过程"><a href="#类从编译到执行的过程" class="headerlink" title="类从编译到执行的过程"></a>类从编译到执行的过程</h3><ol>
+<li>编译器将 ClassName.java 源文件<strong>编译</strong>为 ClassName.class 字节码文件</li>
+<li><strong>ClassLoader</strong> 将字节码转换为 <strong>JVM 中的 Class&lt;ClassName&gt;对象</strong> (类的装载过程：加载、链接、初始化)</li>
+<li>JVM 利用 Class&lt;ClassName&gt; 对象<strong>实例化</strong>为 ClassName 对象</li>
 </ol>
 <p>执行过程：编译时、字节码加载时、运行时 (&#x3D;动态)</p>
 <h3 id="Native-原生方法"><a href="#Native-原生方法" class="headerlink" title="Native 原生方法"></a>Native 原生方法</h3><p>可以通过 <a target="_blank" rel="noopener" href="https://github.com/openjdk/jdk/tree/master/src/java.base/share/native/libjava">https://github.com/openjdk/jdk/tree/master/src/java.base/share/native/libjava</a> 查看</p>
 <h2 id="反射-todo：补充链接"><a href="#反射-todo：补充链接" class="headerlink" title="反射 todo：补充链接"></a>反射 todo：补充链接</h2><p>看<a href="Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6.md">Java反射机制</a></p>
-<h2 id="2-谈谈ClassLoader"><a href="#2-谈谈ClassLoader" class="headerlink" title="2 谈谈ClassLoader"></a>2 谈谈ClassLoader</h2><p>ClassLoader[ˈloʊdər] 是 Java 的核心组件，它主要工作在Class装载的加载阶段，负责从系统外部获得Class二进制数据流，所有的Class都是由ClassLoader进行加载的，然后交给 Java 虚拟机进行连接、初始化等操作。</p>
-<p>Java17 的 ClassLoader 种类：<br><strong>Bootstrap class loader</strong>引导类加载器：JVM内置，加载核心库java.*<br><strong>Platform class loader</strong>：JVM内置，加载 Java SE platform APIs<br>    <strong>Application ClassLoader</strong>(System class loader)：JVM内置，加载程序所在目录<br>        自定义ClassLoader：定制化加载</p>
-<h3 id="自定义ClassLoader-可使用字节码增强技术"><a href="#自定义ClassLoader-可使用字节码增强技术" class="headerlink" title="自定义ClassLoader 可使用字节码增强技术"></a>自定义ClassLoader 可使用字节码增强技术</h3><p>自定义ClassLoader：</p>
+<h2 id="JVM-的运行模式"><a href="#JVM-的运行模式" class="headerlink" title="JVM 的运行模式"></a>JVM 的运行模式</h2><p>Server 模式：启动慢，程序运行快，重型VM<br>Client 模式：启动快，程序运行慢，轻量级VM</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ java -version  <span class="comment"># 查看当前虚拟机是什么模式</span></span><br><span class="line">openjdk version <span class="string">&quot;17.0.7&quot;</span> 2023-04-18</span><br><span class="line">OpenJDK Runtime Environment Temurin-17.0.7+7 (build 17.0.7+7)</span><br><span class="line">OpenJDK 64-Bit Server VM Temurin-17.0.7+7 (build 17.0.7+7, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-ClassLoader"><a href="#2-ClassLoader" class="headerlink" title="2 ClassLoader"></a>2 ClassLoader</h2><p>ClassLoader 是 Java 的核心组件，它主要工作在 Class 装载的加载阶段，负责从系统外部获得 <strong>Class 二进制数据流</strong>，所有的 Class 都是由ClassLoader 进行加载的，然后交给 Java 虚拟机进行连接、初始化等操作。</p>
+<h3 id="层次结构"><a href="#层次结构" class="headerlink" title="层次结构"></a>层次结构</h3><p>Java17 的 ClassLoader 种类：</p>
+<p><strong>Bootstrap ClassLoader</strong> 引导类加载器：是 JVM 的一部分，负责加载核心库 (java.*)<br><strong>Platform ClassLoader</strong> 平台类加载器：是 JVM 的一部分， 负责加载扩展库 (Java SE platform APIs)<br>    <strong>Application ClassLoader</strong> 应用类加载器：JVM内置，负责加载应用程序的类 (默认类加载器)。<br>        <strong>自定义 ClassLoader</strong>：能实现特定的类加载需求。</p>
+<h4 id="自定义-ClassLoader-可使用字节码增强技术"><a href="#自定义-ClassLoader-可使用字节码增强技术" class="headerlink" title="自定义 ClassLoader 可使用字节码增强技术"></a>自定义 ClassLoader 可使用字节码增强技术</h4><p>自定义 ClassLoader：</p>
 <ol>
-<li><p>继承ClassLoader抽象类</p>
+<li><p>继承 ClassLoader 抽象类</p>
 </li>
-<li><p>重写findClass方法返回Class&lt;ClassName&gt;对象</p>
+<li><p>重写 <code>findClass()</code> 方法返回 Class&lt;ClassName&gt; 对象</p>
 </li>
-<li><p>自定义找到.class字节码文件读出，按字节流加载</p>
+<li><p>自定义找到 .class 字节码文件读出，按字节流加载</p>
 </li>
-<li><p>调用defineClass方法解析字节数组来生成Class&lt;ClassName&gt;实例，并加载到JVM。返回Class&lt;ClassName&gt;对象</p>
+<li><p>调用 <code>defineClass()</code> 方法解析字节数组来生成 Class&lt;ClassName&gt; 实例，并加载到 JVM。返回 Class&lt;ClassName&gt; 对象</p>
 </li>
 </ol>
 <p>调用：</p>
 <ol>
-<li>new 自定义ClassLoader</li>
-<li>调用loadClass(“ClassName”)方法，loadClass方法会掉用自定义findClass方法，返回Class&lt;ClassName&gt;对象</li>
+<li>new 自定义 ClassLoader</li>
+<li>调用 <code>loadClass(“ClassName”)</code> 方法，<code>loadClass()</code> 方法会掉用自定义 <code>findClass()</code> 方法，返回 Class&lt;ClassName&gt; 对象</li>
 </ol>
 <p>应用场景：</p>
 <p>​	通过对字节数组操作（<strong>字节码增强技术</strong>ASM）可以<strong>访问远程类</strong>、对<strong>敏感信息加密</strong>。<br>​	实现AOP、Cglib</p>
-<h3 id="ClassLoader的双亲委派机制"><a href="#ClassLoader的双亲委派机制" class="headerlink" title="ClassLoader的双亲委派机制"></a>ClassLoader的双亲委派机制</h3><p>加载类对象的机制</p>
+<p>例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClassLoader</span> <span class="keyword">extends</span> <span class="title class_">ClassLoader</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String path;</span><br><span class="line">    <span class="keyword">private</span> String classLoaderName;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class <span class="title function_">findClass</span><span class="params">(String name)</span> &#123;  <span class="comment">// 用于寻找类文件</span></span><br><span class="line">        <span class="type">byte</span>[] b = loadClassData(name);</span><br><span class="line">        <span class="keyword">return</span> defineClass(<span class="string">&quot;com.interview.javabasic.reflect.Wali&quot;</span>, b, <span class="number">0</span>, b.length);</span><br><span class="line">        <span class="comment">// return defineClass(name, b, 0, b.length);</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">byte</span>[] loadClassData(String name) &#123;  <span class="comment">//用于加载类文件</span></span><br><span class="line">        <span class="comment">// name = name.split(&quot;\\.&quot;)[name.split(&quot;\\.&quot;).length];</span></span><br><span class="line">        name = path + name + <span class="string">&quot;.class&quot;</span>;</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">ByteArrayOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            in = <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="keyword">new</span> <span class="title class_">File</span>(name));</span><br><span class="line">            out = <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">            <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> ((i = in.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">                out.write(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (in != <span class="literal">null</span>)</span><br><span class="line">                    in.close();</span><br><span class="line">                <span class="keyword">if</span> (out != <span class="literal">null</span>)</span><br><span class="line">                    out.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">assert</span> out != <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> out.toByteArray();        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, IllegalAccessException, InstantiationException &#123;</span><br><span class="line">        <span class="type">MyClassLoader</span> <span class="variable">m</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyClassLoader</span>(<span class="string">&quot;F:\\dev-projects\\IdeaProjects\\javabasic\\src\\com\\interview\\javabasic\\reflect\\&quot;</span>, <span class="string">&quot;myClassLoader&quot;</span>);</span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> m.loadClass(<span class="string">&quot;Wali&quot;</span>);</span><br><span class="line">        <span class="comment">// Class c = m.loadClass(&quot;com.interview.javabasic.reflect.Wali&quot;);</span></span><br><span class="line">        System.out.println(c.getClassLoader());</span><br><span class="line">        System.out.println(c.getClassLoader().getParent());</span><br><span class="line">        System.out.println(c.getClassLoader().getParent().getParent());</span><br><span class="line">        System.out.println(c.getClassLoader().getParent().getParent().getParent());</span><br><span class="line">&#125;	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">com.interview.javabasic.reflect.MyClassLoader@30dae81</span><br><span class="line">jdk.internal.loader.ClassLoaders$AppClassLoader@e9e54c2</span><br><span class="line">jdk.internal.loader.ClassLoaders$PlatformClassLoader@7106e68e</span><br><span class="line">null</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><p><strong>ClassLoader 在加载类时会委派给父类加载器尝试加载</strong>。</p>
+<p>双亲委派模型的作用：逐层查找，避免多份同样的字节码的加载</p>
 <p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_16_19_42.png" alt="image-20230516194228426"></p>
-<h4 id="为什么要使用双亲委派机制去加载类"><a href="#为什么要使用双亲委派机制去加载类" class="headerlink" title="为什么要使用双亲委派机制去加载类"></a>为什么要使用双亲委派机制去加载类</h4><p>逐层查找，避免多份同样字节码的加载</p>
-<h3 id="类的装载过程"><a href="#类的装载过程" class="headerlink" title="类的装载过程"></a>类的装载过程</h3><p>我们约定用装载表示 Class 对象的生成过程，而加载是其中的一个部分</p>
+<h3 id="类的装载过程"><a href="#类的装载过程" class="headerlink" title="类的装载过程"></a>类的装载过程</h3><p><a target="_blank" rel="noopener" href="https://github.com/feedfor/jls-chinese/blob/master/12-%E6%89%A7%E8%A1%8C.md">Java 语言规范#执行</a></p>
+<p>我们约定用装载表示 Class 对象的生成过程，而加载是其中的一个部分</p>
 <ol>
-<li><p><strong>加载</strong> loadClass()：通过 ClassLoader 的 loadClass 方法加载 .class 文件字节码到 JVM 内存中，并将静态数据转化为运行时方法区中的类结构数据，在运行时<strong>数据区</strong>中生成代表这个类的 <strong>Java.lang.Class 对象</strong>作为<strong>方法区 (MetaSpace元空间)<strong>这个</strong>类结构数据</strong>的访问入口</p>
+<li><p><strong>加载</strong> <code>loadClass()</code>：通过 ClassLoader 的 <code>loadClass()</code> 方法加载 .class 文件字节码到 JVM 内存中，并将静态数据转化为运行时方法区中的类结构数据，在运行时<strong>数据区</strong>中生成代表这个类的 <strong>Java.lang.Class 对象</strong>作为<strong>方法区 (MetaSpace元空间)<strong>这个</strong>类结构数据</strong>的访问入口</p>
 </li>
-<li><p><strong>链接</strong> resolveClass()：<br><strong>校验</strong>：检查加载的 .class 文件的正确性和安全性<br><strong>准备</strong>：为<strong>static类变量</strong>(static字段、static常量)分配存储空间并设置类变量<strong>初始值</strong>，类变量随类型信息存放在方法区 (MetaSpace元空间)中，生命周期很长使用不当容易造成内存泄漏<br><strong>解析</strong>(可选)：JVM 将常量池内的<strong>符号引用转换为直接引用</strong> (符号引用是类的<strong>全限定名</strong>、<strong>方法名</strong>等，需要先解析再定位到目标)</p>
+<li><p><strong>链接</strong> <code>resolveClass()</code>：<br><strong>校验</strong>：检查加载的 .class 文件的正确性和安全性<br><strong>准备</strong>：为 <strong>static 类变量 <strong>(static 字段、static 常量) <strong>分配存储空间</strong>并设置类变量初始值，类变量随类型信息存放在方法区(MetaSpace 元空间)中，static 变量生命周期很长使用不当容易造成内存泄漏<br><strong>解析符号引用</strong>(可选)：JVM 将常量池内的</strong>符号引用转换为直接引用</strong> (符号引用是类的<strong>全限定名</strong>、<strong>方法名</strong>等，需要先解析再定位到目标)</p>
 </li>
-<li><p><strong>初始化</strong>：执行类变量赋值和静态代码块</p>
+<li><p><strong>初始化</strong>：执行父类初始化、类变量初始化和执行静态代码块</p>
 </li>
 </ol>
-<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区是 JVM 的规范</p>
-<p>具体实现有 JDK8 之前的使用本地内存的元空间 (MetaSpace) 与 JDK8 之后的使用 JVM 内存的永久代 (PermGen)</p>
-<h4 id="类的装载方式"><a href="#类的装载方式" class="headerlink" title="类的装载方式"></a>类的装载方式</h4><p>隐式加载：new (<strong>创建实例</strong> 开辟内存空间)</p>
-<p>显式加载：ClassLoader.loadClass (<strong>没有初始化</strong>)、Class.forName (<strong>初始化完成</strong>)等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ClassLoader.java</span></span><br><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="type">boolean</span> resolve) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line">        <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">        Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">long</span> <span class="variable">t0</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (parent != <span class="literal">null</span>) &#123;</span><br><span class="line">                    c = parent.loadClass(name, <span class="literal">false</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    c = findBootstrapClassOrNull(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                <span class="comment">// to find the class.</span></span><br><span class="line">                <span class="type">long</span> <span class="variable">t1</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">                c = findClass(name);  <span class="comment">// 调用自定义ClassLoader的findClass()方法</span></span><br><span class="line">                <span class="comment">// this is the defining class loader; record the stats</span></span><br><span class="line">                PerfCounter.getParentDelegationTime().addTime(t1 - t0);</span><br><span class="line">                PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</span><br><span class="line">                PerfCounter.getFindClasses().increment();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (resolve)</span><br><span class="line">            resolveClass(c);</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">&#125;	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="显示装载和隐式装载"><a href="#显示装载和隐式装载" class="headerlink" title="显示装载和隐式装载"></a>显示装载和隐式装载</h4><p>隐式装载：new (<strong>在GC堆中</strong>分配了内存空间，<strong>创建实例</strong>)</p>
+<p>显式装载：ClassLoader.loadClass (<strong>没有初始化</strong>)、Class.forName (<strong>初始化完成</strong>)等</p>
 <h5 id="loadClass-和-forName-的区别"><a href="#loadClass-和-forName-的区别" class="headerlink" title="loadClass 和 forName 的区别"></a>loadClass 和 forName 的区别</h5><ul>
-<li><p>Class.forName 得到的 class，是已经初始化完成的</p>
+<li><p><code>Class.forName()</code> 得到的 class，是已经初始化完成的</p>
 </li>
-<li><p>Classloder.loadClass 得到的 class，是还没有初始化的</p>
+<li><p><code>Classloder.loadClass()</code> 得到的 class，是还没有初始化的</p>
 </li>
 </ul>
 <p>例子：</p>
 <ul>
 <li><p>Mysql5 驱动 com.mysql.jdbc.Driver，因为Driver中有静态代码段需要执行，所以需要使用 Class.forName 加载</p>
 </li>
-<li><p>在 Spring IOC 中使用 lazyload 延迟加载技术，即在资源加载器读入 bean 的配置文件时，如果是以 Classpath 的方式就通过 Classloder.loadClass加载。</p>
+<li><p>在 Spring IOC 中使用 lazyload 延迟加载技术，即在资源加载器读入 bean 的配置文件时，如果是以 Classpath 的方式就通过 Classloder.loadClass 加载。</p>
 </li>
 </ul>
-<h2 id="3-Java内存区域划分"><a href="#3-Java内存区域划分" class="headerlink" title="3 Java内存区域划分"></a>3 Java内存区域划分</h2><p><a href="F:\Hexo-Blogs\MyBlog\source_posts\Java\Java线程.md">Java线程笔记 # JMM (Java 内存模型)</a></p>
-<p>C语言内存结构模型：数据段(&#x3D;堆+栈+静态数据区) + 代码段</p>
+<h2 id="3-Java内存区域划分"><a href="#3-Java内存区域划分" class="headerlink" title="3 Java内存区域划分"></a>3 Java内存区域划分</h2><p>C语言内存结构模型：数据段(&#x3D;堆+栈+静态数据区) + 代码段</p>
 <p>JDK8 内存结构模型：分为<strong>线程独占部分</strong>和<strong>线程共享部分</strong></p>
 <p>每一个进程对应一个 JVM 实例，对应一个堆</p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_14_12.png" alt="image-20230517141200811" style="zoom:50%;" />
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_14_12.png" alt="image-20230517141200811" style="zoom: 40%;" />
 
 
 
-<h3 id="内存地址空间的划分"><a href="#内存地址空间的划分" class="headerlink" title="内存地址空间的划分"></a>内存地址空间的划分</h3><p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_14_00.png" alt="image-20230517140049591"></p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_14_01.png" alt="image-20230517140127794" style="zoom:50%;" />
-
-<h3 id="线程独占部分-本地内存"><a href="#线程独占部分-本地内存" class="headerlink" title="线程独占部分 (本地内存)"></a>线程独占部分 (本地内存)</h3><h4 id="PC"><a href="#PC" class="headerlink" title="PC"></a>PC</h4><p>逻辑计数器，不是物理计数器</p>
-<p>对Java方法计数，如果是Native方法则计数器值为Undefined</p>
-<p>不会发生内存泄露</p>
-<h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><p>Java方法执行的内存模型</p>
-<p>包含多个栈帧</p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_14_19.png" alt="image-20230517141924805" style="zoom:50%;" />
-
+<h3 id="线程私有部分-本地内存"><a href="#线程私有部分-本地内存" class="headerlink" title="线程私有部分 (本地内存)"></a>线程私有部分 (本地内存)</h3><p>属于线程私有数据区域，不存在线程安全问题</p>
+<p><strong>PC</strong></p>
+<ul>
+<li><p>是逻辑计数器，存字节码指令的内存地址</p>
+</li>
+<li><p>对 Java 方法计数，如果是 Native 方法则计数器值为 Undefined</p>
+</li>
+</ul>
+<h4 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h4><p>Java方法执行时的内存模型，包含多个栈帧，存储了当前方法的所有本地变量信息 (本地变量信息对其他线程不可见)</p>
 <p><strong>栈帧</strong></p>
-<p>局部变量表：包含方法执丸行过程中的所有变量，为操作数栈提供数据支撑</p>
-<p>操作数栈：入栈、出栈、复制、交换、产生消费变量</p>
-<p>方法执行结束自动释放栈帧，不需要GC回收</p>
+<ul>
+<li><p><strong>栈帧 &#x3D; 局部变量表 + 操作数栈 + 动态链接 + 返回地址</strong><br>局部变量表：包含方法执丸行过程中的所有变量，为操作数栈提供数据支撑<br>操作数栈：入栈、出栈、复制、交换所产生的消费变量</p>
+</li>
+<li><p><strong>方法执行结束自动释放栈帧，不需要 GC 回收</strong></p>
+</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_14_19.png" alt="image-20230517141924805" style="zoom: 33%;" />
+
 <p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_14_45.png" alt="image-20230517144531900"></p>
-<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>与虚拟机栈相似，主要作用于原生方法</p>
-<h4 id="SOF异常、OOM异常"><a href="#SOF异常、OOM异常" class="headerlink" title="SOF异常、OOM异常"></a>SOF异常、OOM异常</h4><p>递归会引发 java.lang.StackOverflowError 异常，栈溢出</p>
-<p>虚拟机栈过多 (线程过多) 会引发 java.lang.OutOfMemoryError 异常，内存不够</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">stackLeakByThread</span><span class="params">()</span><span class="params">(</span></span><br><span class="line"><span class="params">	<span class="keyword">while</span>(<span class="literal">true</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">new</span> <span class="title class_">Thread</span>()&#123;</span><br><span class="line">			<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>&#123;</span><br><span class="line">				<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">                &#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>本地方法栈</strong></p>
+<p>与虚拟机栈相似，存储本地方法的信息</p>
+<h5 id="SOF-栈溢出异常、OOM-内存溢出异常"><a href="#SOF-栈溢出异常、OOM-内存溢出异常" class="headerlink" title="SOF 栈溢出异常、OOM 内存溢出异常"></a>SOF 栈溢出异常、OOM 内存溢出异常</h5><ul>
+<li><p>递归深度太深，会引发 java.lang.StackOverflowError 异常，栈溢出</p>
+</li>
+<li><p>虚拟机栈过多 (线程过多) 会引发 java.lang.OutOfMemoryError 异常，内存不够</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">stackLeakByThread</span><span class="params">()</span><span class="params">(</span></span><br><span class="line"><span class="params">	<span class="keyword">while</span>(<span class="literal">true</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">new</span> <span class="title class_">Thread</span>()&#123;</span><br><span class="line">			<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>&#123;</span><br><span class="line">				<span class="keyword">while</span>(<span class="literal">true</span>) &#123;&#125;                </span><br><span class="line">			&#125;</span><br><span class="line">		&#125;.start();</span><br><span class="line">&#125;	&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="线程共享部分-主内存"><a href="#线程共享部分-主内存" class="headerlink" title="线程共享部分 (主内存)"></a>线程共享部分 (主内存)</h3><h4 id="MetaSpace-元空间"><a href="#MetaSpace-元空间" class="headerlink" title="MetaSpace 元空间"></a>MetaSpace 元空间</h4><p>在Java7之后，原先位于方法区 (PermGen) 中的字符串常量池被移动到了 JAVA 堆中<br>在Java8之后，使用 MetaSpace 元空间替代了 PermGen 永久代，解决了空间问题</p>
-<p>MetaSpace元空间与PermGen永久代 (Permanent Generation) 的共同点与区别：</p>
+<h3 id="线程共享部分-主内存"><a href="#线程共享部分-主内存" class="headerlink" title="线程共享部分 (主内存)"></a>线程共享部分 (主内存)</h3><p>属于数据共享的区域，多线程并发操作时会引发线程安全问题</p>
+<p>主内存共享的方式是：线程各拷贝一份数据到工作内存(线程独占)，操作完成后刷新回主内存</p>
+<h4 id="元空间-使用本地内存"><a href="#元空间-使用本地内存" class="headerlink" title="元空间 使用本地内存"></a>元空间 使用本地内存</h4><p><strong>方法区</strong>是 JMM 规范中定义的一种内存区域，<strong>存储类的元信息</strong><br>具体实现有：</p>
 <ul>
-<li><p>都是存储 Class 相关信息 (Method + Field等)<br>都是方法区的实现</p>
+<li>永久代(PermGen)(Java[7-)，使用 JVM 内存固定分配 <code>-XX:MaxPermSize</code></li>
+<li><strong>元空间(MetaSpace)(Java[8+)，使用操作系统的本地内存进行动态分配</strong></li>
+</ul>
+<p>MetaSpace 相比 PermGen 的优势</p>
+<ul>
+<li><p>字符串常量池存在永久代(JVM)中，容易出现性能问题和内存溢出</p>
 </li>
-<li><p>元空间使用<strong>本地内存</strong>，而永久代使用的是 <strong>jvm 的内存</strong></p>
+<li><p>类和方法的信息大小难易确定，给永久代的大小指定带来困难 (元空间动态分配，不用指定初始化大小)</p>
+</li>
+<li><p>永久代会为 GC 带来不必要的复杂性，需要特别处理回收效率低 (元空间使用本地内存，不会因空间不足而触发 Full GC)</p>
+</li>
+<li><p>元空间方便 HotSpot VM 与其他 VM 如 rockit 的集成</p>
 </li>
 </ul>
-<p>MetaSpace相l比PermGen的优势</p>
-<ul>
-<li><p>字符串常量池存在永久代中，容易出现性能问题和内存溢出</p>
-</li>
-<li><p>类和方法的信息大小难易确定，给永久代的大小指定带来困难</p>
-</li>
-<li><p>永久代会为 GC 带来不必要的复杂性，需要特别处理回收效率低</p>
-</li>
-<li><p>方便 HotSpot VM 与其他 VM 如 rockit 的集成</p>
-</li>
+<h4 id="GC堆"><a href="#GC堆" class="headerlink" title="GC堆"></a>GC堆</h4><ul>
+<li><strong>常量池</strong> (&#x3D;静态字段 + 符号引用(&#x3D;类全限定名+方法名) )</li>
+<li><strong>实例对象的分配区域</strong> (数组+类对象)</li>
 </ul>
-<h4 id="Heap-堆"><a href="#Heap-堆" class="headerlink" title="Heap 堆"></a>Heap 堆</h4><p>在Java7之后，原先位于方法区 (PermGen) 中的字符串常量池被移动到了 JAVA 堆中</p>
-<ul>
-<li><p>常量池 (&#x3D;<strong>静态字段</strong> + <strong>符号引用</strong>(&#x3D;类全限定名+方法名) )</p>
-</li>
-<li><p>对象实例的分配区域 (<strong>数组</strong>+<strong>类对象</strong>)</p>
-</li>
+<p>堆是 GC 管理的主要区域，因此也被成为 GC 堆</p>
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_15_46.png" alt="image-20230517154645449" style="zoom: 67%;" />
+
+
+
+<h5 id="GC-堆内存区域的划分-重点"><a href="#GC-堆内存区域的划分-重点" class="headerlink" title="GC 堆内存区域的划分(重点)"></a>GC 堆内存区域的划分(重点)</h5><ul>
+<li><strong>年轻代</strong>：是用于存放新创建的对象的区域<ul>
+<li><strong>Eden 区</strong>：</li>
+<li><strong>两个 Survivor 区</strong>：分为 <strong>From 区</strong>、<strong>To 区</strong></li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_15_46.png" alt="image-20230517154645449"></p>
-<p>GC 管理的主要区域，因此也被成为 GC 堆</p>
+</li>
+<li><strong>老年代</strong>：是用于存放长时间存活的对象的区域。在经过多次 Minor GC 后，仍然存活的对象会被晋升到老年代。</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_34.png" alt="image-20230519183404821" style="zoom: 33%;" />
+
+<center/>JDK[7-</center>
+
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_35.png" alt="image-20230519183415831" style="zoom: 40%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_19_08.png" alt="image-20230519190841976" style="zoom:80%;" />
+
+<center/>JDK[8+</center>
+
+
+
 <h3 id="常考题解析"><a href="#常考题解析" class="headerlink" title="常考题解析"></a>常考题解析</h3><h4 id="三大性能调优参数"><a href="#三大性能调优参数" class="headerlink" title="三大性能调优参数"></a>三大性能调优参数</h4><p><code>java -Xms128m -Xmx128m -Xss256k -jar xxxx.jar</code></p>
 <p>-Xss：规定了每个线程虚拟机栈（堆栈）的大小，常 256k<br>-Xms：堆的初始值<br>-Xmx：堆能达到的最大值<br>通常 Xms 和 Xmx 设置成一样的，避免内存抖动</p>
-<h4 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h4><p>内存分配策略：<br>静态存储：编译时确定每个数据目标在运行时的存储空间需求，要求程序代码中没有可变数据结构，没有嵌套和递归代码<br>栈式存储：数据区需求在编译时未知，运行时进入 module 模块入口前需要能确定运行时的存储空间需求，动态分配<br>堆式存储：编译时或运行时模块入口都无法确定，动态分配</p>
-<p><strong>联系：</strong>堆和栈都是 Java 的内存结构模型。<br>            在堆中分配 Object 引用<strong>对象实例</strong>和数组，堆中还有常量池<br>            栈的栈帧主要由局部变量表和操作数栈构成，存的是<strong>地址</strong>，存储 <strong>Local Variables</strong> 局部变量和 <strong>Variable reference</strong> 变量引用即堆中对象实例的首地址，</p>
+<h4 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h4><p>内存分配策略：</p>
+<p>静态存储：<strong>编译时</strong>确定每个数据目标在运行时的存储空间需求，要求程序代码中没有可变数据结构，没有嵌套和递归代码<br>栈式存储：数据区需求在编译时未知，<strong>运行时</strong>进入 module 模块入口前需要能确定运行时的存储空间需求，动态分配<br>堆式存储：编译时或运行时模块入口都无法确定，<strong>动态分配</strong></p>
+<p><strong>联系：</strong></p>
+<p>堆和栈都是 JMM 规范中定义的概念。</p>
+<p><strong>GC堆 &#x3D; 常量池 + 存储实例对象</strong><br><strong>栈 &#x3D; 存储地址</strong>，指向对应的堆中的实例对象</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_17_12.png" alt="image-20230517171251767" style="zoom:80%;" />
 
-<p><strong>区别：</strong><br>线程：由线程<strong>独占</strong>，堆由线程<strong>共享</strong><br><strong>管理方式</strong>：栈<strong>自动释放</strong>，堆需要<strong>GC</strong><br>空间大小：分配的内存栈比堆小<br>碎片相关：栈产生的碎片远小于堆，因为堆空间活动多<br><strong>分配方式</strong>：栈支持静态和动态分配，而堆仅支持动态分配<br>效率：栈的效率比堆高</p>
+<h5 id="区别-重点-："><a href="#区别-重点-：" class="headerlink" title="区别 (重点)："></a>区别 (重点)：</h5><table>
+<thead>
+<tr>
+<th></th>
+<th>栈</th>
+<th>堆</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>线程</td>
+<td>线程私有</td>
+<td>线程共享</td>
+</tr>
+<tr>
+<td>管理方式</td>
+<td>自动释放</td>
+<td>需要 GC 垃圾回收</td>
+</tr>
+<tr>
+<td>空间大小</td>
+<td>栈比堆小，使用 JVM 内存</td>
+<td>使用 OS 内存</td>
+</tr>
+<tr>
+<td>碎片相关</td>
+<td>栈产生的碎片远远小于堆，因为堆空间活动多</td>
+<td></td>
+</tr>
+<tr>
+<td>分配方式</td>
+<td>支持静态分配和动态分配</td>
+<td>仅支持动态分配</td>
+</tr>
+<tr>
+<td>效率</td>
+<td>栈的使用效率比堆高</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
 <h5 id="元空间、堆、线程独占部分间的联系——内存角度"><a href="#元空间、堆、线程独占部分间的联系——内存角度" class="headerlink" title="元空间、堆、线程独占部分间的联系——内存角度"></a>元空间、堆、线程独占部分间的联系——内存角度</h5><p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_17_06.png" alt="image-20230517170601579"></p>
-<h4 id="不同-JDK-下-intern-方法的表现"><a href="#不同-JDK-下-intern-方法的表现" class="headerlink" title="不同 JDK 下 intern() 方法的表现"></a>不同 JDK 下 intern() 方法的表现</h4><p>JDK6 VS JDK6+</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InternDifference</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 先&quot;a&quot;，在元空间中分配内存，后new，在堆中分配内存</span></span><br><span class="line">        s.intern();  <span class="comment">// JDK6 在常量池中创建字符串对象并返回; JDK7+ 在常量池中创建字符串对象引用并返回</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;a&quot;</span>;</span><br><span class="line">        System.out.println(s == s2);  <span class="comment">// JDK6 false; JDK6+ false</span></span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>) + <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 在堆中分配内存，创建String对象</span></span><br><span class="line">        s3.intern();</span><br><span class="line">        <span class="type">String</span> <span class="variable">s4</span> <span class="operator">=</span> <span class="string">&quot;aa&quot;</span>;</span><br><span class="line">        System.out.println(s3 == s4);  <span class="comment">// JDK6 false; JDK6+ true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="不同-JDK-下-intern-方法的表现"><a href="#不同-JDK-下-intern-方法的表现" class="headerlink" title="不同 JDK 下 intern() 方法的表现"></a>不同 JDK 下 intern() 方法的表现</h4><p>TODO：有空再看<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/67070276/why-does-new-string-new-string-return-different-results-under-jdk8">https://stackoverflow.com/questions/67070276/why-does-new-string-new-string-return-different-results-under-jdk8</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/63702466/how-does-javas-intern-method-behave-on-such-strings-that-are-created-during-r">https://stackoverflow.com/questions/63702466/how-does-javas-intern-method-behave-on-such-strings-that-are-created-during-r</a><br><a target="_blank" rel="noopener" href="https://www.javatpoint.com/java-string-intern">https://www.javatpoint.com/java-string-intern</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Goodbye_Youth/article/details/103518074">https://blog.csdn.net/Goodbye_Youth/article/details/103518074</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    返回字符串对象的规范表示。    </span></span><br><span class="line"><span class="comment">    字符串池最初是空的，由String类私有维护。</span></span><br><span class="line"><span class="comment">    当调用 intern 方法时，如果池中已包含由equals(Object)方法确定的等于此String对象的字符串，则返回池中的字符串。否则，将此String对象添加到池中，并返回对此String对象的引用。</span></span><br><span class="line"><span class="comment">    由此可见，对于任意两个字符串s和t ，当且仅当s.equals(t)为true时s.intern() == t.intern()才为true 。</span></span><br><span class="line"><span class="comment">    所有文字字符串和字符串值常量表达式都被保留。字符串文字在Java 语言规范的 @jls 3.10.5 部分中定义。    </span></span><br><span class="line"><span class="comment">    返回值(不为空)：与此字符串具有相同内容的字符串，但保证来自唯一字符串池。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@NotNull</span> <span class="keyword">public</span> <span class="keyword">native</span> String <span class="title function_">intern</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
 
-<p>JDK6：当调用 intern() 方法时，如果字符串常量池先前已创建出该字符串对象，则返回池中的该字符串的引用。否则，将此<strong>字符串对象</strong>添加到字符串常量池中，并且返回该字符串对象的引用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDK[6-</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InternDifference</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 先&quot;a&quot;：在永久代的常量池中创建对象实例。后new：在GC堆中创建对象引用，对象引用指向常量池中的对象实例，s为GC堆中对象引用的地址</span></span><br><span class="line">        s.intern();</span><br><span class="line">        <span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;a&quot;</span>;  <span class="comment">// s2为永久代常量池中对象实例的地址</span></span><br><span class="line">        System.out.println(s == s2);  <span class="comment">// 比较引用的地址：false</span></span><br><span class="line">        </span><br><span class="line">        <span class="type">String</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>) + <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 字符串是不可变类型，&quot;+&quot;会在GC堆中创建新的对象实例&quot;aa&quot;，s3为GC堆中对象实例的地址</span></span><br><span class="line">		System.out.println(System.identityHashCode(s3));</span><br><span class="line">        s3.intern();  <span class="comment">// &quot;aa&quot;拷贝到常量池</span></span><br><span class="line">        System.out.println(System.identityHashCode(<span class="string">&quot;aa&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">s4</span> <span class="operator">=</span> <span class="string">&quot;aa&quot;</span>;  <span class="comment">// s2为永久代常量池中对象实例的地址</span></span><br><span class="line">        System.out.println(s3 == s4);  <span class="comment">// 比较引用的地址：false</span></span><br><span class="line">&#125;	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JDK[6-：当调用 intern() 方法时，如果字符串常量池先前已创建出该字符串对象，则返回池中的该字符串的引用。否则，将此<strong>字符串对象</strong>添加到字符串常量池中，并且返回该字符串对象的引用。</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_18_00.png" style="zoom: 67%;" />
 
-<p>JDK6+：当调用 intern() 方法时，如果字符串常量池先前己创建出该字符串对象，则返回池中的该字符串的引用。否则，如果该字符串对象己经存在于Java堆中，则将<strong>堆中对此对象的引用</strong>添加到字符串常量池中，并且返回该引用；如果堆中不存在，则在池中创建该字符串并返回其引用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//JDK[7+</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InternDifference</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 先&quot;a&quot;：在GC堆的常量池中创建对象，后new：在GC堆中创建对象引用，s为GC堆中对象引用的地址</span></span><br><span class="line">        s.intern();</span><br><span class="line">        <span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;a&quot;</span>;  <span class="comment">// s2为GC堆常量池中对象实例的地址</span></span><br><span class="line">        System.out.println(s == s2);  <span class="comment">// 比较引用的地址：false</span></span><br><span class="line">        </span><br><span class="line">        <span class="type">String</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>) + <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 字符串是不可变类型，&quot;+&quot;会在GC堆中创建新的对象实例&quot;aa&quot;，s3为GC堆中对象实例的地址</span></span><br><span class="line">        System.out.println(System.identityHashCode(s3));</span><br><span class="line">        s3.intern();  <span class="comment">// &quot;aa&quot;引用拷贝到GC堆中的常量池</span></span><br><span class="line">        System.out.println(System.identityHashCode(<span class="string">&quot;aa&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">s4</span> <span class="operator">=</span> <span class="string">&quot;aa&quot;</span>;  <span class="comment">// s4指向GC堆常量池中的引用拷贝，s4为GC堆中对象实例的地址</span></span><br><span class="line">        System.out.println(s3 == s4);  <span class="comment">// 比较引用的地址：true</span></span><br><span class="line">&#125;	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JDK[7+：当调用 intern() 方法时，如果字符串常量池先前己创建出该字符串对象，则返回池中的该字符串的引用。否则，如果该字符串对象己经存在于Java堆中，则将<strong>堆中对此对象的引用</strong>添加到字符串常量池中，并且返回该引用；如果堆中不存在，则在池中创建该字符串并返回其引用。</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_17_17_59.png" alt="image-20230517175904118" style="zoom:67%;" />
 
 
@@ -339,72 +437,186 @@
 <li>活跃线程的引用对象</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_14.png" alt="image-20230519181356595"></p>
-<h3 id="回收垃圾的4种算法"><a href="#回收垃圾的4种算法" class="headerlink" title="回收垃圾的4种算法"></a>回收垃圾的4种算法</h3><h4 id="标记-清除算法-Mark-and-Sweep"><a href="#标记-清除算法-Mark-and-Sweep" class="headerlink" title="标记-清除算法(Mark and Sweep)"></a>标记-清除算法(Mark and Sweep)</h4><p>Mark标记阶段：使用可达性分析算法，从根集合进行扫描，对存活的对象进行标记<br>Sweep清除阶段：对堆内存从头到尾进行线性遍历，回收不可达对象内存</p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_23.png" style="zoom: 67%;" />
+<h3 id="回收垃圾的4种算法"><a href="#回收垃圾的4种算法" class="headerlink" title="回收垃圾的4种算法"></a>回收垃圾的4种算法</h3><h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>标记-清除算法(Mark and Sweep)</p>
+<ol>
+<li>Mark 标记阶段：使用可达性分析算法，从根集合进行扫描，对存活的对象进行标记</li>
+<li>Sweep 清除阶段：对堆内存从头到尾进行线性遍历，回收不可达对象内存</li>
+</ol>
+<p>缺点：<br>可用内存碎片化</p>
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_23.png" style="zoom: 50%;" />
 
-<p>缺点：碎片化</p>
-<h4 id="复制算法-Copying"><a href="#复制算法-Copying" class="headerlink" title="复制算法(Copying)"></a>复制算法(Copying)</h4><p>内存分为对象面和空闲面<br>对象在对象面上创建<br>存活的对象被从对象面复制到空闲面<br>将对象面所有对象内存清除，每次对一个半区进行回收</p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_22.png" alt="image-20230519182219841" style="zoom:67%;" />
 
-<p>优点：<br>解决碎片化问题，复制操作内存分配时不用考虑内存碎片<br>顺序分配内存，简单高效，只需要移动堆顶指针</p>
-<p>适用于对象<strong>存活率低</strong>的场景，比如年轻代</p>
-<h4 id="标记-整理算法-Compacting"><a href="#标记-整理算法-Compacting" class="headerlink" title="标记-整理算法(Compacting)"></a>标记-整理算法(Compacting)</h4><p>Mark 标记阶段：使用可达性分析算法，从根集合进行扫描，对存活的对象进行标记</p>
-<p>Sweep 清除阶段：移动所有存活的对象，且按照内存地址次序依次排列，然后<br>将末端内存地址以后的内存全部回收。<strong>进行存活对象的移动</strong></p>
+
+
+
+<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>标记-整理算法(Compacting)</p>
+<ol>
+<li>Mark 标记阶段：使用可达性分析算法，从根集合进行扫描，对存活的对象进行标记</li>
+<li>Sweep 清除阶段：移动所有存活的对象，且按照内存地址次序依次排列，然后<br>将末端内存地址以后的内存全部回收。<strong>进行存活对象的移动</strong></li>
+</ol>
+<p>优点：<br>避免内存的不连续行<br>不用设置两块内存互换</p>
+<p>场景：<br>用于老年代 (对象存活率高的场景)</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_27.png" alt="image-20230519182723498" style="zoom:67%;" />
 
-<p>优点：<br>避免内存的不连续行<br>不用设置两块内存互换<br>适用于<strong>存活率高</strong>的场景，比如老年代</p>
-<h4 id="分代搜集算法-Generational-Collector"><a href="#分代搜集算法-Generational-Collector" class="headerlink" title="分代搜集算法(Generational Collector)"></a>分代搜集算法(Generational Collector)</h4><h5 id="Java-堆内存的划分"><a href="#Java-堆内存的划分" class="headerlink" title="Java 堆内存的划分"></a>Java 堆内存的划分</h5><p>年轻代：尽可能快速地收集掉那些生命周期短的对象<br>        Eden 区：<br>        两个 Survivor 区：分为From区、To区<br>老年代：存放生命周期较长的对象</p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_34.png" alt="image-20230519183404821" style="zoom:50%;" />
 
-<p>在Java8之后，使用 MetaSpace 元空间替代了 PermGen 永久代，解决了空间问题</p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_35.png" alt="image-20230519183415831" style="zoom:67%;" />
 
-<p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_19_08.png" alt="image-20230519190841976"></p>
-<h5 id="GC-分类"><a href="#GC-分类" class="headerlink" title="GC 分类"></a>GC 分类</h5><p>分为 Minor GC 和 Full GC</p>
-<h5 id="年轻代的垃圾收集-Minor-GC"><a href="#年轻代的垃圾收集-Minor-GC" class="headerlink" title="年轻代的垃圾收集 Minor GC"></a>年轻代的垃圾收集 Minor GC</h5><p>在年轻代，使用复制算法回收垃圾</p>
-<p>触发 Minor GC 的条件：当 Eden 空间不足时</p>
-<p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_48.png" alt="image-20230519184847441"></p>
-<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_49.png" alt="image-20230519184901206" style="zoom:67%;" />
 
-<img src="C:\Users\qq109\AppData\Roaming\Typora\typora-user-images\image-20230519184907614.png" alt="image-20230519184907614" style="zoom:67%;" />
 
-<p><code>-XX: MaxTenuringThreshold</code> 默认15，若超过年龄阈值则进入老年代</p>
-<h6 id="从年轻代晋升到老年代的条件"><a href="#从年轻代晋升到老年代的条件" class="headerlink" title="从年轻代晋升到老年代的条件"></a>从年轻代晋升到老年代的条件</h6><ul>
-<li><p>经历一定Minor)次数依然存活的对象</p>
-</li>
-<li><p>Survivor 区中存放不下的对象</p>
-</li>
-<li><p>新生成的大对象 (<code>-XX:+PretenuerSizeThreshold</code>)</p>
-</li>
+<h4 id="分代搜集算法"><a href="#分代搜集算法" class="headerlink" title="分代搜集算法"></a>分代搜集算法</h4><p>Generational Collector</p>
+<h5 id="Minor-GC"><a href="#Minor-GC" class="headerlink" title="Minor GC"></a>Minor GC</h5><p>Minor GC 是针对 GC 堆中年轻代的垃圾回收操作。</p>
+<h6 id="常用的调优参数"><a href="#常用的调优参数" class="headerlink" title="常用的调优参数"></a>常用的调优参数</h6><p><code>-XX:NewRatio</code>：设置老年代和年轻代的大小比例，默认 2:1</p>
+<p><code>-X:SurvivorRatio</code>：设置 Eden 区和一个 Survivor 区 的比值，默认 8:1</p>
+<p><code>-XX: MaxTenuringThreshold</code> 默认15，若对象超过年龄阈值则晋升到老年代</p>
+<p><code>-XX:+PretenureSizeThreshold</code> 若新创建的对象超过这个阈值则直接晋升到老年代</p>
+<p><strong>触发条件：</strong></p>
+<p>Eden 区空间不足</p>
+<p><strong>对象从年轻代晋升到老年代的条件：</strong></p>
+<ul>
+<li>经历 MaxTenuringThreshold 次的 Minor GC 后依然存活的对象</li>
+<li>新创建的超过 PretenuerSizeThreshold 大小的大对象</li>
+<li>Survivor 区中存放不下的对象</li>
 </ul>
-<h6 id="常用的调优参数"><a href="#常用的调优参数" class="headerlink" title="常用的调优参数"></a>常用的调优参数</h6><p><code>-X:SurvivorRatio</code>：设置 Eden 和 Survivor 的比值，默认8：l</p>
-<p><code>-XX:NewRatio</code>：设置老年代和年轻代内存大小的比例</p>
-<p><code>-X:MaxTenuringThreshold</code>：设置对象从年轻代晋升到老生代经过 GC 次数的最大阈值</p>
-<h5 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h5><p>在年轻代和老年代，使用标记-清理算法或标记-整理算法清理垃圾对象</p>
-<p>区别：<br>Major GC 可以指 Full GC、也可以指老年代GC，面试需要问清楚<br>Full GC 比 Minor GC 慢，但执行频率低</p>
-<h6 id="触发-Full-GC-的条件"><a href="#触发-Full-GC-的条件" class="headerlink" title="触发 Full GC 的条件"></a>触发 Full GC 的条件</h6><ul>
-<li>1老年代空间不足</li>
-<li>JDK7 永久代空间不足		</li>
-<li>CMS(concurrent mark sweep) GC时出现 promotion failed，concurrent mode failure</li>
-<li>2Minor GC 晋升到老年代的对象平均大小大于老年代的剩余空间</li>
-<li>3调用 System.gc()		</li>
-<li>使用RMI来进行RPC或管理的DK应用，每小时执行1次Full GC</li>
+<p><strong>回收垃圾的算法：</strong></p>
+<p>标记-复制算法</p>
+<ol>
+<li>标记存活对象</li>
+<li>复制 Eden 区存活对象</li>
+<li>清空 Eden 区</li>
+<li>交换 Survivor 区</li>
+<li>年龄计算</li>
+</ol>
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_48.png" alt="image-20230519184847441" style="zoom: 67%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_49.png" alt="image-20230519184901206" style="zoom: 50%;" />
+
+<img src="C:\Users\qq109\AppData\Roaming\Typora\typora-user-images\image-20230519184907614.png" alt="image-20230519184907614" style="zoom: 50%;" />
+
+
+
+<h6 id="标记-复制算法"><a href="#标记-复制算法" class="headerlink" title="标记-复制算法"></a>标记-复制算法</h6><p>复制算法(Copying)，内存分为对象面和空闲面</p>
+<ol>
+<li>对象在对象面上创建</li>
+<li>将存活的对象从对象面复制到空闲面</li>
+<li>回收对象面的不可达对象内存</li>
+</ol>
+<p>优点：<br>两个内存区域交替使用，解决可用内存碎片化问题(顺序分配内存只需移动堆顶指针)</p>
+<p>场景：<br>用于年轻代 (对象存活率低的场景)</p>
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_18_22.png" alt="image-20230519182219841" style="zoom: 50%;" />
+
+
+
+<h5 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h5><p>Full GC 是针对整个 GC 堆中新生代和老年代都包括的垃圾回收操作。</p>
+<p><strong>触发条件：</strong></p>
+<ul>
+<li><strong>老年代空间不足</strong> (在进行一次 Minor GC 时，发现老年代的剩余空间大小小于历次晋升对象的平均大小)</li>
+<li><strong>显式调用 <code>System.gc()</code> 方法</strong></li>
+<li><strong>在使用 CMS 垃圾收集器时，出现GC失败</strong> (promotion failed 晋升失败，concurrent mode failure 无法在规定时间内完成收集工作)</li>
+<li>JDK7 的永久代空间不足 (JDK8 的元空间使用本地内存，不会因空间不足而触发 Full GC)</li>
+<li>在使用 RMI(Remote Method Invocation) 远程方法调用来进行 RPC 或管理的 DK(Distributed Key-Value) 分布式键值对应用时，每小时执行1次 Full GC</li>
 </ul>
-<h6 id="Stop-the-World"><a href="#Stop-the-World" class="headerlink" title="Stop-the-World"></a>Stop-the-World</h6><p>VM 由于要执行 GC 而停止了应用程序的执行<br>任何一种GC算法中都会发生<br>多数GC优化通过减少Stop-the-world发生的时间来提高程序性能，使系统高吞吐低停顿</p>
-<h6 id="Safepoint"><a href="#Safepoint" class="headerlink" title="Safepoint"></a>Safepoint</h6><p>分析过程中对象引用关系不会发生变化的点，分析结果具有确定性的点，每个线程都到安全点才执行 GC<br>产生Safepoint的地方：方法调用；循环跳转；异常跳转等<br>安全点数量得适中，太少GC等太久，太多程序负荷大</p>
-<h3 id="常见的垃圾收集器"><a href="#常见的垃圾收集器" class="headerlink" title="常见的垃圾收集器"></a>常见的垃圾收集器</h3><p>只需要简单了解，知道区别，目前 GC 还在飞速发展，jdk11 的 Epsilon GC 和 ZGC。</p>
+<p><strong>回收垃圾的算法：</strong></p>
+<p>在年轻代使用标记-复制算法</p>
+<p>在老年代使用标记-整理算法</p>
+<p><strong>Full GC 和 Major GC 的区别：</strong></p>
+<ul>
+<li>Major GC 可以指 Full GC、也可以指老年代 GC (面试需问清楚 Major GC 指什么)</li>
+<li>Full GC 比 Minor GC 慢，但执行频率低</li>
+</ul>
+<h6 id="安全点"><a href="#安全点" class="headerlink" title="安全点"></a>安全点</h6><blockquote>
+<p>Stop-the-World</p>
+<p>在 Full GC 运行时，会在所有应用程序线程到达各自<strong>安全点</strong>后暂停执行，以确保对象在垃圾回收期间不会被并发修改或访问，直到垃圾回收完成。这个暂停的时间被称为<strong>停顿时间</strong>。(在 Minor GC 运行时，只需要停止正在年轻代区域上的所有应用程序线程，不需要安全点)</p>
+<p>停顿时间越长，应用程序的响应性就越差，用户可能会感觉到应用程序的卡顿或延迟。</p>
+</blockquote>
+<p>只有每个线程都到达安全点后 JVM 才执行 Full GC 操作<br>Safepoint (安全点) 是应用程序线程暂停的位置，暂停应用程序线程后对象引用关系不会发生变化，分析结果具有确定性。</p>
+<p>产生安全点的地方：方法调用指令、循环跳转指令、异常跳转指令、主动式安全点等处</p>
+<p>安全点数量太少会导致 Full GC 停顿事件太长，安全点数量太多会频繁检测导致程序负荷大。</p>
+<h3 id="常见的垃圾收集器"><a href="#常见的垃圾收集器" class="headerlink" title="常见的垃圾收集器"></a>常见的垃圾收集器</h3><p>不同的垃圾收集器，表示不同的回收策略。</p>
+<p>目前现状：GC 还在飞速发展，jdk11 出了 Epsilon GC 和 ZGC</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_20_19_53.png" alt="image-20230520195351495" style="zoom:67%;" />
 
-<p><strong>JVM的运行模式</strong></p>
-<p>Server：启动慢，程序运行快，重型VM<br>Client：启动快，程序运行慢，轻量级VM</p>
-<p>两者是不同的虚拟机，<code>java -version</code> 查看当前虚拟机是什么模式</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> java <span class="literal">-version</span></span><br><span class="line">openjdk version <span class="string">&quot;17.0.7&quot;</span> <span class="number">2023</span><span class="literal">-04-18</span></span><br><span class="line">OpenJDK Runtime Environment Temurin<span class="literal">-17</span>.<span class="number">0.7</span>+<span class="number">7</span> (build <span class="number">17.0</span>.<span class="number">7</span>+<span class="number">7</span>)</span><br><span class="line">OpenJDK <span class="number">64</span><span class="literal">-Bit</span> Server VM Temurin<span class="literal">-17</span>.<span class="number">0.7</span>+<span class="number">7</span> (build <span class="number">17.0</span>.<span class="number">7</span>+<span class="number">7</span>, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="年轻代收集器"><a href="#年轻代收集器" class="headerlink" title="年轻代收集器"></a>年轻代收集器</h4><p>不同的收集器，代表不同的策略</p>
+<table>
+<thead>
+<tr>
+<th>年轻代的垃圾收集器</th>
+<th>启动参数</th>
+<th>回收垃圾的算法</th>
+<th>线程</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Serial GC</td>
+<td><code>-XX:+UseSerialGC</code></td>
+<td>复制算法</td>
+<td>单线程</td>
+<td>适用于小型或客户端应用，目标是最大化响应时间</td>
+</tr>
+<tr>
+<td>ParNew GC</td>
+<td><code>-XX:+UseParNewGC</code></td>
+<td>复制算法</td>
+<td>多线程</td>
+<td>是 Serial GC 的多线程版本，适用于多核服务器，目标是提高吞吐量</td>
+</tr>
+<tr>
+<td>Parallel Scavenge</td>
+<td><code>-XX:+UseParallelGC</code></td>
+<td>复制算法</td>
+<td>多线程</td>
+<td>适用于注重系统吞吐量而对响应时间要求相对较低的应用场景</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>老年代的垃圾收集器</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Serial Old</td>
+<td><code>-XX:+UseSerialOldGC</code></td>
+<td>标记-整理算法</td>
+<td>单线程</td>
+<td>适用于小型或客户端应用。</td>
+</tr>
+<tr>
+<td>Parallel Old</td>
+<td><code>-XX:+UseParallelOldGC</code></td>
+<td>标记-整理算法</td>
+<td>多线程</td>
+<td>适用于多核服务器，目标是提高吞吐量</td>
+</tr>
+<tr>
+<td>Concurrent Mark-Sweep</td>
+<td><code>-XX:+UseConcMarkSweepGC</code></td>
+<td>并发标记-清除算法</td>
+<td>多线程</td>
+<td>适用于追求低延迟的应用，但可能产生较多的碎片</td>
+</tr>
+<tr>
+<td>Garbage First(G1)</td>
+<td><code>-XX:+UseG1GC</code></td>
+<td></td>
+<td>多线程</td>
+<td>适用于大内存的应用，目标是在保持吞吐量的同时降低停顿时间</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
 <p><code>-XX:+UseAdaptiveSizePolicy</code>：自适应策略，将内存管理的任务交给虚拟机</p>
-<h5 id="单线程的-Serial-收集器"><a href="#单线程的-Serial-收集器" class="headerlink" title="单线程的 Serial 收集器"></a>单线程的 Serial 收集器</h5><p>(启动参数：<code>-XX:+UseSerialGC</code>，复制算法)</p>
+<h4 id="年轻代收集器"><a href="#年轻代收集器" class="headerlink" title="年轻代收集器"></a>年轻代收集器</h4><h5 id="Serial-GC"><a href="#Serial-GC" class="headerlink" title="Serial GC"></a>Serial GC</h5><p>(启动参数：<code>-XX:+UseSerialGC</code>，复制算法)</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_19_57.png" alt="image-20230519195542293" style="zoom:50%;" />
 
 <ul>
@@ -413,16 +625,16 @@
 <li><p>简单高效，Client模式下默认的年轻代收集器</p>
 </li>
 </ul>
-<h5 id="多线程的-ParNew-收集器"><a href="#多线程的-ParNew-收集器" class="headerlink" title="多线程的 ParNew 收集器"></a>多线程的 ParNew 收集器</h5><p>(启动参数：<code>-XX:+UseParNewGC</code>，复制算法)</p>
+<h5 id="ParNew-GC"><a href="#ParNew-GC" class="headerlink" title="ParNew GC"></a>ParNew GC</h5><p>(启动参数：<code>-XX:+UseParNewGC</code>，复制算法)</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_19_55.png" alt="image-20230519195507076" style="zoom:50%;" />
 
 <ul>
 <li>多线程收集，其余的行为、特点和 Serial 收集器一样</li>
 <li>单核执行效率不如Serial，在多核下执行才有优势，</li>
-<li>能与CMS配合工作，是 Server 模式下的首选年轻代收集器  </li>
+<li>能与 CMS 配合工作，是 Server 模式下的首选年轻代收集器  </li>
 <li><strong>以减少 Stop-the-World 为出发点，关注用户线程停顿时间</strong>，适合与用户交互的程序</li>
 </ul>
-<h5 id="多线程的-Parallel-Scavenge-并行清除收集器"><a href="#多线程的-Parallel-Scavenge-并行清除收集器" class="headerlink" title="多线程的 Parallel Scavenge 并行清除收集器"></a>多线程的 Parallel Scavenge 并行清除收集器</h5><p>&#x2F;ˈskævɪndʒ&#x2F; (启动参数：<code>-XX:+UseParallelGC</code>，复制算法)</p>
+<h5 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h5><p>Parallel Scavenge 并行清除收集器，&#x2F;ˈskævɪndʒ&#x2F; (启动参数：<code>-XX:+UseParallelGC</code>，复制算法)</p>
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_19_19_55.png" alt="image-20230519195507076" style="zoom:50%;" />
 
 <ul>
@@ -430,16 +642,17 @@
 <li>在多核下执行才有优势，Server模式下默认的年轻代收集器</li>
 </ul>
 <p>(吞吐量&#x3D;运行用户代码时间&#x2F;（运行用户代码时间+垃圾收集时间)</p>
-<h4 id="老年代收集器"><a href="#老年代收集器" class="headerlink" title="老年代收集器"></a>老年代收集器</h4><h5 id="单线程的-Serial-Old-收集器"><a href="#单线程的-Serial-Old-收集器" class="headerlink" title="单线程的 Serial Old 收集器"></a>单线程的 Serial Old 收集器</h5><p>(启动参数：<code>-XX:+UseSerialOldGC</code>，标记-整理算法)</p>
+<h4 id="老年代收集器"><a href="#老年代收集器" class="headerlink" title="老年代收集器"></a>老年代收集器</h4><h5 id="Serial-Old"><a href="#Serial-Old" class="headerlink" title="Serial Old"></a>Serial Old</h5><p>(启动参数：<code>-XX:+UseSerialOldGC</code>，标记-整理算法)</p>
 <ul>
 <li>单线程收集，进行垃圾收集时，必须暂停所有工作线程</li>
 <li>简单高效，Client模式下默认的老年代收集器</li>
 </ul>
-<h5 id="多线程的-Parallel-Old-收集器"><a href="#多线程的-Parallel-Old-收集器" class="headerlink" title="多线程的 Parallel Old 收集器"></a>多线程的 Parallel Old 收集器</h5><p>(启动参数：<code>-XX:+UseParallelOldGC</code>，标记-整理算法)</p>
+<h5 id="Parallel-Old"><a href="#Parallel-Old" class="headerlink" title="Parallel Old"></a>Parallel Old</h5><p>(启动参数：<code>-XX:+UseParallelOldGC</code>，标记-整理算法)</p>
 <ul>
 <li>多线程，<strong>吞吐量优先</strong></li>
 </ul>
-<h5 id="CMS-并发标记清理收集器"><a href="#CMS-并发标记清理收集器" class="headerlink" title="CMS 并发标记清理收集器"></a>CMS 并发标记清理收集器</h5><p>(启动参数：<code>-XX:+UseConcMarkSweepGC</code>，标记-清除算法)</p>
+<h5 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h5><p>Concurrent Mark-Sweep 并发标记清除</p>
+<p>(启动参数：<code>-XX:+UseConcMarkSweepGC</code>，标记-清除算法)</p>
 <p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_20_16_29.png" alt="image-20230520162923360"></p>
 <ul>
 <li><p><strong>关注用户线程停顿时间</strong></p>
@@ -458,7 +671,7 @@
 </li>
 </ul>
 <p>因为 Parallel Scavenge，G1 是独立实现的，其余的共用了框架代码，所以 CMS 不能与 Parallel Scavenge、G1 共用</p>
-<h5 id="Garbage-First-收集器-G1"><a href="#Garbage-First-收集器-G1" class="headerlink" title="Garbage First 收集器 (G1)"></a>Garbage First 收集器 (G1)</h5><p>（启动参数：<code>-XX:+UseG1GC</code>，复制+标记-整理算法</p>
+<h5 id="Garbage-First-G1"><a href="#Garbage-First-G1" class="headerlink" title="Garbage First (G1)"></a>Garbage First (G1)</h5><p>（启动参数：<code>-XX:+UseG1GC</code>，复制+标记-整理算法</p>
 <ul>
 <li>将整个Java堆内存划分成多个大小相等的Region</li>
 <li>年轻代和老年代不再物理隔离</li>
@@ -475,19 +688,21 @@
 <li><p>可预测的停顿，可设置停顿时间</p>
 </li>
 </ul>
-<h3 id="GC相关的面试题"><a href="#GC相关的面试题" class="headerlink" title="GC相关的面试题"></a>GC相关的面试题</h3><h4 id="finalize-方法的作用"><a href="#finalize-方法的作用" class="headerlink" title="finalize() 方法的作用"></a>finalize() 方法的作用</h4><ul>
+<h3 id="GC相关的面试题"><a href="#GC相关的面试题" class="headerlink" title="GC相关的面试题"></a>GC相关的面试题</h3><h4 id="finalize-方法的作用"><a href="#finalize-方法的作用" class="headerlink" title="finalize() 方法的作用"></a>finalize() 方法的作用</h4><p>JDK9 中被标记为@Deprecated，JDK11中被弃用</p>
+<ul>
 <li><strong>与C++的析构函数不同，析构函数调用是确定的，而它的是不确定的</strong></li>
-<li>将未被引用的对象放置于F-Queue队列</li>
+<li>将未被引用的对象放置于 F-Queue 队列</li>
 <li><strong>方法执行随时可能会被终止</strong></li>
 <li>给予对象最后一次重生的机会</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Finalization</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Finalization finalization;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">finalize</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Finalized&quot;</span>);</span><br><span class="line">        finalization = <span class="built_in">this</span>;  <span class="comment">// 重生</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>由于 finalize() 运行的不确定性较大，无法各对象的保证顺序，运行代价高，因此不建议使用 finalize() 方法</p>
-<h4 id="Java的4种引用"><a href="#Java的4种引用" class="headerlink" title="Java的4种引用"></a>Java的4种引用</h4><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_06_02_13_42.png" alt="image-20230602134245031" style="zoom:80%;" />
+<h4 id="Java的4种引用"><a href="#Java的4种引用" class="headerlink" title="Java的4种引用"></a>Java的4种引用</h4><p>TODO：使用这些引用类型可能会造成内存泄漏或意外的对象回收，在大多数情况下还是用强引用，有空再来把这里看下。</p>
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_06_02_13_42.png" alt="image-20230602134245031" style="zoom:80%;" />
 
 <h5 id="强引用-Strong-Reference"><a href="#强引用-Strong-Reference" class="headerlink" title="强引用 (Strong Reference)"></a>强引用 (Strong Reference)</h5><ul>
-<li><strong>最普遍的</strong>引用：<code>Object obj = new Object()</code>，obj 是引用对象<strong>reference object</strong>，new Object是引用实例<strong>referent</strong></li>
+<li><strong>最普遍的</strong>引用：<code>Object obj = new Object()</code>，obj 是引用对象 <strong>reference object</strong>，new Object是引用实例 <strong>referent</strong></li>
 <li>抛出 OutOfMemoryError 终止程序也不会回收具有强引用的对象</li>
 <li>通过将对象设置为 null 来弱化引用，使其被回收</li>
 </ul>
@@ -567,4 +782,4 @@
 
 
 
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chenxiangcheng1.github.io">Nemesis</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chenxiangcheng1.github.io/articles/%E9%9D%A2%E8%AF%95/Java/GC/JVM/">https://chenxiangcheng1.github.io/articles/%E9%9D%A2%E8%AF%95/Java/GC/JVM/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chenxiangcheng1.github.io" target="_blank">Nemesis</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/articles/%E9%9D%A2%E8%AF%95/Spring/Spring/" title="Spring"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Spring</div></div></a></div><div class="next-post pull-right"><a href="/articles/%E9%9D%A2%E8%AF%95/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Java%E5%8F%8D%E5%B0%84%E5%92%8C%E6%B3%A8%E8%A7%A3%E6%9C%BA%E5%88%B6/" title="Java反射和注解机制"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java反射和注解机制</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人 <br/> Talk is cheap. Show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/chenxiangcheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">有空B站直播写代码 ( •̀ ω •́ )✧</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JVM%E4%B8%BB%E8%A6%81%E8%80%83%E7%82%B9"><span class="toc-number">1.</span> <span class="toc-text">JVM主要考点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E5%8F%B0%E6%97%A0%E5%85%B3%E6%80%A7%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">平台无关性如何实现？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">1.1.1.</span> <span class="toc-text">如何查看字节码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HotSpot-JVM%E6%9E%B6%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">1 HotSpot JVM架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E4%BB%8E%E7%BC%96%E8%AF%91%E5%88%B0%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">类从编译到执行的过程？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Native-%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.2.</span> <span class="toc-text">Native 原生方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84-todo%EF%BC%9A%E8%A1%A5%E5%85%85%E9%93%BE%E6%8E%A5"><span class="toc-number">1.3.</span> <span class="toc-text">反射 todo：补充链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%B0%88%E8%B0%88ClassLoader"><span class="toc-number">1.4.</span> <span class="toc-text">2 谈谈ClassLoader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89ClassLoader-%E5%8F%AF%E4%BD%BF%E7%94%A8%E5%AD%97%E8%8A%82%E7%A0%81%E5%A2%9E%E5%BC%BA%E6%8A%80%E6%9C%AF"><span class="toc-number">1.4.1.</span> <span class="toc-text">自定义ClassLoader 可使用字节码增强技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassLoader%E7%9A%84%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">ClassLoader的双亲委派机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E5%8E%BB%E5%8A%A0%E8%BD%BD%E7%B1%BB"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">为什么要使用双亲委派机制去加载类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E8%A3%85%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.3.</span> <span class="toc-text">类的装载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">方法区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E8%A3%85%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">类的装载方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#loadClass-%E5%92%8C-forName-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.4.3.2.1.</span> <span class="toc-text">loadClass 和 forName 的区别</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86"><span class="toc-number">1.5.</span> <span class="toc-text">3 Java内存区域划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%92%E5%88%86"><span class="toc-number">1.5.1.</span> <span class="toc-text">内存地址空间的划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%8B%AC%E5%8D%A0%E9%83%A8%E5%88%86-%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AD%98"><span class="toc-number">1.5.2.</span> <span class="toc-text">线程独占部分 (本地内存)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PC"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">PC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">本地方法栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SOF%E5%BC%82%E5%B8%B8%E3%80%81OOM%E5%BC%82%E5%B8%B8"><span class="toc-number">1.5.2.4.</span> <span class="toc-text">SOF异常、OOM异常</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB%E9%83%A8%E5%88%86-%E4%B8%BB%E5%86%85%E5%AD%98"><span class="toc-number">1.5.3.</span> <span class="toc-text">线程共享部分 (主内存)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MetaSpace-%E5%85%83%E7%A9%BA%E9%97%B4"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">MetaSpace 元空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Heap-%E5%A0%86"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">Heap 堆</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%80%83%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="toc-number">1.5.4.</span> <span class="toc-text">常考题解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E5%A4%A7%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">三大性能调优参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">堆和栈的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%83%E7%A9%BA%E9%97%B4%E3%80%81%E5%A0%86%E3%80%81%E7%BA%BF%E7%A8%8B%E7%8B%AC%E5%8D%A0%E9%83%A8%E5%88%86%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB%E2%80%94%E2%80%94%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6"><span class="toc-number">1.5.4.2.1.</span> <span class="toc-text">元空间、堆、线程独占部分间的联系——内存角度</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C-JDK-%E4%B8%8B-intern-%E6%96%B9%E6%B3%95%E7%9A%84%E8%A1%A8%E7%8E%B0"><span class="toc-number">1.5.4.3.</span> <span class="toc-text">不同 JDK 下 intern() 方法的表现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-GC-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.6.</span> <span class="toc-text">4 GC 机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A2%AB%E5%88%A4%E5%AE%9A%E4%B8%BA%E5%9E%83%E5%9C%BE%E7%9A%84%E6%A0%87%E5%87%86"><span class="toc-number">1.6.1.</span> <span class="toc-text">被判定为垃圾的标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E5%9E%83%E5%9C%BE%E7%9A%842%E7%A7%8D%E7%AE%97%E6%B3%95"><span class="toc-number">1.6.2.</span> <span class="toc-text">标记垃圾的2种算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6%E5%9E%83%E5%9C%BE%E7%9A%844%E7%A7%8D%E7%AE%97%E6%B3%95"><span class="toc-number">1.6.3.</span> <span class="toc-text">回收垃圾的4种算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95-Mark-and-Sweep"><span class="toc-number">1.6.3.1.</span> <span class="toc-text">标记-清除算法(Mark and Sweep)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E7%AE%97%E6%B3%95-Copying"><span class="toc-number">1.6.3.2.</span> <span class="toc-text">复制算法(Copying)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86%E7%AE%97%E6%B3%95-Compacting"><span class="toc-number">1.6.3.3.</span> <span class="toc-text">标记-整理算法(Compacting)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E4%BB%A3%E6%90%9C%E9%9B%86%E7%AE%97%E6%B3%95-Generational-Collector"><span class="toc-number">1.6.3.4.</span> <span class="toc-text">分代搜集算法(Generational Collector)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Java-%E5%A0%86%E5%86%85%E5%AD%98%E7%9A%84%E5%88%92%E5%88%86"><span class="toc-number">1.6.3.4.1.</span> <span class="toc-text">Java 堆内存的划分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#GC-%E5%88%86%E7%B1%BB"><span class="toc-number">1.6.3.4.2.</span> <span class="toc-text">GC 分类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B9%B4%E8%BD%BB%E4%BB%A3%E7%9A%84%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86-Minor-GC"><span class="toc-number">1.6.3.4.3.</span> <span class="toc-text">年轻代的垃圾收集 Minor GC</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BB%8E%E5%B9%B4%E8%BD%BB%E4%BB%A3%E6%99%8B%E5%8D%87%E5%88%B0%E8%80%81%E5%B9%B4%E4%BB%A3%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.6.3.4.3.1.</span> <span class="toc-text">从年轻代晋升到老年代的条件</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0"><span class="toc-number">1.6.3.4.3.2.</span> <span class="toc-text">常用的调优参数</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Full-GC"><span class="toc-number">1.6.3.4.4.</span> <span class="toc-text">Full GC</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91-Full-GC-%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.6.3.4.4.1.</span> <span class="toc-text">触发 Full GC 的条件</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Stop-the-World"><span class="toc-number">1.6.3.4.4.2.</span> <span class="toc-text">Stop-the-World</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Safepoint"><span class="toc-number">1.6.3.4.4.3.</span> <span class="toc-text">Safepoint</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.</span> <span class="toc-text">常见的垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B4%E8%BD%BB%E4%BB%A3%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.1.</span> <span class="toc-text">年轻代收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84-Serial-%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.1.1.</span> <span class="toc-text">单线程的 Serial 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84-ParNew-%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.1.2.</span> <span class="toc-text">多线程的 ParNew 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84-Parallel-Scavenge-%E5%B9%B6%E8%A1%8C%E6%B8%85%E9%99%A4%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.1.3.</span> <span class="toc-text">多线程的 Parallel Scavenge 并行清除收集器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%80%81%E5%B9%B4%E4%BB%A3%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.2.</span> <span class="toc-text">老年代收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84-Serial-Old-%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.2.1.</span> <span class="toc-text">单线程的 Serial Old 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84-Parallel-Old-%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.2.2.</span> <span class="toc-text">多线程的 Parallel Old 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CMS-%E5%B9%B6%E5%8F%91%E6%A0%87%E8%AE%B0%E6%B8%85%E7%90%86%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.6.4.2.3.</span> <span class="toc-text">CMS 并发标记清理收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Garbage-First-%E6%94%B6%E9%9B%86%E5%99%A8-G1"><span class="toc-number">1.6.4.2.4.</span> <span class="toc-text">Garbage First 收集器 (G1)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC%E7%9B%B8%E5%85%B3%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">1.6.5.</span> <span class="toc-text">GC相关的面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#finalize-%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.6.5.1.</span> <span class="toc-text">finalize() 方法的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java%E7%9A%844%E7%A7%8D%E5%BC%95%E7%94%A8"><span class="toc-number">1.6.5.2.</span> <span class="toc-text">Java的4种引用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%BA%E5%BC%95%E7%94%A8-Strong-Reference"><span class="toc-number">1.6.5.2.1.</span> <span class="toc-text">强引用 (Strong Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BD%AF%E5%BC%95%E7%94%A8-Soft-Reference"><span class="toc-number">1.6.5.2.2.</span> <span class="toc-text">软引用 (Soft Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%B1%E5%BC%95%E7%94%A8-Weak-Reference"><span class="toc-number">1.6.5.2.3.</span> <span class="toc-text">弱引用 (Weak Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E5%BC%95%E7%94%A8-Phantom-Reference"><span class="toc-number">1.6.5.2.4.</span> <span class="toc-text">虚引用 (Phantom Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%84%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.6.5.2.5.</span> <span class="toc-text">各种引用类型的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E9%98%9F%E5%88%97-ReferenceQueue"><span class="toc-number">1.6.5.2.6.</span> <span class="toc-text">引用队列 (ReferenceQueue)</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/articles/%E9%9D%A2%E8%AF%95/Java/Java/" title="Java"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java"/></a><div class="content"><a class="title" href="/articles/%E9%9D%A2%E8%AF%95/Java/Java/" title="Java">Java</a><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E9%9D%A2%E8%AF%95/design-patterns/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式"/></a><div class="content"><a class="title" href="/articles/%E9%9D%A2%E8%AF%95/design-patterns/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E9%9D%A2%E8%AF%95/Spring/Spring/" title="Spring"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring"/></a><div class="content"><a class="title" href="/articles/%E9%9D%A2%E8%AF%95/Spring/Spring/" title="Spring">Spring</a><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E9%9D%A2%E8%AF%95/Java/GC/JVM/" title="JVM"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM"/></a><div class="content"><a class="title" href="/articles/%E9%9D%A2%E8%AF%95/Java/GC/JVM/" title="JVM">JVM</a><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E9%9D%A2%E8%AF%95/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Java%E5%8F%8D%E5%B0%84%E5%92%8C%E6%B3%A8%E8%A7%A3%E6%9C%BA%E5%88%B6/" title="Java反射和注解机制"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java反射和注解机制"/></a><div class="content"><a class="title" href="/articles/%E9%9D%A2%E8%AF%95/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Java%E5%8F%8D%E5%B0%84%E5%92%8C%E6%B3%A8%E8%A7%A3%E6%9C%BA%E5%88%B6/" title="Java反射和注解机制">Java反射和注解机制</a><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chenxiangcheng1.github.io">Nemesis</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chenxiangcheng1.github.io/articles/%E9%9D%A2%E8%AF%95/Java/GC/JVM/">https://chenxiangcheng1.github.io/articles/%E9%9D%A2%E8%AF%95/Java/GC/JVM/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chenxiangcheng1.github.io" target="_blank">Nemesis</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/articles/%E9%9D%A2%E8%AF%95/Java/%E7%B1%BB%E5%BA%93/Java%E7%9A%84IO%E6%9C%BA%E5%88%B6/" title="JavaIO机制"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaIO机制</div></div></a></div><div class="next-post pull-right"><a href="/articles/%E9%9D%A2%E8%AF%95/Java/%E7%B1%BB%E5%BA%93/Collection_Map%E9%9B%86%E5%90%88%E4%BD%93%E7%B3%BB/" title="Java集合体系"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java集合体系</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人 <br/> Talk is cheap. Show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/chenxiangcheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">有空B站直播写代码 ( •̀ ω •́ )✧</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JVM%E4%B8%BB%E8%A6%81%E8%80%83%E7%82%B9"><span class="toc-number">1.</span> <span class="toc-text">JVM主要考点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%A1%A3"><span class="toc-number">1.1.</span> <span class="toc-text">文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E5%8F%B0%E6%97%A0%E5%85%B3%E6%80%A7%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">平台无关性如何实现？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">1.2.1.</span> <span class="toc-text">如何查看字节码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HotSpot-JVM%E6%9E%B6%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">1 HotSpot JVM架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E4%BB%8E%E7%BC%96%E8%AF%91%E5%88%B0%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">类从编译到执行的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Native-%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">Native 原生方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84-todo%EF%BC%9A%E8%A1%A5%E5%85%85%E9%93%BE%E6%8E%A5"><span class="toc-number">1.4.</span> <span class="toc-text">反射 todo：补充链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM-%E7%9A%84%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">JVM 的运行模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ClassLoader"><span class="toc-number">1.6.</span> <span class="toc-text">2 ClassLoader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.1.</span> <span class="toc-text">层次结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-ClassLoader-%E5%8F%AF%E4%BD%BF%E7%94%A8%E5%AD%97%E8%8A%82%E7%A0%81%E5%A2%9E%E5%BC%BA%E6%8A%80%E6%9C%AF"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">自定义 ClassLoader 可使用字节码增强技术</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">1.6.2.</span> <span class="toc-text">双亲委派机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E8%A3%85%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">1.6.3.</span> <span class="toc-text">类的装载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E8%A3%85%E8%BD%BD%E5%92%8C%E9%9A%90%E5%BC%8F%E8%A3%85%E8%BD%BD"><span class="toc-number">1.6.3.1.</span> <span class="toc-text">显示装载和隐式装载</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#loadClass-%E5%92%8C-forName-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.6.3.1.1.</span> <span class="toc-text">loadClass 和 forName 的区别</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86"><span class="toc-number">1.7.</span> <span class="toc-text">3 Java内存区域划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89%E9%83%A8%E5%88%86-%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AD%98"><span class="toc-number">1.7.1.</span> <span class="toc-text">线程私有部分 (本地内存)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="toc-number">1.7.1.1.</span> <span class="toc-text">虚拟机栈</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#SOF-%E6%A0%88%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8%E3%80%81OOM-%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8"><span class="toc-number">1.7.1.1.1.</span> <span class="toc-text">SOF 栈溢出异常、OOM 内存溢出异常</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB%E9%83%A8%E5%88%86-%E4%B8%BB%E5%86%85%E5%AD%98"><span class="toc-number">1.7.2.</span> <span class="toc-text">线程共享部分 (主内存)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%A9%BA%E9%97%B4-%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AD%98"><span class="toc-number">1.7.2.1.</span> <span class="toc-text">元空间 使用本地内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GC%E5%A0%86"><span class="toc-number">1.7.2.2.</span> <span class="toc-text">GC堆</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#GC-%E5%A0%86%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E7%9A%84%E5%88%92%E5%88%86-%E9%87%8D%E7%82%B9"><span class="toc-number">1.7.2.2.1.</span> <span class="toc-text">GC 堆内存区域的划分(重点)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%80%83%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="toc-number">1.7.3.</span> <span class="toc-text">常考题解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E5%A4%A7%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0"><span class="toc-number">1.7.3.1.</span> <span class="toc-text">三大性能调优参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.7.3.2.</span> <span class="toc-text">堆和栈的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB-%E9%87%8D%E7%82%B9-%EF%BC%9A"><span class="toc-number">1.7.3.2.1.</span> <span class="toc-text">区别 (重点)：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%83%E7%A9%BA%E9%97%B4%E3%80%81%E5%A0%86%E3%80%81%E7%BA%BF%E7%A8%8B%E7%8B%AC%E5%8D%A0%E9%83%A8%E5%88%86%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB%E2%80%94%E2%80%94%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6"><span class="toc-number">1.7.3.2.2.</span> <span class="toc-text">元空间、堆、线程独占部分间的联系——内存角度</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C-JDK-%E4%B8%8B-intern-%E6%96%B9%E6%B3%95%E7%9A%84%E8%A1%A8%E7%8E%B0"><span class="toc-number">1.7.3.3.</span> <span class="toc-text">不同 JDK 下 intern() 方法的表现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-GC-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.8.</span> <span class="toc-text">4 GC 机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A2%AB%E5%88%A4%E5%AE%9A%E4%B8%BA%E5%9E%83%E5%9C%BE%E7%9A%84%E6%A0%87%E5%87%86"><span class="toc-number">1.8.1.</span> <span class="toc-text">被判定为垃圾的标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E5%9E%83%E5%9C%BE%E7%9A%842%E7%A7%8D%E7%AE%97%E6%B3%95"><span class="toc-number">1.8.2.</span> <span class="toc-text">标记垃圾的2种算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6%E5%9E%83%E5%9C%BE%E7%9A%844%E7%A7%8D%E7%AE%97%E6%B3%95"><span class="toc-number">1.8.3.</span> <span class="toc-text">回收垃圾的4种算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95"><span class="toc-number">1.8.3.1.</span> <span class="toc-text">标记-清除算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.8.3.2.</span> <span class="toc-text">标记-整理算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E4%BB%A3%E6%90%9C%E9%9B%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.8.3.3.</span> <span class="toc-text">分代搜集算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Minor-GC"><span class="toc-number">1.8.3.3.1.</span> <span class="toc-text">Minor GC</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0"><span class="toc-number">1.8.3.3.1.1.</span> <span class="toc-text">常用的调优参数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0-%E5%A4%8D%E5%88%B6%E7%AE%97%E6%B3%95"><span class="toc-number">1.8.3.3.1.2.</span> <span class="toc-text">标记-复制算法</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Full-GC"><span class="toc-number">1.8.3.3.2.</span> <span class="toc-text">Full GC</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%82%B9"><span class="toc-number">1.8.3.3.2.1.</span> <span class="toc-text">安全点</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.8.4.</span> <span class="toc-text">常见的垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B4%E8%BD%BB%E4%BB%A3%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.8.4.1.</span> <span class="toc-text">年轻代收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Serial-GC"><span class="toc-number">1.8.4.1.1.</span> <span class="toc-text">Serial GC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ParNew-GC"><span class="toc-number">1.8.4.1.2.</span> <span class="toc-text">ParNew GC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">1.8.4.1.3.</span> <span class="toc-text">Parallel Scavenge</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%80%81%E5%B9%B4%E4%BB%A3%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.8.4.2.</span> <span class="toc-text">老年代收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Serial-Old"><span class="toc-number">1.8.4.2.1.</span> <span class="toc-text">Serial Old</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Parallel-Old"><span class="toc-number">1.8.4.2.2.</span> <span class="toc-text">Parallel Old</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CMS"><span class="toc-number">1.8.4.2.3.</span> <span class="toc-text">CMS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Garbage-First-G1"><span class="toc-number">1.8.4.2.4.</span> <span class="toc-text">Garbage First (G1)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC%E7%9B%B8%E5%85%B3%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">1.8.5.</span> <span class="toc-text">GC相关的面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#finalize-%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.8.5.1.</span> <span class="toc-text">finalize() 方法的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java%E7%9A%844%E7%A7%8D%E5%BC%95%E7%94%A8"><span class="toc-number">1.8.5.2.</span> <span class="toc-text">Java的4种引用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%BA%E5%BC%95%E7%94%A8-Strong-Reference"><span class="toc-number">1.8.5.2.1.</span> <span class="toc-text">强引用 (Strong Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BD%AF%E5%BC%95%E7%94%A8-Soft-Reference"><span class="toc-number">1.8.5.2.2.</span> <span class="toc-text">软引用 (Soft Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%B1%E5%BC%95%E7%94%A8-Weak-Reference"><span class="toc-number">1.8.5.2.3.</span> <span class="toc-text">弱引用 (Weak Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E5%BC%95%E7%94%A8-Phantom-Reference"><span class="toc-number">1.8.5.2.4.</span> <span class="toc-text">虚引用 (Phantom Reference)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%84%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.8.5.2.5.</span> <span class="toc-text">各种引用类型的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E9%98%9F%E5%88%97-ReferenceQueue"><span class="toc-number">1.8.5.2.6.</span> <span class="toc-text">引用队列 (ReferenceQueue)</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/nodejs/nodejs/" title="Node.js"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Node.js"/></a><div class="content"><a class="title" href="/articles/Dev/nodejs/nodejs/" title="Node.js">Node.js</a><time datetime="2023-08-22T16:00:00.000Z" title="发表于 2023-08-23 00:00:00">2023-08-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/java-library/Lombok/" title="Lombok"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lombok"/></a><div class="content"><a class="title" href="/articles/Dev/java-library/Lombok/" title="Lombok">Lombok</a><time datetime="2023-08-07T16:00:00.000Z" title="发表于 2023-08-08 00:00:00">2023-08-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/build-tools/Gradle8.2.1/" title="Gradle"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Gradle"/></a><div class="content"><a class="title" href="/articles/Dev/build-tools/Gradle8.2.1/" title="Gradle">Gradle</a><time datetime="2023-08-07T16:00:00.000Z" title="发表于 2023-08-08 00:00:00">2023-08-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E9%9D%A2%E8%AF%95/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Java%E6%B3%A8%E8%A7%A3/" title="Java注解"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java注解"/></a><div class="content"><a class="title" href="/articles/%E9%9D%A2%E8%AF%95/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Java%E6%B3%A8%E8%A7%A3/" title="Java注解">Java注解</a><time datetime="2023-08-06T16:00:00.000Z" title="发表于 2023-08-07 00:00:00">2023-08-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/build-tools/Maven3.9.4/" title="Maven"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Maven"/></a><div class="content"><a class="title" href="/articles/Dev/build-tools/Maven3.9.4/" title="Maven">Maven</a><time datetime="2023-08-03T16:00:00.000Z" title="发表于 2023-08-04 00:00:00">2023-08-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

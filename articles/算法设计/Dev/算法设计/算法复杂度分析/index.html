@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>算法复杂度分析 | Nemesis</title><meta name="author" content="Nemesis,chenxiangcheng1@gmail.com"><meta name="copyright" content="Nemesis"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="主要是介绍时间复杂度与空间复杂度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法复杂度分析">
+<meta property="og:url" content="https://blog.haruharu.top/articles/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/Dev/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/">
+<meta property="og:site_name" content="Nemesis">
+<meta property="og:description" content="主要是介绍时间复杂度与空间复杂度">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2023-11-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-03T13:47:26.146Z">
+<meta property="article:author" content="Nemesis">
+<meta property="article:tag" content="博客,ACM,技术,开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://blog.haruharu.top/articles/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/Dev/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '算法复杂度分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-03 21:47:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">算法复杂度分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-09T16:00:00.000Z" title="发表于 2023-11-10 00:00:00">2023-11-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-03T13:47:26.146Z" title="更新于 2024-03-03 21:47:26">2024-03-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/">算法设计</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="算法复杂度分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="复杂度分析理论"><a href="#复杂度分析理论" class="headerlink" title="复杂度分析理论"></a>复杂度分析理论</h1><h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>Big-O，Big-Theta，Big-Omega</p>
+<h3 id="大O-渐进时间复杂度"><a href="#大O-渐进时间复杂度" class="headerlink" title="大O 渐进时间复杂度"></a>大O 渐进时间复杂度</h3><p>大O描述的是算法的运行时间和输入数据 (在n趋向于无穷时的时间变换趋势) 之间的关系</p>
+<p>O(n)：表示该算法的时间和元素个数n呈线性关系，实际为 T &#x3D; c1 * n + c2</p>
+<p>往往计算的是<strong>最坏复杂度</strong>（ if括号内的表达式 也要算）<br>当操作具有无规律性的时候，考虑使用最坏时间复杂度</p>
+<p>不可对实测时间毫秒级别的差距较真</p>
+<h4 id="迭代对数时间复杂度"><a href="#迭代对数时间复杂度" class="headerlink" title="迭代对数时间复杂度"></a>迭代对数时间复杂度</h4><p>迭代对数(iterated logarithm)时间复杂度：每个从n到logn的复杂度都是巨大的提升<br>因为 $log_a^N &#x3D; log_a^b(常数) * log_b^N$ ，所以对数复杂度，对数底数可以忽略</p>
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/1627317500030.png" alt="1627317500030" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/1627317493053.png" alt="testname001" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/image-20211106184651660.png" alt="image-20211106184651660" /></td>
+    </tr>
+</table>
+
+<p>对数时间复杂度一般和树结构有关 (包括递归树)</p>
+<p>O(n) 和 O(nlogn) 的差距很小<br>数据规模扩大两倍，时间差不多不变<br>并查集的时间复杂度: O(log*n)，近乎O(1)级别</p>
+<p>$$<br>\begin{equation}<br>log<em>n&#x3D;\left{<br>\begin{aligned}<br>0 &amp;&amp; if(n\le1)\<br>1 + log</em>(logn) &amp;&amp; if(n\gt1) \<br>\end{aligned}<br>\right.<br>\end{equation}<br>$$</p>
+<h4 id="指数时间复杂度"><a href="#指数时间复杂度" class="headerlink" title="指数时间复杂度"></a>指数时间复杂度</h4><p>O(2^n)</p>
+<p>指数爆炸，当n &#x3D; 30时家用计算机解决不了，当n &#x3D; 100时超级计算机也解决不了</p>
+<h4 id="阶乘时间复杂度"><a href="#阶乘时间复杂度" class="headerlink" title="阶乘时间复杂度"></a>阶乘时间复杂度</h4><p>O(n!)</p>
+<p>比指数时间复杂度还要高阶</p>
+<h4 id="均摊时间复杂度"><a href="#均摊时间复杂度" class="headerlink" title="均摊时间复杂度"></a>均摊时间复杂度</h4><p>均摊时间复杂度分析(Amortized Time Analysis)</p>
+<p>但最坏情况不会每次都出现，为防止复杂度的震荡问题（总是在极端情况下操作的情况，无法均摊，复杂度太高）。所以从<strong>调用的角度</strong>，将最差时间复杂度平摊给每次调用，就是均摊时间复杂度。<br>当操作具有规律性的时候，考虑均摊复杂度</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">resize</span><span class="params">(<span class="type">int</span> newCapacity)</span> &#123;</span><br><span class="line">        E[] newData = (E[]) <span class="keyword">new</span> <span class="title class_">Object</span>[newCapacity];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            newData[i] = data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        data = newData;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 最坏时间复杂度为O(n)</span></span><br><span class="line"><span class="comment">// 均摊时间复杂度为O(1)</span></span><br></pre></td></tr></table></figure>
+
+<p>计算 addLast 操作的均摊时间复杂度(容量为n)：</p>
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_1118_124343.png" alt="1622520279014" style="zoom:60%;" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_1118_124344.png" alt="1622520340492" /></td>
+    </tr>
+</table>
+
+
+<h3 id="计算大O时间复杂度"><a href="#计算大O时间复杂度" class="headerlink" title="计算大O时间复杂度"></a>计算大O时间复杂度</h3><p>1计算单个for循环的时间复杂度：<strong>看执行的操作数和容量n的关系</strong><br><code>for(int i = 0 ; i &lt; n ; i ++)</code> 是<code>O(n)</code>的<br><code>for(int i = 0 ; i*i &lt; n ; i ++)</code> 是<code>O(sqrt(n))</code>的<br><code>for(int i = 0 ; i &lt; n ; i *= 2) </code> 是<code>O(logn)</code>的</p>
+<p>2计算复杂函数的时间复杂度：<br>循环中嵌套函数是相乘：<strong>循环逻辑的嵌套是相乘</strong><br>if中嵌套函数、函数中嵌套函数是相加：<strong>顺序逻辑的嵌套是相加</strong></p>
+<p>3计算递归算法的时间复杂度</p>
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/image-20211106232418740.png" alt="image-20211106232418740" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/image-20211106232450455.png" alt="image-20211106232450455" /></td>
+    </tr>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/image-20211115114529907.png" alt="image-20211115114529907" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/image-20211115114545330.png" alt="image-20211115114545330" /></td>
+    </tr>
+</table>
+
+<p>主定理O(T*depth)：计算递归复杂度的通用公式，递归深度&#x3D;一次调用的递归次数(即递归树的节点数)</p>
+<p>对比斐波那契算法和归并排序算法<br>对于斐波那契数列来说，下层调用递归的次数是上层的两倍；而对于归并排序来说，每层调用递归的次数一样(不同层归并时每个数字都会遍历一次)<br>对于斐波那契数列来说，每个节点的计算量都是一致的；而对于归并排序来说，每个节点的计算量和随着节点在递归树上深度的增加而递减的<br>$$<br>计算斐波那契数列的时间复杂度 \<br>\begin{aligned}<br>1*depth&#x3D;&amp;1+2+4+8&#x3D;15 \<br>&#x3D;&amp;2^0+2^1+2^2+2^3+…+2^n \<br>&#x3D;&amp;2^{n+1}-1 \<br>&#x3D;&amp;O(2^n)时间复杂度<br>\end{aligned}<br>$$</p>
+<p>$$<br>计算归并排序的时间复杂度 \<br>\begin{aligned}<br>每层时间复杂度n*logn层<br>\end{aligned}<br>$$</p>
+<h3 id="实战-重要"><a href="#实战-重要" class="headerlink" title="实战(重要)"></a>实战(重要)</h3><p>各种复杂度能解决的数据范围（重要：解题的第一步是看数据量）</p>
+<p>在竞赛中，<strong>一般计算机一秒能执行 5 x 10^8^ 次计算</strong>，如果题目給出的时间限制为 1s，那么你选择的算法执行的计算次数最多应该在 10^8^ 量级オ有可能解决这个题目。</p>
+<p>以下范围仅供参考，实际中还要考虑每种算法的常数（n为方法的数据规模，考虑常数再除以10）</p>
+<table>
+<thead>
+<tr>
+<th>大O 渐进时间复杂度</th>
+<th>最大能解决的数据范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>O(n)</td>
+<td>10^8^ (亿)</td>
+</tr>
+<tr>
+<td>O(n*logn)</td>
+<td>10^6^</td>
+</tr>
+<tr>
+<td>O(n*sqrt(n))</td>
+<td>10^5^</td>
+</tr>
+<tr>
+<td>O(n^2^)</td>
+<td><strong>5000</strong>，当数据量是1万，说明n^2的复杂度不能解决了</td>
+</tr>
+<tr>
+<td>O(n^3^)</td>
+<td>300</td>
+</tr>
+<tr>
+<td>O(n^4^)</td>
+<td>100</td>
+</tr>
+<tr>
+<td>O(2^n^)</td>
+<td>25</td>
+</tr>
+<tr>
+<td>O(n!)</td>
+<td>11</td>
+</tr>
+</tbody></table>
+<h3 id="Java打印执行时间"><a href="#Java打印执行时间" class="headerlink" title="Java打印执行时间"></a>Java打印执行时间</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/6/3 <span class="doctag">@Created</span> by cxc</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试使用q运行opCount个enqueue和dequeue操作所需要的时间，单位：秒</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> q 队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> opCount 操作数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 所需时间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">double</span> <span class="title function_">testQueue</span><span class="params">(Queue&lt;Integer&gt; q, <span class="type">int</span> opCount)</span> &#123;</span><br><span class="line">        <span class="type">long</span> <span class="variable">startTime</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">        <span class="type">Random</span> <span class="variable">random</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; opCount; i++) &#123;</span><br><span class="line">            q.enqueue(random.nextInt(Integer.MAX_VALUE));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; opCount; i++) &#123;</span><br><span class="line">            q.dequeue();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="variable">endTime</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (endTime - startTime) / <span class="number">1000000000.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">       </span><br><span class="line">        System.out.println(<span class="string">&quot;==========比较ArrayQueue和LoopQueue的入队出队时间========&quot;</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">opCount</span> <span class="operator">=</span> <span class="number">100000</span>;</span><br><span class="line">        </span><br><span class="line">        ArrayQueue&lt;Integer&gt; arrayQueue = <span class="keyword">new</span> <span class="title class_">ArrayQueue</span>&lt;&gt;();</span><br><span class="line">        <span class="type">double</span> <span class="variable">time1</span> <span class="operator">=</span> testQueue(arrayQueue, opCount);</span><br><span class="line">        System.out.println(time1);</span><br><span class="line">        </span><br><span class="line">        LoopQueue&lt;Integer&gt; loopQueue = <span class="keyword">new</span> <span class="title class_">LoopQueue</span>&lt;&gt;();</span><br><span class="line">        <span class="type">double</span> <span class="variable">time2</span> <span class="operator">=</span> testQueue(loopQueue, opCount);</span><br><span class="line">        System.out.println(time2);</span><br><span class="line">        </span><br><span class="line"><span class="comment">//        十万规模</span></span><br><span class="line"><span class="comment">//        2.9428689  O(n^2)</span></span><br><span class="line"><span class="comment">//        0.0107106  O(n)</span></span><br><span class="line"><span class="comment">//        百万规模</span></span><br><span class="line"><span class="comment">//        313.029943  O(n^2)</span></span><br><span class="line"><span class="comment">//        0.0756922   O(n)</span></span><br><span class="line"><span class="comment">//		  精确的比较时间没有意义</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="将问题按时间复杂度分类"><a href="#将问题按时间复杂度分类" class="headerlink" title="将问题按时间复杂度分类"></a>将问题按时间复杂度分类</h3><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>全称</th>
+<th>释义</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P</td>
+<td>P问题(多项式(Polynomial)复杂度问题)</td>
+<td>能在多项式时间内解决的问题</td>
+<td></td>
+</tr>
+<tr>
+<td>NP</td>
+<td>NP问题(多项式复杂度非确定性(Non-deterministic Polynomial)问题)</td>
+<td>能在多项式时间验证答案正确与否的问题</td>
+<td>P &#x3D; NP？就是在问如果对于一个问题我能在多项式时间内验证其答案的正确性，那么我是否能在多项式时间内解决它？</td>
+</tr>
+<tr>
+<td>NP-hard</td>
+<td>NP难题</td>
+<td>任意NP问题都可以在多项式时间内归约为该问题(NP-hard)</td>
+<td></td>
+</tr>
+<tr>
+<td>NP-complete</td>
+<td>NP完全问题</td>
+<td>既是NP，也是NP-hard</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/image-20211123213109633.png" alt="image-20211123213109633"></p>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><h3 id="int"><a href="#int" class="headerlink" title="int"></a>int</h3><p><strong>int最大值为多少？</strong> 因为一个int占32bit(4Byte)内存空间，所以 $int最大值&#x3D;2^{31}-1&#x3D;2*10^9&#x3D;20亿$ (31是因为符号位，-1是因为要表示0)</p>
+<p><strong>常见爆int的情况：</strong> 17! 、fibonacci[46]，(f[0]&#x3D;1,f[1]&#x3D;1时)</p>
+<p><strong>int数组最多占多少内存？</strong> int[Integer.MAX_VALUE] 占 $4Byte<em>2</em>10^9 &#x3D; 8GB$</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.haruharu.top">Nemesis</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.haruharu.top/articles/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/Dev/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/">https://blog.haruharu.top/articles/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/Dev/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.haruharu.top" target="_blank">Nemesis</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/articles/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/Dev/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/%E5%AD%90%E5%BA%8F%E5%88%97%E5%92%8C%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/" title="子序列和子串问题"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">子序列和子串问题</div></div></a></div><div class="next-post pull-right"><a href="/articles/uncategorized/Dev/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" title=""><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人 <br/> Talk is cheap. Show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/chenxiangcheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">有空B站直播写代码 ( •̀ ω •́ )✧</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90%E7%90%86%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">复杂度分析理论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7O-%E6%B8%90%E8%BF%9B%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.1.</span> <span class="toc-text">大O 渐进时间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%AF%B9%E6%95%B0%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">迭代对数时间复杂度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">指数时间复杂度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%B6%E4%B9%98%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">阶乘时间复杂度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9D%87%E6%91%8A%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">均摊时间复杂度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%A4%A7O%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.2.</span> <span class="toc-text">计算大O时间复杂度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98-%E9%87%8D%E8%A6%81"><span class="toc-number">1.1.3.</span> <span class="toc-text">实战(重要)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E6%89%93%E5%8D%B0%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4"><span class="toc-number">1.1.4.</span> <span class="toc-text">Java打印执行时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E9%97%AE%E9%A2%98%E6%8C%89%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.5.</span> <span class="toc-text">将问题按时间复杂度分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.2.</span> <span class="toc-text">空间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#int"><span class="toc-number">1.2.1.</span> <span class="toc-text">int</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/%E4%BA%91%E6%9C%8D%E5%8A%A1/%E5%9F%9F%E5%90%8D/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/%E4%BA%91%E6%9C%8D%E5%8A%A1/%E5%9F%9F%E5%90%8D/" title="无题">无题</a><time datetime="2024-05-04T12:39:59.191Z" title="发表于 2024-05-04 20:39:59">2024-05-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/small-language/Dev/language/small-language/YAML1.2/" title="YAML"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="YAML"/></a><div class="content"><a class="title" href="/articles/small-language/Dev/language/small-language/YAML1.2/" title="YAML">YAML</a><time datetime="2024-04-19T16:00:00.000Z" title="发表于 2024-04-20 00:00:00">2024-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/design-patterns/%E8%A1%8C%E4%B8%BA%E5%9E%8B/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/design-patterns/%E8%A1%8C%E4%B8%BA%E5%9E%8B/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-04-15T07:44:57.487Z" title="发表于 2024-04-15 15:44:57">2024-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93/" title="无题">无题</a><time datetime="2024-04-12T01:08:47.433Z" title="发表于 2024-04-12 09:08:47">2024-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/NOSQL/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/NOSQL/" title="无题">无题</a><time datetime="2024-04-02T07:40:54.290Z" title="发表于 2024-04-02 15:40:54">2024-04-02</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Springboot集成springdoc库 | Nemesis</title><meta name="author" content="Nemesis,chenxiangcheng1@gmail.com"><meta name="copyright" content="Nemesis"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="主要关于OpenAPI，Swagger，SpringDoc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Springboot集成springdoc库">
+<meta property="og:url" content="https://blog.haruharu.top/articles/Spring/Spring-Boot/%E9%9B%86%E6%88%90%E5%BA%93/Dev/language/Java/java-library/springdoc-openapi2.1.0/">
+<meta property="og:site_name" content="Nemesis">
+<meta property="og:description" content="主要关于OpenAPI，Swagger，SpringDoc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2023-08-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-09T08:46:55.505Z">
+<meta property="article:author" content="Nemesis">
+<meta property="article:tag" content="博客,ACM,技术,开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://blog.haruharu.top/articles/Spring/Spring-Boot/%E9%9B%86%E6%88%90%E5%BA%93/Dev/language/Java/java-library/springdoc-openapi2.1.0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Springboot集成springdoc库',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-09 16:46:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Springboot集成springdoc库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-03T16:00:00.000Z" title="发表于 2023-08-04 00:00:00">2023-08-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-09T08:46:55.505Z" title="更新于 2023-10-09 16:46:55">2023-10-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Spring/">Spring</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Spring/Spring-Boot/">Spring Boot</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Spring/Spring-Boot/%E9%9B%86%E6%88%90%E5%BA%93/">集成库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Springboot集成springdoc库"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="SpringDoc"><a href="#SpringDoc" class="headerlink" title="SpringDoc"></a>SpringDoc</h1><h2 id="OpenAPI规范"><a href="#OpenAPI规范" class="headerlink" title="OpenAPI规范"></a>OpenAPI规范</h2><p><a target="_blank" rel="noopener" href="https://www.openapis.org/">OAS(OpenAPI Specification) 官网</a>	<a target="_blank" rel="noopener" href="https://github.com/OAI/OpenAPI-Specification">OAS(OpenAPI Specification) github</a></p>
+<p>OpenAPI 规范以前称为 Swagger 规范，定义了 RESTful API 的标准，后被 Linux 列为 API 标准，从而成为了一种行业标准。</p>
+<p>目前(2023.8)最新的版本为 OpenApi3.1.0</p>
+<h3 id="Swagger-Core"><a href="#Swagger-Core" class="headerlink" title="Swagger Core"></a>Swagger Core</h3><p>Swagger 是一个实现了OpenAPI 规范的工具集。其中核心是<code>io.swagger.core.v3</code>(Swagger Core)用于生成和解析 OpenAPI3.x.x 规范的 API 文档</p>
+<p>OpenAPI 文档本身是一个 JSON 对象，可以用 JSON 或 YAML 格式表示。</p>
+<p><strong>UI 库</strong></p>
+<p>当然你也可以直接使用</p>
+<p>SpringFox Swagger UI 基于 Swagger2，最新的基于 OpenAPI3 来兼容 OpenAPI2 的注解，逐渐弃用</p>
+<p>SpringDoc OpenAPI UI 基于 OpenAPI3</p>
+<p>还有其他个人开发的 UI…</p>
+<h3 id="springdoc-openapi"><a href="#springdoc-openapi" class="headerlink" title="springdoc-openapi"></a>springdoc-openapi</h3><p><a target="_blank" rel="noopener" href="https://springdoc.org/">homepage</a>	<a target="_blank" rel="noopener" href="https://github.com/springdoc/springdoc-openapi">github</a></p>
+<p>是 Spring 官方推出的 OpenAPI 规范的实现之一，能更方便地与Spring Boot集成自动配置，通过Swagger-Core生成 OpenAPI 文档，通过 Swagger-UI 来 Json 可视化并生成 Web 页面。</p>
+<p>与 Spring REST DOC 生成静态文档不同，springdoc-openapi 生成动态文档</p>
+<table>
+<thead>
+<tr>
+<th>swagger2</th>
+<th>OpenAPI3</th>
+<th>注解位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@EnableSwagger2Doc<br />@EnableOpenApi  # Swagger3</td>
+<td></td>
+<td>对SpringBootApplication使用</td>
+</tr>
+<tr>
+<td>@Api(tags &#x3D; “用户管理”)</td>
+<td>@Tag(name &#x3D; “接口类描述”)</td>
+<td>Controller 类上</td>
+</tr>
+<tr>
+<td>@ApiOperation(value &#x3D; “创建用户(方法作用)”, notes &#x3D; “根据User对象创建用户(方法备注说明)”)</td>
+<td>@Operation(summary &#x3D;“接口方法描述”)</td>
+<td>Controller 方法上</td>
+</tr>
+<tr>
+<td>@ApiImplicitParams</td>
+<td>@Parameters</td>
+<td>Controller 方法上</td>
+</tr>
+<tr>
+<td>@ApiImplicitParam(paramType &#x3D; “path”, dataType &#x3D; “Long”, name &#x3D; “id”, value &#x3D; “用户编号”, required &#x3D; true, example &#x3D; “1”)</td>
+<td>@Parameter(description&#x3D;“参数描述”)</td>
+<td>Controller 方法上 @Parameters 里</td>
+</tr>
+<tr>
+<td>@ApiParam</td>
+<td>@Parameter(description&#x3D;“参数描述”)</td>
+<td>Controller 方法的参数上</td>
+</tr>
+<tr>
+<td>@ApiIgnore</td>
+<td>@Parameter(hidden &#x3D; true) 或@Operation(hidden &#x3D; true) 或@Hidden</td>
+<td></td>
+</tr>
+<tr>
+<td>@ApiModel(description&#x3D;”用户实体”)</td>
+<td>@Schema</td>
+<td>DTO(数据传输对象)类上，对bean使用</td>
+</tr>
+<tr>
+<td>@ApiModelProperty(“用户编号”)</td>
+<td>@Schema</td>
+<td>DTO(数据传输对象)属性上，对bean.property使用</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ApiImplicitParams</span>：用在请求的方法上，表示一组参数说明</span><br><span class="line">    <span class="meta">@ApiImplicitParam</span>：用在<span class="meta">@ApiImplicitParams</span>注解中，指定一个请求参数的各个方面</span><br><span class="line">        name：参数名</span><br><span class="line">        value：参数的汉字说明、解释</span><br><span class="line">        required：参数是否必须传</span><br><span class="line">        paramType：参数放在哪个地方</span><br><span class="line">            · header --&gt; 请求参数的获取：<span class="meta">@RequestHeader</span></span><br><span class="line">            · query --&gt; 请求参数的获取：<span class="meta">@RequestParam</span></span><br><span class="line">            · path（用于restful接口）--&gt; 请求参数的获取：<span class="meta">@PathVariable</span></span><br><span class="line">            · div（不常用）</span><br><span class="line">            · form（不常用）    </span><br><span class="line">        dataType：参数类型，默认String，其它值dataType=<span class="string">&quot;Integer&quot;</span>       </span><br><span class="line">        defaultValue：参数的默认值</span><br><span class="line">        </span><br><span class="line"><span class="meta">@ApiResponses</span>：用在请求的方法上，表示一组响应</span><br><span class="line">    <span class="meta">@ApiResponse</span>：用在<span class="meta">@ApiResponses</span>中，一般用于表达一个错误的响应信息</span><br><span class="line">        code：数字，例如<span class="number">400</span></span><br><span class="line">        message：信息，例如<span class="string">&quot;请求参数没填好&quot;</span></span><br><span class="line">        response：抛出异常的类</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="swagger-spring-boot-starter"><a href="#swagger-spring-boot-starter" class="headerlink" title="swagger-spring-boot-starter"></a>swagger-spring-boot-starter</h3><p><a target="_blank" rel="noopener" href="https://github.com/SpringForAll/spring-boot-starter-swagger">swagger-spring-boot-starter 个人做的</a></p>
+<p>使用方式：1：添加依赖，2：添加基本注解，3：springboot配置(yml)相关内容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--添加swagger依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spring4all<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>swagger-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.9.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--版本不一样Swagger3依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># swagger2配置</span></span><br><span class="line"><span class="attr">swagger:</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">spring-boot-starter-swagger</span>  <span class="comment"># 标题</span></span><br><span class="line">  <span class="attr">description:</span> <span class="string">Starter</span> <span class="string">for</span> <span class="string">swagger</span> <span class="number">2.</span><span class="string">x</span>  <span class="comment"># 描述</span></span><br><span class="line">  <span class="attr">version:</span> <span class="number">1.4</span><span class="number">.0</span><span class="string">.RELEASE</span>  <span class="comment"># 版本</span></span><br><span class="line">  <span class="attr">license:</span> <span class="string">Apache</span> <span class="string">License,</span> <span class="string">Version</span> <span class="number">2.0</span>  <span class="comment"># 许可证</span></span><br><span class="line">  <span class="attr">licenseUrl:</span> <span class="string">https://www.apache.org/licenses/LICENSE-2.0.html</span>  <span class="comment"># 许可证URL</span></span><br><span class="line">  <span class="attr">termsOfServiceUrl:</span> <span class="string">https://github.com/dyc87112/spring-boot-starter-swagger</span>  <span class="comment"># 服务条款URL</span></span><br><span class="line">  <span class="attr">contact.name:</span> <span class="string">cxc</span>  <span class="comment"># 维护人</span></span><br><span class="line">  <span class="attr">contact.url:</span> <span class="string">http://blog.didispace.com</span>  <span class="comment"># 维护人URL</span></span><br><span class="line">  <span class="attr">contact.email:</span> <span class="number">1093553592</span><span class="string">@qq.com</span>  <span class="comment"># 维护人email</span></span><br><span class="line">  <span class="attr">base-package:</span> <span class="string">com.example</span>  <span class="comment"># swagger扫描的基础包，默认：全扫描</span></span><br><span class="line">  <span class="attr">base-path:</span> <span class="string">/**</span>  <span class="comment"># 需要处理的基础URL规则，默认：/**</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// swagger3配置</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Swagger3Config</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Docket <span class="title function_">createRestApi</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Docket</span>(DocumentationType.OAS_30)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> ApiInfo <span class="title function_">apiInfo</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ApiInfoBuilder</span>()</span><br><span class="line">                .title(<span class="string">&quot;Swagger3接口文档&quot;</span>)</span><br><span class="line">                .description(<span class="string">&quot;更多请咨询服务开发者Ray。&quot;</span>)</span><br><span class="line">                .contact(<span class="keyword">new</span> <span class="title class_">Contact</span>(<span class="string">&quot;Ray。&quot;</span>, <span class="string">&quot;http://www.ruiyeclub.cn&quot;</span>, <span class="string">&quot;ruiyeclub@foxmail.com&quot;</span>))</span><br><span class="line">                .version(<span class="string">&quot;1.0&quot;</span>)</span><br><span class="line">                .build();</span><br><span class="line">&#125;	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Swagger2 文档 URL：<a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></p>
+<p>Swagger3 文档 URL：<a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui/">http://localhost:8080/swagger-ui/</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.haruharu.top">Nemesis</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.haruharu.top/articles/Spring/Spring-Boot/%E9%9B%86%E6%88%90%E5%BA%93/Dev/language/Java/java-library/springdoc-openapi2.1.0/">https://blog.haruharu.top/articles/Spring/Spring-Boot/%E9%9B%86%E6%88%90%E5%BA%93/Dev/language/Java/java-library/springdoc-openapi2.1.0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.haruharu.top" target="_blank">Nemesis</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/articles/Dev/Build-Tools/Dev/tools/build-tools/Maven3.9.4/" title="Maven"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Maven</div></div></a></div><div class="next-post pull-right"><a href="/articles/Spring/Dev/Spring/spring_framework6.0.11/" title="Spring"><img class="cover" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_06_13_13_54.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Spring</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人 <br/> Talk is cheap. Show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/chenxiangcheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">有空B站直播写代码 ( •̀ ω •́ )✧</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringDoc"><span class="toc-number">1.</span> <span class="toc-text">SpringDoc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenAPI%E8%A7%84%E8%8C%83"><span class="toc-number">1.1.</span> <span class="toc-text">OpenAPI规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Swagger-Core"><span class="toc-number">1.1.1.</span> <span class="toc-text">Swagger Core</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#springdoc-openapi"><span class="toc-number">1.1.2.</span> <span class="toc-text">springdoc-openapi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#swagger-spring-boot-starter"><span class="toc-number">1.1.3.</span> <span class="toc-text">swagger-spring-boot-starter</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/%E4%BA%91%E6%9C%8D%E5%8A%A1/%E5%9F%9F%E5%90%8D/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/%E4%BA%91%E6%9C%8D%E5%8A%A1/%E5%9F%9F%E5%90%8D/" title="无题">无题</a><time datetime="2024-05-04T12:39:59.191Z" title="发表于 2024-05-04 20:39:59">2024-05-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/small-language/Dev/language/small-language/YAML1.2/" title="YAML"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="YAML"/></a><div class="content"><a class="title" href="/articles/small-language/Dev/language/small-language/YAML1.2/" title="YAML">YAML</a><time datetime="2024-04-19T16:00:00.000Z" title="发表于 2024-04-20 00:00:00">2024-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/design-patterns/%E8%A1%8C%E4%B8%BA%E5%9E%8B/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/design-patterns/%E8%A1%8C%E4%B8%BA%E5%9E%8B/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-04-15T07:44:57.487Z" title="发表于 2024-04-15 15:44:57">2024-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93/" title="无题">无题</a><time datetime="2024-04-12T01:08:47.433Z" title="发表于 2024-04-12 09:08:47">2024-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/NOSQL/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/articles/uncategorized/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/NOSQL/" title="无题">无题</a><time datetime="2024-04-02T07:40:54.290Z" title="发表于 2024-04-02 15:40:54">2024-04-02</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

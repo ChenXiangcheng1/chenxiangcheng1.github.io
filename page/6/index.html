@@ -5,17 +5,17 @@
 <meta property="og:site_name" content="Nemesis">
 <meta property="og:description" content="浙江外国语学院大四老人  Talk is cheap. Show me the code.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="og:image" content="https://blog.haruharu.top/img/avatar.png">
 <meta property="article:author" content="Nemesis">
 <meta property="article:tag" content="博客,ACM,技术,开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.haruharu.top/page/6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://blog.haruharu.top/img/avatar.png"><link rel="shortcut icon" href="/img/favicon48.ico"><link rel="canonical" href="https://blog.haruharu.top/page/6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: undefined,
-  translate: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -25,7 +25,7 @@
     homepage: false,
     post: false
   },
-  runtime: '',
+  runtime: '天',
   dateSuffix: {
     just: '刚刚',
     min: '分钟前',
@@ -33,7 +33,7 @@
     day: '天前',
     month: '个月前'
   },
-  copyright: undefined,
+  copyright: {"limitCount":200,"languages":{"author":"作者: Nemesis","link":"链接: ","source":"来源: Nemesis","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
   lightbox: 'fancybox',
   Snackbar: undefined,
   infinitegrid: {
@@ -45,7 +45,7 @@
   isAnchor: false,
   percent: {
     toc: true,
-    rightside: false,
+    rightside: true,
   },
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
@@ -54,7 +54,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-06-02 00:34:02'
+  postUpdate: '2024-06-03 01:10:55'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -133,9 +133,13 @@
       }
       const t = saveToLocal.get('theme')
     
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
-      
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 23
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         if (asideStatus === 'hide') {
@@ -151,246 +155,28 @@
         }
       }
       detectApple()
-    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Nemesis</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Java/Dev/language/Java/JDK21/" title="Java"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_29_22_32.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Java/Dev/language/Java/JDK21/" title="Java">Java</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a></span></div><div class="content">Java主要考点
-对 Java 的理解
-平台无关性：Compile Once, Run Anywhere 一次编译到处运行Java源码首先被编译成二进制字节码，再由不同平台的JVM进行解析成机器指令。Java语言在不同的平台上运行时不需要进行重新编译，Java虚拟机在执行字节码的时候，把字节码转换成具体平台上的机器指令。字节码优点：准备工作方面：因为直接解析每次执行都需要各种检查效率低，而字节码进行多次执行的效率更高兼容性方面：也可以将别的语言scala、Kotlin解析成字节码，增加了兼容扩展能力
-JVM：hotSpotJVM &#x3D; ClassLoader+Runtime Data Area(PC+JVM栈+本地方法栈+GC堆+元空间)+JNI+执行引擎GC机制(不必手动释放堆内存)JVM笔记
-语言特性：泛型、(反射、注解)Java泛型笔记、Java反射笔记、Java注解笔记
-OOP面向对象编程：封装继承多态
-常用类库：集合、J.U.C 并发库、网络库、IO
-异常处理
-
-Java平台版本
-Java SE：用于桌面或简单服务器应用的 Java 平台。Java SE 允许您在桌面 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Spring/Spring-Core/%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/Dev/Spring/spring-core/%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/Spring%E4%BA%8B%E5%8A%A1/" title="Spring事务">Spring事务</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/">Spring Core</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/">数据访问</a></span></div><div class="content">Spring 事务处理机制事务的细粒度一般封装在业务层的每一个方法上，每个业务方法是原子性的，在持久层dao太细，在表现层太粗
-ACIDMySQL8笔记#3.2事务的四大特性 ACID
-编程式事务处理基于底层 API 的编程式事务管理
-
-PlatformTransactionManager(核心)
-Transaction Definition
-TransactionStatus
-
-基于 TransactionTemplate 的编程式事务管理
-
-TransactionTemplate
-
-1基于底层 API (基础)
-事务管理器(核心)有三种实现：声明式事务管理、编程式事务管理、注解驱动事务管理
-PlatformTransactionManager(核心)不管使用哪种事务管理的方法，都需要声明事务管理器。
-方法：getTransaction(TransactionDefinition):TransactionStatus 开启一个事务，获取当前活动事务
-commit(TransactionStatus):void 提交事务
-roolback(TransactionStatus):void ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Spring/Spring-Core/%E6%A0%B8%E5%BF%83/Dev/Spring/spring-core/%E6%A0%B8%E5%BF%83/spring_aop/" title="Spring AOP">Spring AOP</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/">Spring Core</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/%E6%A0%B8%E5%BF%83/">核心</a></span></div><div class="content">AOP
-AOP(Aspect Oriented Programming)：面向切面编程，是OOP的扩展。将业务功能代码与切面代码分离，实现了关注点分离
-
-软件工程的基本原则——关注点分离：不同的问题交给不同的部分去解决，每部分专注于自己的问题
-
-面向切面编程 AOP 正是此种技术的体现
-
-通用化功能 (事务管理、缓存、日志、安全检查) 代码的实现，对应的就是所谓的切面 (Aspect)
-
-业务功能代码和切面代码分开后，架构将变得高内聚低耦合
-
-确保功能的完整性：切面最终需要被合并到业务中 (Weave织入)
-
-
-术语概念
-
-
-AOP概念
-
-释义
-
-
-
-Aspect
-切面
-就是切入点和通知的组合
-
-
-Target
-目标对象
-被增强的对象
-
-
-Join Point
-连接点
-指的是可以被拦截到的点
-
-
-Pointcut
-切入点
-真正被拦截到的点，支持正则表达式
-
-
-Adⅵce
-通知(一般切面)
-拦截后要做的事，(方法拦截器是通知的具体实现)
-
-
-Advisor
-特殊切面
-&#x3D;切入点+通知
-
-
-Weaving
-织入
-将Advice应用到Target的过程，被应用了增强后产生一个代理对象 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Spring/Spring-Core/%E6%A0%B8%E5%BF%83/Dev/Spring/spring-core/%E6%A0%B8%E5%BF%83/spring_ioc/" title="Spring IOC"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_12_18_18.png&quot; alt=&quot;image-20230712181851670" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring IOC"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Spring/Spring-Core/%E6%A0%B8%E5%BF%83/Dev/Spring/spring-core/%E6%A0%B8%E5%BF%83/spring_ioc/" title="Spring IOC">Spring IOC</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/">Spring Core</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/%E6%A0%B8%E5%BF%83/">核心</a></span></div><div class="content">Spring IOCIOCIOC有什么优势？需要扫描所有依赖查是否有对应注解，很蠢
-好文章，分析了各种方式的利弊
-传统的编程模型中，对象通过直接实例化其他对象来满足其依赖关系。控制反转是指将对象创建和依赖管理的控制权从程序转移到外部容器中，由容器负责对象创建和依赖管理，对象需要遵循一些约定。只需要关注依赖注入方式和依赖项
-
-
-在lister类中使用简单创建的依赖关系
-
-
-
-依赖注入后的依赖关系(Assembler组装)
-
-
-
-DI依赖注入是指将依赖项注入到对象中，依赖注入是控制反转的实现。
-构造方法注入(最佳实践)实现特定参数的构造方法，通过配置将依赖项注入到对象的构造方法参数
-示例：PicoContainer
-1234class MovieLister &#123;	public MovieLister(MovieFinder finder) &#123;		this.finder = finder;       &#125;	&#125;
-
-1234class ColonMovieFinder &#123;	public ColonMovieFinder(String filena ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Dev/language/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" title="Java反射机制">Java反射机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">Java语言特性</a></span></div><div class="content">Java反射机制主要考点定义Java 反射指：在运行时能够获取类或对象的成员变量和方法信息以及创建实例的能力。
-优点：运行时动态地加载类，不需要在编译时就明确地引用该类，从而提供更大的灵活性和可扩展性。缺点：反射要解析字节码文件执行时性能较低，编译时没有类型检查存在安全问题
-反射APIJAVA 在 java.lang.reflect 包中提供了对反射功能的支持。
-AnnotationElement 接口该接口声明了很多可以获取注解的方法
-AnnotatedElement 接口的实现类：有 AccessibleObject(子类有Constructor&#x2F;Field&#x2F;Method)、Class、Package
-
-
-
-AnnotationElement接口方法
-释义
-
-
-
-getAnnotation(Class&lt;A&gt;):&lt;A extends Annotation&gt;
-返回Class类型的该元素的注解
-
-
-getAnnotations():Annotation[]
-返回此元素上存在的所有注解
-
-
-getDeclaredAnnotations():Ann ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Java/VM/Dev/language/Java/VM/JVM/" title="JVM"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_13_14_00.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Java/VM/Dev/language/Java/VM/JVM/" title="JVM">JVM</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/VM/">VM</a></span></div><div class="content">JVM主要考点Java Language and Virtual Machine Specifications (Java 语言和虚拟机规范)
-JVM：
-
-HotSpot：由OpenJDK维护
-
-OpenJ9：官网	|	github
-
-Azul Zing(收费)
-
-
-1 HotSpot VM 架构JVM是内存中的虚拟机主要由 Class Loader 类加载器、Runtime Data Area 运行时数据区、Execution Engine 执行引擎、Native Interface 本地接口四部分构成，主要通过 Class Loader 将符合格式要求的class文件加载到内存，并通过 Execution Engine 解析里面的字节码。
-
-
-Class Loader：类加载器，将符合格式要求的 class 字节码文件加载到内存
-
-Execution Engine：执行引擎，字节码解释成机械指令码
-
-Native Interface：本地方法接口，融合不同开发语言的原生库为Java所用 (例把C&#x2F;C++编译成了DLL)，通过 native 本地方法调用，例如 Class. ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%BA%BF%E7%A8%8B/" title="Java线程"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_09_13_01_53.png&quot; alt=&quot;image-20230913015318274" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java线程"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%BA%BF%E7%A8%8B/" title="Java线程">Java线程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">Java线程主要考点并行与并发的区别并行就是多核CPU分别执行多个进程
-并发就是单核CPU轮转调度法
-进程和线程的区别总结：
-
-进程是资源分配的最小单位，线程是 CPU 调度的最小单位
-
-进程有独立的地址空间，线程属于某个进程共享进程的内存资源，即每个进程对应一个 JVM 实例有独立的地址空间，多个线程共享 GC 堆
-
-多进程的程序比多线程程序健壮
-
-线程的切换比进程的切换开销小
-
-
-Java 采用单线程编程模型，程序会自动创建主线程。由于是单线程所以需要自己将耗时任务放入子线程。
-线程和进程的由来：
-
-串行：初期的计算机只能串行执行任务，并且需要长时间等待用户输入
-批处理：预先将用户的指令集中成清单，批量串行处理用户指令，仍然无法并发执行
-进程：进程独占内存空间，保存各自运行状态，相互间不干扰且可以互相切换，为并发处理任务提供了可能
-线程：共享进程的内存资源，相互间切换更快速，支持更细粒度的任务控制，使进程内的子任务得以并发执行
-
-结构：
-
-
-
-
-进程
-线程
-
-
-
-结构
-所有与进程相关的资源，都被记录在 PCB 中
-线程只由堆栈寄存器、程序计数器和 TCB 组成
-
-
-作用
-进程是资源 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%9A%84IO%E6%9C%BA%E5%88%B6/" title="JavaIO机制"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_12_01_09.png&quot; alt=&quot;image-20230712010935842" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaIO机制"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%9A%84IO%E6%9C%BA%E5%88%B6/" title="JavaIO机制">JavaIO机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">Java的IO机制主要考点IO过程服务端：Accept 接收客户端请求、Read 准备数据、Write 拷贝数据
-服务端BIO、NIO、AIO模型的区别(总结)
-
-
-属性模型
-阻塞BIO
-非阻塞NIO
-异步AIO
-
-
-
-客户端之间同步情况
-客户端阻塞整个步骤
-NIO不是严格异步的，NIO的 I&#x2F;O 操作是非阻塞的，应用程序可以在等待 I&#x2F;O 完成时继续执行其他任务，但是NIO依赖阻塞或轮询机制来检查就绪状态并处理 I&#x2F;O 操作
-允许应用程序在发起I&#x2F;O请求后，继续执行其他任务，而不需要等待I&#x2F;O操作完成。
-
-
-线程数(client:server)
-1:1每来一个客户端线程，服务端也需要开一个额外线程
-N:1服务端一个额外NIO线程(select())响应多个客户端请求
-N:0 服务端直接主线程(异步系统调用epoll边缘触发)，不需要额外线程
-
-
-复杂度
-简单
-较复杂
-复杂
-
-
-吞吐量
-低
-高
-高
-
-
-应用场景
-适用于连接数少且需要低延迟的场景，如数据库连接
-适用于连接数目多且短连接的场景，如聊天服务器可以构建多路复用的的 IO 操作
- ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Object/" title="Reference">Reference</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">ObjectObject 是所有对象的超类
-getClass():Class&lt;?&gt;返回此对象的运行时类对象
-hashCode():int返回哈希码值。当自定义类作为键存储在哈希表(如HashMap)中时需要重写该方法 。每当重写 hashCode() 方法时，也需要重写 equals() 方法，以维护 hashCode() 方法的通用契约，即相等的对象必须具有相等的哈希码。
-哈希笔记
-1234567891011121314151617// Object@IntrinsicCandidatepublic native int hashCode();// Stringpublic int hashCode() &#123;    int h = hash;    if (h == 0 &amp;&amp; !hashIsZero) &#123;        h = isLatin1() ? StringLatin1.hashCode(value)                       : StringUTF16.hashCode(value);        if (h ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/" title="Java异常处理机制"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_07_13_58.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java异常处理机制"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/" title="Java异常处理机制">Java异常处理机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">Java异常处理机制主要考点Throwablejava.lang.Throwable 类
-
-
-Error 错误表示系统错误或低层资源的错误，是程序无法处理的错误，编译器不做检查
-从责任角度看：Error 属于 JVM 应该承担的责任，例如处理 JVM 相关的问题、OOM、SOF
-
-NoClassDefFoundError - 找不到 class 定义的异常
-
-NoClassDefFoundError - 的成因：
-类依赖的 class 或者 jar 不存在。例如 maven 漏引了某个 jar 包
-类文件存在，但是存在不同域中。例如多个不同的 classloader 重复加载了同一个 class
-大小写问题，因为 javac 编译时是无视大小写的，很有可能编译出来的 class 文件就与想要的不一样
-
-
-
-
-SOF(StackOverflowError) - 深递归导致栈被耗尽而抛出的异常
-
-OOM(OutOfMemoryError) - 内存溢出异常
-
-
-Exception 异常是程序可以处理的异常，捕获后可能恢复。
-RuntimeException运行时异常需要在编写代码时避免发生 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/5/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/7/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人 <br/> Talk is cheap. Show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/articles/small-language/Dev/language/small-language/YAML1.2/" title="YAML">YAML</a><time datetime="2024-04-19T16:00:00.000Z" title="发表于 2024-04-20 00:00:00">2024-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_08_26_56.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nginx"/></a><div class="content"><a class="title" href="/articles/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx">Nginx</a><time datetime="2024-03-17T16:00:00.000Z" title="发表于 2024-03-18 00:00:00">2024-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%93%E6%9E%84%E5%9E%8B/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式"><img src="https://refactoringguru.cn/images/patterns/diagrams/bridge/structure-zh.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="桥接模式"/></a><div class="content"><a class="title" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%93%E6%9E%84%E5%9E%8B/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式">桥接模式</a><time datetime="2024-03-12T16:00:00.000Z" title="发表于 2024-03-13 00:00:00">2024-03-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%88%9B%E5%BB%BA%E5%9E%8B/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0308_133937.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="抽象工厂模式"/></a><div class="content"><a class="title" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%88%9B%E5%BB%BA%E5%9E%8B/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式">抽象工厂模式</a><time datetime="2024-03-07T16:00:00.000Z" title="发表于 2024-03-08 00:00:00">2024-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/ORM%E6%A1%86%E6%9E%B6/Dev/ORM%E6%A1%86%E6%9E%B6/MyBatis/" title="Mybatis"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_21_14_50.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mybatis"/></a><div class="content"><a class="title" href="/articles/ORM%E6%A1%86%E6%9E%B6/Dev/ORM%E6%A1%86%E6%9E%B6/MyBatis/" title="Mybatis">Mybatis</a><time datetime="2024-03-05T16:00:00.000Z" title="发表于 2024-03-06 00:00:00">2024-03-06</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/index_img.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Nemesis</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://space.bilibili.com/36033539" target="_blank" title="Bili"><i class="fa-brands fa-bilibili" style="color: #74C0FC;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="设计模式"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_09_12_01_07.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%93%E6%9E%84%E5%9E%8B/">结构型</a></span></div><div class="content">关于设计模式中的代理模式，涉及静态代理、JDK动态代理、cglib动态代理</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Dev/language/Java/JDK21/" title="Java"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_29_22_32.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/language/Java/JDK21/" title="Java">Java</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a></span></div><div class="content">介绍Java各平台版本，关于Java的思维导图</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Dev/Spring/spring-core/%E6%A0%B8%E5%BF%83/spring_aop/" title="Spring AOP">Spring AOP</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/">Spring Core</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/%E6%A0%B8%E5%BF%83/">核心</a></span></div><div class="content">关于SpringCore中AOP的底层实现，Spring AOP的最佳实践</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Dev/Spring/spring-core/%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/Spring%E4%BA%8B%E5%8A%A1/" title="Spring事务">Spring事务</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/">Spring Core</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/">数据访问</a></span></div><div class="content">主要是关于Spring事务</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Dev/language/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" title="Java反射机制">Java反射机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">Java语言特性</a></span></div><div class="content">关于反射API和JDK动态代理</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Dev/Spring/spring-core/%E6%A0%B8%E5%BF%83/spring_ioc/" title="Spring IOC"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_12_18_18.png&quot; alt=&quot;image-20230712181851670" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring IOC"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/Spring/spring-core/%E6%A0%B8%E5%BF%83/spring_ioc/" title="Spring IOC">Spring IOC</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/">Spring Core</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/Spring-Core/%E6%A0%B8%E5%BF%83/">核心</a></span></div><div class="content">关于SpringCore中IOC的底层实现</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Dev/language/Java/VM/JVM/" title="JVM"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_13_14_00.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/language/Java/VM/JVM/" title="JVM">JVM</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/VM/">VM</a></span></div><div class="content">主要是JVM架构、GC机制，还介绍了Java工具</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%9A%84IO%E6%9C%BA%E5%88%B6/" title="JavaIO机制"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_12_01_09.png&quot; alt=&quot;image-20230712010935842" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaIO机制"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%9A%84IO%E6%9C%BA%E5%88%B6/" title="JavaIO机制">JavaIO机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">关于BIO机制(阻塞)、NIO机制(非阻塞)、AIO机制(异步)的核心接口与类。</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%BA%BF%E7%A8%8B/" title="Java线程"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_09_13_01_53.png&quot; alt=&quot;image-20230913015318274" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java线程"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Java%E7%BA%BF%E7%A8%8B/" title="Java线程">Java线程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">关于Java线程，涉及创建线程、线程方法、线程状态转移，线程同步机制，synchronized和volatile底层实现原理，Excutors中创建线程池的工厂方法，ThreadLocal线程局部变量</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Reference">Reference</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">关于Java字符串</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/5/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/7/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><a id="card-info-btn" href="mailto:chenxiangcheng1@gmail.com"><i class="fas fa-envelope"></i><span>Contact Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://space.bilibili.com/36033539" target="_blank" title="Bili"><i class="fa-brands fa-bilibili" style="color: #74C0FC;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">有空B站直播写代码 ( •̀ ω •́ )✧</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/articles/%E4%BA%8C%E7%BA%A7%E5%B8%82%E5%9C%BA/%E8%80%83%E8%AF%95/%E5%9F%BA%E4%BB%8E/" title="基金从业资格证">基金从业资格证</a><time datetime="2024-06-01T16:00:00.000Z" title="发表于 2024-06-02 00:00:00">2024-06-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/articles/Dev/language/small-language/YAML1.2/" title="YAML">YAML</a><time datetime="2024-04-19T16:00:00.000Z" title="发表于 2024-04-20 00:00:00">2024-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_08_26_56.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nginx"/></a><div class="content"><a class="title" href="/articles/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx">Nginx</a><time datetime="2024-03-17T16:00:00.000Z" title="发表于 2024-03-18 00:00:00">2024-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式"><img src="https://refactoringguru.cn/images/patterns/diagrams/bridge/structure-zh.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="桥接模式"/></a><div class="content"><a class="title" href="/articles/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式">桥接模式</a><time datetime="2024-03-12T16:00:00.000Z" title="发表于 2024-03-13 00:00:00">2024-03-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0308_133937.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="抽象工厂模式"/></a><div class="content"><a class="title" href="/articles/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式">抽象工厂模式</a><time datetime="2024-03-07T16:00:00.000Z" title="发表于 2024-03-08 00:00:00">2024-03-08</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             <a class="card-more-btn" href="/categories/" title="查看更多">
@@ -398,5 +184,23 @@ RuntimeException运行时异常需要在编写代码时避免发生 ...</div></d
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Dev/"><span class="card-category-list-name">Dev</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Dev/Build-Tools/"><span class="card-category-list-name">Build Tools</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Dev/Java-Library/"><span class="card-category-list-name">Java Library</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/"><span class="card-category-list-name">Java</span><span class="card-category-list-count">18</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/"><span class="card-category-list-name">Java语言特性</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/OOPs/"><span class="card-category-list-name">OOPs</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/VM/"><span class="card-category-list-name">VM</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/%E7%B1%BB%E5%BA%93/"><span class="card-category-list-name">类库</span><span class="card-category-list-count">10</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">五月 2023</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">68</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-06-01T16:34:02.383Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%9F%BA%E9%87%91/" style="font-size: 1.15em; color: rgb(109, 112, 80)">基金</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><span class="card-archive-list-count">15</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">69</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-03-03T06:52:58.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">216.4k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-06-02T17:10:54.859Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/index_img.png')"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script async data-pjax src="https://cdn.jsdelivr.net/gh/Pil0tXia/busuanzi-modified/busuanzi.pure.mini.js"></script></div></body></html>

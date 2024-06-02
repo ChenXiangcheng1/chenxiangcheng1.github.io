@@ -5,17 +5,17 @@
 <meta property="og:site_name" content="Nemesis">
 <meta property="og:description" content="浙江外国语学院大四老人  Talk is cheap. Show me the code.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="og:image" content="https://blog.haruharu.top/img/avatar.png">
 <meta property="article:author" content="Nemesis">
 <meta property="article:tag" content="博客,ACM,技术,开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.haruharu.top/page/7/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://blog.haruharu.top/img/avatar.png"><link rel="shortcut icon" href="/img/favicon48.ico"><link rel="canonical" href="https://blog.haruharu.top/page/7/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: undefined,
-  translate: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -25,7 +25,7 @@
     homepage: false,
     post: false
   },
-  runtime: '',
+  runtime: '天',
   dateSuffix: {
     just: '刚刚',
     min: '分钟前',
@@ -33,7 +33,7 @@
     day: '天前',
     month: '个月前'
   },
-  copyright: undefined,
+  copyright: {"limitCount":200,"languages":{"author":"作者: Nemesis","link":"链接: ","source":"来源: Nemesis","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
   lightbox: 'fancybox',
   Snackbar: undefined,
   infinitegrid: {
@@ -45,7 +45,7 @@
   isAnchor: false,
   percent: {
     toc: true,
-    rightside: false,
+    rightside: true,
   },
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
@@ -54,7 +54,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-06-02 00:34:02'
+  postUpdate: '2024-06-03 01:10:55'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -133,9 +133,13 @@
       }
       const t = saveToLocal.get('theme')
     
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
-      
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 23
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         if (asideStatus === 'hide') {
@@ -151,178 +155,31 @@
         }
       }
       detectApple()
-    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Nemesis</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Reference">Reference</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">字符串总结
-
-
-字符串
-类型
-同步策略
-
-
-
-String
-字符串常量
-线程安全
-
-
-StringBuilder
-字符串变量
-线程不安全
-
-
-StringBuffer
-字符串变量
-线程安全
-
-
-String实现了 CharSequence、Serializable、Comparable、constable(常量)
-String 是字符串常量，是不可变对象(值在创建后无法修改)
-
-**值不可变(immutable)**，即进行字符串的修改和拼接会创建新对象
-线程安全，因为不可变性所以不会出现并发访问的问题
-
-使用：
-1String str1 = new String(&quot;abc&quot;);  // 这里创建了两次对象，一次是在GC堆的常量池中创建了对象&quot;abc&quot;，一次是在堆内存中(非常量池)创建了对象str1，引用指向常量池的&quot;abc&quot;
-
-因为 String 的不可变性能防止键改变，且重写了equals() 和 hash() 方法，Integer常量也同理，所以适合作为 HashMap 的键
-每次对 String 类型进行修改的时候其实 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/util/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" title="Java集合框架"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_07_18_52.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java集合框架"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Java/%E7%B1%BB%E5%BA%93/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/util/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" title="Java集合框架">Java集合框架</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">Java Collections Framework层次结构
-
-
-
-
-        	
-        
-        
-    
-
-
-
-
-
-
-Collection 接口
-java.util.Colection
-
-View Collections(视图集合)本身不存储元素，底层依赖支持集合(backing collection)来存储实际元素对支持集合的任何改变在view collection中可见，对view collection的任何改变会写入支持集合Collections.checkedCollection()Collections.synchronizedCollection()Collections.unmodifiableCollection()List.subList()Map.entrySet()Map.keySet()Map.values()
-
-Unmodifiable Collections(不可修改的集合)调用可变(mutator)方法会抛出UnsupportedOperationException异常不可修改集合不一定是不可变的(例如包含可变元素的不可修改集 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/Redis7.2.0/" title="Redis"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_10_11_29.png&quot; alt=&quot;image-20230510112901318" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/Redis7.2.0/" title="Redis">Redis</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-05-01T16:00:00.000Z" title="发表于 2023-05-02 00:00:00">2023-05-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="content">Redis7.2.0Redis 是一个内存数据库，能够持久化到磁盘上。数据模型是键值对，但支持许多不同类型的值：Strings字符串、Lists列表、Sets集合、Sorted Sets排序集合、Hashes哈希、Streams流、HyperLogLogs、位图应用场景：分布式缓存(Mybatis也有缓存，但Redis是分布式的)
-另一个很好的例子是将 Redis 视为 memcached 的一个更复杂的版本，其中的操作不仅仅是 SET 和 GET，而是使用复杂数据类型的操作，如Lists列表、Sets集合、有序数据结构等等。
-可以在 Linux&#x2F;WSL 中进行部署docker 中安装 Redis Stack (没人用)
-TODO：有空看跳表、看文档
-文档官方文档	|	github源码	|	github redis-windows	|	docker镜像 redis
-资源#实现了Redis协议的客户端
-资源#使用了Redis的库
-资源#管理和部署Redis的工具
-资源#扩展Redis服务功能的模块
-需要使用 CLI Redis 命令时，查询 命令文档，命令名都是有语义
-1简介缓 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Dev/Network/Network/" title="计算机网络"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_01_15_19.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Dev/Network/Network/" title="计算机网络">计算机网络</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-04-30T16:00:00.000Z" title="发表于 2023-05-01 00:00:00">2023-05-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">计算机网络主要考点OSI 和 TCP&#x2F;IP
-
-
-
-OSI 参考模型
-主要作用(每一层都上层提供服务且透明)
-常见协议
-
-
-
-应用层
-准备数据，提供应用程序间通信，为应用程序提供网络接口
-HTTP、SSH、DHCP
-
-
-表示层
-在传输之前处理数据的格式：进行数据压缩&#x2F;还原、数据加&#x2F;解密(二进制、编码格式ascii)
-
-
-
-会话层
-建立、维护和管理会话。即在两个互相通信的进程之间对传输的报文提供同步管理服务
-TLS、SSL
-
-
-传输层
-建立端到端的连接，提供两端应用程序的通信。可靠传输(分段编号)&#x2F;不可靠传输、流量控制
-TCP、UDP
-
-
-网络层
-点对点，寻址和路由选择(选择路由路径)
-IP、ICMP
-
-
-数据链路层
-提供介质访问、链路管理(在网络节点间的线路上传送数据帧)
-ARP
-
-
-物理层
-在传输媒体上传输比特流、定义了网络设备的机械特性,接口标准,电器标准,过程特性
-
-
-
-
-
-
-TCP&#x2F;IP 协议栈
-物理层和数据链路层的底层的协议由网卡NIC通过硬件实现网络层、传输层的协议由操作系统实现并向应用层提供socket接口
-默认端口号
-
-
- ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Linux/Dev/Linux/Linux/" title="Linux"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_04_30_21_35.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Linux/Dev/Linux/Linux/" title="Linux">Linux</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-04-30T16:00:00.000Z" title="发表于 2023-05-01 00:00:00">2023-05-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/">Linux</a></span></div><div class="content">Linux主要考点体系结构
-内存地址空间的划分：
-
-
-
-
-用户态和内核态：
-在Linux操作系统中，内核态和用户态是两种不同的权限级别，它们用于区分操作系统内核的执行环境和用户程序的执行环境。
-
-用户态（User Mode）：
-
-当用户程序运行时，它处于用户态。在用户态下，程序只能访问受限资源和执行受限操作。
-
-用户态的程序不能直接访问操作系统内核的功能和硬件资源，例如直接访问硬件设备、修改内核数据结构等。
-
-用户态下的程序执行速度相对较快，因为不需要处理特权指令和保护操作系统资源。
-
-
-
-内核态（Kernel Mode）：
-
-内核态是操作系统内核执行时的特权级别。在内核态下，操作系统具有对系统硬件和资源的完全控制权限。
-
-内核态的程序可以执行特权指令、直接访问硬件设备和修改内核数据结构。
-
-内核态下的程序执行速度相对较慢，因为需要处理特权指令和进行安全检查。
-
-
-
-
-用户态和内核态的转换过程：
-
-用户态到内核态的转换（触发系统调用）：
-
-用户程序需要执行一些只有操作系统内核才能提供的特权操作，例如文件操作、网络通信、进程管理等。
-用户程序通过系统调用（System Call）将控制权 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL8/" title="关系型数据库"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_28_14_30.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关系型数据库"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL8/" title="关系型数据库">关系型数据库</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-28T16:00:00.000Z" title="发表于 2023-03-29 00:00:00">2023-03-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="content">MySQL8目前很多Linux发行版用MariaDB关系型数据库首推postgresql
-文档Reference	|	源码文档	|	github源码	|	官站源码		TODO: 有空可以搭建 MySQL Debug 环境，调试源码
-1 关系型数据库管理系统架构要设计一个关系型数据库，首先要将其划分成两大部分，一个是存储部分，该部分类似一个文件系统来将数据持久化到存储设备当中。那光有存储是不行的，还需要有程序实例部分来对存储进行逻辑上的管理，而程序实例部分包含将数据的逻辑关系转换成物理存储关系的1存储管理模块、优化执行效率的2缓存模块、将SQL语句进行解析的3SQL解析模块、记录操作的4日志管理模块、进行多用户管理的5权限划分模块、6灾难恢复模块、优化数据查询效率的7索引模块，以及使得数据库支持并发操作的8锁模块。
-
-
-
-锁
-
-2索引模块如果WHERE子句中使用了索引，那么ORDER BY子句中不会使用索引
-2.1索引的作用因为索引能让我们避免全表扫描，提升检索效率。(全表扫描将整张表的数据全部或者分批次加载到内存当中，再搜索不仅浪费内存还花费时间)
-需要注意的是，索引并不是建立得越多越 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Dev/Java-Library/Dev/language/Java/java-library/%E6%97%A5%E5%BF%97/" title="日志框架"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0314_003300.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日志框架"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/Java-Library/Dev/language/Java/java-library/%E6%97%A5%E5%BF%97/" title="日志框架">日志框架</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-13T16:00:00.000Z" title="发表于 2023-03-14 00:00:00">2023-03-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Dev/">Dev</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Dev/Java-Library/">Java Library</a></span></div><div class="content">日志框架日志实现JULjava.util.logging，功能不如 Logback&#x2F;Log4j2 等完善
-Log4j(经典)是 apache 的一个开源项目，性能不如 Logback 和 Log4j2，已经停止更新
-Log4j 中有三个主要组成部分：
-
-loggers - 负责捕获记录信息，可以定义日志信息级别，还可以更细致的控制日志的生成过程
-appenders - 负责发布日志信息，以不同的首选目的地，可以控制日志信息输送的目的地是stdout控制台、file文件、数据库、套接口服务器
-layouts - 负责格式化不同风格的日志信息，可以控制日志输出格式
-
-1234567891011121314# 配置文件# 配置根Logger# log4j.rootLogger=[level],appenderName,appenderName,...  log4j.rootLogger=info, stdout  log4j.appender.stdout=org.apache.log4j.ConsoleAppenderlog4j.appender.stdout.Target=Sy ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/uncategorized/Dev/language/Java/java-library/spring-boot-starter-test/" title="无题">无题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-12-11T04:28:08.223Z" title="发表于 2022-12-11 12:28:08">2022-12-11</time></span></div><div class="content">Spring整合Junit测试依赖包：spring-test、Junit4
-断言assertEquals(期望值，实际值)
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/index_img.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Nemesis"><span class="site-name">Nemesis</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Nemesis</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://space.bilibili.com/36033539" target="_blank" title="Bili"><i class="fa-brands fa-bilibili" style="color: #74C0FC;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/Object/" title="Reference">Reference</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">关于Object的方法、深拷贝和浅拷贝</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/" title="Java异常处理机制"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_07_13_58.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java异常处理机制"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/" title="Java异常处理机制">Java异常处理机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">关于Java异常处理机制</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/util/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" title="Java集合框架"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_07_18_52.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java集合框架"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/language/Java/%E7%B1%BB%E5%BA%93APIs/util/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" title="Java集合框架">Java集合框架</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-12T16:00:00.000Z" title="发表于 2023-07-13 00:00:00">2023-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/%E7%B1%BB%E5%BA%93/">类库</a></span></div><div class="content">关于Java集合框架的Collection、Map、J.U.C包。</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/Redis7.2.0/" title="Redis"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_10_11_29.png&quot; alt=&quot;image-20230510112901318" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/NOSQL/Redis7.2.0/" title="Redis">Redis</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-05-01T16:00:00.000Z" title="发表于 2023-05-02 00:00:00">2023-05-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="content">关于Redis的笔记,涉及Redis简介、Redis数据类型、Redis命令、缓存、异步消息队列、分布式锁、rdb-aof持久化、主从同步、Redis集群</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Dev/Linux/Linux/" title="Linux"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_04_30_21_35.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/Linux/Linux/" title="Linux">Linux</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-04-30T16:00:00.000Z" title="发表于 2023-05-01 00:00:00">2023-05-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/">Linux</a></span></div><div class="content">主要是Linux基础操作</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Dev/Network/Network/" title="计算机网络"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_01_15_19.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/Network/Network/" title="计算机网络">计算机网络</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-04-30T16:00:00.000Z" title="发表于 2023-05-01 00:00:00">2023-05-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">主要是计算机网络相关知识点</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/articles/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL8/" title="关系型数据库"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_28_14_30.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关系型数据库"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL8/" title="关系型数据库">关系型数据库</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-28T16:00:00.000Z" title="发表于 2023-03-29 00:00:00">2023-03-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="content">主要是总结了MySQL8的索引模块和锁模块</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/articles/Dev/language/Java/java-library/%E6%97%A5%E5%BF%97/" title="日志框架"><img class="post-bg" src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0314_003300.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日志框架"></a></div><div class="recent-post-info"><a class="article-title" href="/articles/Dev/language/Java/java-library/%E6%97%A5%E5%BF%97/" title="日志框架">日志框架</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-13T16:00:00.000Z" title="发表于 2023-03-14 00:00:00">2023-03-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Dev/">Dev</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Dev/Java-Library/">Java Library</a></span></div><div class="content">主要关于slf4j、Log4j2基础以及在SpringBoot项目中的使用</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/articles/Dev/language/Java/java-library/spring-boot-starter-test/" title="无题">无题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-12-11T04:28:08.223Z" title="发表于 2022-12-11 12:28:08">2022-12-11</time></span></div><div class="content">Spring整合Junit测试
+依赖包：spring-test、Junit4
+断言
+assertEquals(期望值，实际值)
 assertEquals(期望对象，实际对象) 利用Equals
 assertSame(期望对象，实际对象) 利用内存地址
 assertNotSame(期望对象，实际对象)
@@ -333,10 +190,12 @@ assertFalse(布尔条件)
 Junit注解
 
 
+
 注解
 
 ‘释义
 成员变量
+
 
 
 
@@ -364,7 +223,9 @@ SpringRunner.class
 
 
 
-例子1234567@Autowire ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/6/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#content-inner">6</a><span class="page-number current">7</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人 <br/> Talk is cheap. Show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/articles/small-language/Dev/language/small-language/YAML1.2/" title="YAML">YAML</a><time datetime="2024-04-19T16:00:00.000Z" title="发表于 2024-04-20 00:00:00">2024-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_08_26_56.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nginx"/></a><div class="content"><a class="title" href="/articles/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx">Nginx</a><time datetime="2024-03-17T16:00:00.000Z" title="发表于 2024-03-18 00:00:00">2024-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%93%E6%9E%84%E5%9E%8B/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式"><img src="https://refactoringguru.cn/images/patterns/diagrams/bridge/structure-zh.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="桥接模式"/></a><div class="content"><a class="title" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%93%E6%9E%84%E5%9E%8B/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式">桥接模式</a><time datetime="2024-03-12T16:00:00.000Z" title="发表于 2024-03-13 00:00:00">2024-03-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%88%9B%E5%BB%BA%E5%9E%8B/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0308_133937.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="抽象工厂模式"/></a><div class="content"><a class="title" href="/articles/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%88%9B%E5%BB%BA%E5%9E%8B/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式">抽象工厂模式</a><time datetime="2024-03-07T16:00:00.000Z" title="发表于 2024-03-08 00:00:00">2024-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/ORM%E6%A1%86%E6%9E%B6/Dev/ORM%E6%A1%86%E6%9E%B6/MyBatis/" title="Mybatis"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_21_14_50.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mybatis"/></a><div class="content"><a class="title" href="/articles/ORM%E6%A1%86%E6%9E%B6/Dev/ORM%E6%A1%86%E6%9E%B6/MyBatis/" title="Mybatis">Mybatis</a><time datetime="2024-03-05T16:00:00.000Z" title="发表于 2024-03-06 00:00:00">2024-03-06</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+
+例子
+1234567@Au ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/6/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#content-inner">6</a><span class="page-number current">7</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nemesis</div><div class="author-info__description">浙江外国语学院大四老人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><a id="card-info-btn" href="mailto:chenxiangcheng1@gmail.com"><i class="fas fa-envelope"></i><span>Contact Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/chenxiangcheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenxiangcheng1@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://space.bilibili.com/36033539" target="_blank" title="Bili"><i class="fa-brands fa-bilibili" style="color: #74C0FC;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">有空B站直播写代码 ( •̀ ω •́ )✧</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/articles/%E4%BA%8C%E7%BA%A7%E5%B8%82%E5%9C%BA/%E8%80%83%E8%AF%95/%E5%9F%BA%E4%BB%8E/" title="基金从业资格证">基金从业资格证</a><time datetime="2024-06-01T16:00:00.000Z" title="发表于 2024-06-02 00:00:00">2024-06-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/articles/Dev/language/small-language/YAML1.2/" title="YAML">YAML</a><time datetime="2024-04-19T16:00:00.000Z" title="发表于 2024-04-20 00:00:00">2024-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_08_26_56.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nginx"/></a><div class="content"><a class="title" href="/articles/Dev/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/Web%E4%B8%AD%E9%97%B4%E4%BB%B6/Nginx/" title="Nginx">Nginx</a><time datetime="2024-03-17T16:00:00.000Z" title="发表于 2024-03-18 00:00:00">2024-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式"><img src="https://refactoringguru.cn/images/patterns/diagrams/bridge/structure-zh.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="桥接模式"/></a><div class="content"><a class="title" href="/articles/Dev/design-patterns/%E7%BB%93%E6%9E%84%E5%9E%8B/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/" title="桥接模式">桥接模式</a><time datetime="2024-03-12T16:00:00.000Z" title="发表于 2024-03-13 00:00:00">2024-03-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/articles/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式"><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0308_133937.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="抽象工厂模式"/></a><div class="content"><a class="title" href="/articles/Dev/design-patterns/%E5%88%9B%E5%BB%BA%E5%9E%8B/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式">抽象工厂模式</a><time datetime="2024-03-07T16:00:00.000Z" title="发表于 2024-03-08 00:00:00">2024-03-08</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             <a class="card-more-btn" href="/categories/" title="查看更多">
@@ -372,5 +233,23 @@ SpringRunner.class
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Dev/"><span class="card-category-list-name">Dev</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Dev/Build-Tools/"><span class="card-category-list-name">Build Tools</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Dev/Java-Library/"><span class="card-category-list-name">Java Library</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/"><span class="card-category-list-name">Java</span><span class="card-category-list-count">18</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/Java%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/"><span class="card-category-list-name">Java语言特性</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/OOPs/"><span class="card-category-list-name">OOPs</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/VM/"><span class="card-category-list-name">VM</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/%E7%B1%BB%E5%BA%93/"><span class="card-category-list-name">类库</span><span class="card-category-list-count">10</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">五月 2023</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">68</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-06-01T16:34:02.383Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%9F%BA%E9%87%91/" style="font-size: 1.15em; color: rgb(109, 112, 80)">基金</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><span class="card-archive-list-count">15</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">69</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-03-03T06:52:58.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">216.4k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-06-02T17:10:54.859Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/index_img.png')"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Nemesis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script async data-pjax src="https://cdn.jsdelivr.net/gh/Pil0tXia/busuanzi-modified/busuanzi.pure.mini.js"></script></div></body></html>

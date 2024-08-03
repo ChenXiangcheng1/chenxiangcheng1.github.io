@@ -26,6 +26,7 @@ menu:
   #   电影: /movies/ || fas fa-video
   友链: /link/ || fas fa-link
   关于: /about/ || fas fa-heart
+  sitemap: /sitemap.xml || sitemap 
 
 # Code Blocks (代碼相關)
 # --------------------------------------
@@ -606,8 +607,8 @@ google_adsense:
 # --------------------------------------
 
 site_verification:
-  # - name: google-site-verification
-  #   content: xxxxxx
+  - name: google-site-verification
+    content: pU5IjPh6_ey9s4keWZ5QhZ8CbVyQ_lUOaa_ZYRJqu70
   # - name: baidu-site-verification
   #   content: xxxxxxx
 

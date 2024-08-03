@@ -42,7 +42,7 @@ sticky:  # 置顶
 
 
 
-# Blog框架
+# Blog
 
 Hugo：文章多速度快
 
@@ -169,6 +169,8 @@ golang 实现，比 Hexo 渲染速度更快，但没看到喜欢的 theme
 
 # 建站
 
+[站长工具](https://tool.chinaz.com/)
+
 
 
 ## 站点图标
@@ -180,6 +182,10 @@ AIGC生成图片
 [bitbug](https://www.bitbug.net/)生成 .ico 图标
 
 ## 部署项目
+
+* Vercel 站点托管(推荐)
+* Github Page 站点托管
+* 云服务器(国内需要备案 不建议)
 
 push 源项目目录到 <username>.github.io ，使用 Github Actions 部署，https://<username>.github.io
 
@@ -206,9 +212,23 @@ Github Pages repo 是公开的，配置发布源
 
 ## SEO
 
-规则：
-一般SEO只爬三层
-中文不利于 SEO
+[hexo-generator-sitemap](https://github.com/hexojs/hexo-generator-sitemap): 生成sitemap
+[Google Search Console](https://search.google.com/search-console)：Google收录，提交网址并添加sitemap
+
+
+
+[Google 搜索中心#SEO基础知识](https://developers.google.com/search/docs/fundamentals/how-search-works?hl=zh-CN)
+推荐：一般SEO只爬三层、中文不利于SEO
+
+TODO: 了解并配置 Robots.txt
+
+
+
+## 备案
+
+如果域名解析国内服务器，则需要备案
+
+
 
 
 
@@ -230,21 +250,3 @@ Github Pages repo 是公开的，配置发布源
 ~~hexo-abbrlink插件，路径数字没有语义~~
 front-matter 中添加一个 urlname 作为永久链接路径
 
-
-
-# TODO
-
-1上SEO
-hexo-generator-sitemap 使博客能被搜索引擎收录
-
-2添加github项目信息
-
-3看github page action部署
-
-4解决DeprecationWarn警告
-
-5了解备案
-
-
-
-部署在 Vercel 上

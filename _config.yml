@@ -117,6 +117,17 @@ auto_dir_categorize:
 	enable: true
 	force: false  # 强制根据目录
 
+# https://github.com/hexojs/hexo-generator-sitemap
+sitemap:
+  path:   # sitemap路径
+    - sitemap.xml
+    - sitemap.txt
+  template: ./sitemap_template.xml  # 自定义模板路径
+  template_txt: ./sitemap_template.txt
+  rel: true  # 将rel-sitemap添加到header
+  tags: true
+  categories: true
+
 ######################################################################
 # 以下未整理
 ######################################################################

@@ -2,7 +2,7 @@
 
 main 分支是博客的源码仓库
 
-gh-page 分支是博客的 Github Pages 仓库，存放着 `npx hexo -g` 生成的静态文件
+gh-pages 分支是博客的 Github Pages 仓库，存放着 `npx hexo -g` 生成的静态文件
 
 我的Blog是静态站点，采用了Hexo框架+Butterfly主题+一系列插件
 

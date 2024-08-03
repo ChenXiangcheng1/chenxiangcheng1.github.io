@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+*.log
+.deploy*/
+_multiconfig.yml
+
+# npx pnpm i
+node_modules/
+# hexo g 生成的缓存文件
+db.json
+# hexo g 生成的静态文件
+public/

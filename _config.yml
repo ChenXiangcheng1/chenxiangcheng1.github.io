@@ -1,0 +1,138 @@
+# Hexo Configuration 站点配置文件
+## Docs: https://hexo.io/zh-cn/docs/configuration.html
+
+# Site
+title: Nemesis
+subtitle: 跌倒又爬起，山岭静悄悄
+description: 浙江外国语学院大四老人 <br/> Talk is cheap. Show me the code.  # 主要用于SEO
+keywords: 博客,ACM,技术,开发  # 主要用于SEO
+author: Nemesis
+language: zh-CN  # en
+timezone: Asia/Shanghai
+email: chenxiangcheng1@gmail.com
+
+# URL
+url: https://blog.haruharu.top  # https://chenxiangcheng1.github.io/blog
+root: /  # /blog/
+# 永久链接
+permalink: articles/:urltitle/  # articles/:category/:title/  # :year/:month/:day/:title/ # posts/:abbrlink.html
+permalink_defaults:
+pretty_urls:
+  trailing_index: false
+  trailing_html: false
+
+# Directory
+source_dir: source
+public_dir: public  # 公共文件夹，这个文件夹用于存放生成的站点文件。就是上传github的文件
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render: 
+  - 'README.md'
+
+# 文章
+new_post_name: :title.md
+default_layout: post  # scaffolds 默认预设布局layout
+auto_spacing: false
+titlecase: false # 标题大小写
+external_link:
+  enable: true
+  field: site
+  exclude: []
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+# Docs：https://hexo.io/zh-cn/docs/syntax-highlight
+syntax_highlighter: highlight.js
+highlight:
+  auto_detect: true # 默认是false
+  line_number: true
+  line_threshold: 0
+  tab_replace: ''
+  exclude_languages:
+    - example
+  wrap: true
+  hljs: false
+prismjs:
+  preprocess: true
+  line_number: true
+  line_threshold: 0
+  tab_replace: ''
+
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Date / Time format
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: mtime
+
+# Pagination
+per_page: 7
+pagination_dir: page
+
+# Extensions
+# theme: next
+theme: butterfly  # butterfly 6.7k, landscape 310默认主题, next 8.1k不更新了
+theme_config: 
+
+# Deployment 一键部署
+# Docs: https://hexo.io/docs/one-command-deployment
+# hexo-deployer-git插件，原理就是在.deploy_git生成网站，并强制推送到github覆盖目录
+# Docs: https://github.com/hexojs/hexo-deployer-git
+deploy:
+  type: git
+  # repo: https://github.com/<username>/<project>
+  repo: git@github.com:ChenXiangcheng1/chenxiangcheng1.github.io.git
+  # repo: https://github.com/ChenXiangcheng1/chenxiangcheng1.github.io.git
+  branch: gh-pages  # main gh-pages
+  # message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+  token:  # $GITHUB_TOKEN
+  name: 
+  email:
+
+# Include / Exclude file(s)
+include:
+exclude: 
+ignore:
+
+
+######################################################################
+# 插件
+
+# https://butterfly.js.org/posts/ceeb73f/#Math-%E6%95%B8%E5%AD%B8
+# hexo-renderer-markdown-it、katex插件
+markdown:
+  plugins:
+    - '@renbaoshuo/markdown-it-katex'
+
+# https://github.com/zthxxx/hexo-directory-category#readme
+auto_dir_categorize:
+	enable: true
+	force: false  # 强制根据目录
+
+######################################################################
+# 以下未整理
+######################################################################
+
+
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+
+
+# Metadata elements
+## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+meta_generator: true

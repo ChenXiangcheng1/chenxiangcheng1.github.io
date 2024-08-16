@@ -351,7 +351,8 @@ nc -vz 172.30.208.1 7890
 共：把一个分支的提交合并到另一个分支
 
 merge：合并
-rebase：嫁接，会打乱提交结构和顺序
+rebase：嫁接
+	缺点：commit顺序和提交时间不一致，会乱掉
 
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0525_164838.png" alt="image-20240525164838756" style="zoom: 60%;" />
 
@@ -417,7 +418,14 @@ git rm -r --cached <target_file>  # 删除暂存区文件
 
 ```bash
 git checkout dev
-git pull origin main  # 拉取远程主分支的最新更新并合并到本地分支。如果有冲突则需要手动解决冲突
+git pull --rebase origin main  # 拉取远程主分支的最新更新并合并到本地分支。如果有冲突则需要手动解决冲突
+
+# 等价于
+git fetch
+git rebase
+git add ...
+git rebase --continue
+# git rebase --abort  # 终止rebase回到rebase之前的初始状态
 ```
 
 

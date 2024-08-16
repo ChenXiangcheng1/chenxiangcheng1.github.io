@@ -11,11 +11,11 @@
 项目  配置属性(输出目录 Debug/Release 平台)
 	配置属性-常规 : Windows SDK版本、平台工具集、语言标准
 	配置属性-C/C++-优化 = 启动(Release默认) / 禁用(Debug默认)
-	配置属性-C/C++-代码生成-运行库-多线程调试 DLL =  MD(默认 程序小 依赖系统MS运行时DLL库) / MT(程序更大 但是不依赖系统DLL)
-	配置属性-C/C++-常规-附加包含目录：设置头文件相对路径
-	配置属性-C/C++-预编译头：使用(/Yu) / 不适用预编译头(Precompiled Header .pch)
-	配置属性-C/C++-链接器-常规-附加库目录：${SolutionDir}/x64/Release
-	配置属性-C/C++-链接器-输入-附加依赖项：xx.lib
+	配置属性-C/C++-代码生成-运行库-多线程调试 DLL =  MD(默认 程序小 依赖系统MS运行时DLL库) / **MT**(程序更大 但是不依赖系统DLL)
+	配置属性-C/C++-常规-附加包含目录：设置**头文件相对路径**
+	配置属性-C/C++-预编译头：使用(编译选项/Yu)(大项目) / **不使用预编译头**(Precompiled Header .pch)(小项目、跨语言项目)(推荐)
+	配置属性-C/C++-链接器-常规-附加库目录：${SolutionDir}/x64/Release **lib库所在path**
+	配置属性-C/C++-链接器-输入-附加依赖项：xx.lib **lib库名**
 	配置属性-调试：工作目录、命令
 
 生成  配置管理器
@@ -105,8 +105,6 @@ _declspec(dllimport) int __stdcall fun2(const chat* param);
 
 
 
-
-
 动态加载：
 
 ```c++
@@ -156,6 +154,31 @@ int main()
 }
 
 ```
+
+
+
+### 添加lib
+
+1：通过vs工程配置
+
+配置属性-C/C++-链接器-常规-附加库目录：${SolutionDir}/x64/Release **lib库所在path**
+配置属性-C/C++-链接器-输入-附加依赖项：xx.lib **lib库名**
+
+
+
+2：通过宏
+
+```c++
+#ifdef _DEBUG
+#pragma comment(lib,"..\\debug\\LedCtrlBoard.lib")
+#else
+#pragma comment(lib,"..\\release\\LedCtrlBoard.lib")
+#endif
+```
+
+
+
+3：直接添加现有项，选择lib文件(推荐)
 
 
 

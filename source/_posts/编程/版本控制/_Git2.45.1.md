@@ -356,6 +356,12 @@ rebase：嫁接
 
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2024_0525_164838.png" alt="image-20240525164838756" style="zoom: 60%;" />
 
+`git rebase main` 把自己的分支dev变基到目标分支main上，也就是把自己的提交历史放在目标分支的最后，这样可以保持提交历史的整洁和线性
+
+`git merge main` 把目标分支合并到自己的分支上，也就是把目标分支的提交历史和自己的提交历史合并成一个新的提交，这样可以保持提交历史的完整和真实
+
+
+
 ### 场景(重点)
 
 #### 上传新项目
@@ -418,7 +424,9 @@ git rm -r --cached <target_file>  # 删除暂存区文件
 
 ```bash
 git checkout dev
+git stash
 git pull --rebase origin main  # 拉取远程主分支的最新更新并合并到本地分支。如果有冲突则需要手动解决冲突
+git stash pop
 
 # 等价于
 git fetch
@@ -426,6 +434,8 @@ git rebase
 git add ...
 git rebase --continue
 # git rebase --abort  # 终止rebase回到rebase之前的初始状态
+
+# 之后就可以commit、push origin main啦
 ```
 
 
@@ -480,6 +490,45 @@ git add .
 git commit -m "update: xxxx"
 git push orgin main
 ```
+
+
+
+#### 创建新本地分支
+
+`git clone -b <name> <url>` 只能 clone 到新目录
+
+```bash
+# 查看分支
+git branch --list
+* feature-atxfile
+  main
+
+git show-branch
+* [feature-atxfile] add get_prev_trade_date
+ ! [main] add get_prev_trade_date
+--
+*+ [feature-atxfile] add get_prev_trade_date
+
+git branch -v  # 推荐
+* feature-atxfile d3030e5 add get_prev_trade_date
+  main            d3030e5 add get_prev_trade_date
+
+git branch -a  # 推荐
+* feature-atxfile
+  main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/feature-atxfile
+  remotes/origin/main
+
+# 创建新本地分支
+git remote add origin <url>
+git fetch origin  # 更新远程仓库分支的最新状态(引用) .git/refs/heads/<branch-name>
+git checkout -b new-branch origin/main
+```
+
+
+
+
 
 
 

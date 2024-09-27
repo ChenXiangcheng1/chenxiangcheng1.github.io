@@ -53,7 +53,7 @@ array2:  # 数组
 ```
 
 ```yaml
-any_name1: &config1  # 锚点Anchor
+any_name1: &config1  # 锚点Anchor, any_name没作用
     k1: v1
 service:
     k3: v3
@@ -65,3 +65,8 @@ any_name2: &config2
 k2: *config2  # 引用
 ```
 
+& 锚点
+
+\* 引用
+
+<< 合并键

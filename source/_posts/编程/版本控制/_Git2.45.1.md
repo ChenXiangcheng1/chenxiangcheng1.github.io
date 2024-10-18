@@ -4,6 +4,13 @@
 
 **强烈建议在Windows上在WSL中使用Git**
 
+![](https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/wz/202410160846187.png)
+
+工作区(最底下)：Changes not staged for commit
+暂存区：Changes to be committed
+
+
+
 ## 资料
 
 [Git游戏](https://learngitbranching.js.org/?demonoemo=&locale=zh_CN)
@@ -346,6 +353,15 @@ nc -vz 172.30.208.1 7890
 
 ## 命令
 
+```bash
+git status --short
+git clone --depth=1  # 只下载最新提交，适合获取代码简单查看不改
+```
+
+
+
+
+
 ### git merge 和 rebase 的区别
 
 共：把一个分支的提交合并到另一个分支
@@ -420,13 +436,15 @@ git rm -r --cached <target_file>  # 删除暂存区文件
 
 
 
-#### 定期从远程主分支拉取更新
+#### rebase定期从远程主分支拉取更新
 
 ```bash
 git checkout dev
-git stash
+git stash	
 git pull --rebase origin main  # 拉取远程主分支的最新更新并合并到本地分支。如果有冲突则需要手动解决冲突
-git stash pop
+git stash pop  # 本质上是 git stash apply、git stash drop
+# 若有冲突，手动解决冲突
+git stash pop  # 冲突时不执行drop，再次pop确保 git stash list 为空
 
 # 等价于
 git fetch
@@ -438,9 +456,21 @@ git rebase --continue
 # 之后就可以commit、push origin main啦
 ```
 
+```bash
+# 扩展git pull本质
+git pull = fetch + merge
+
+git fetch upstream origin == git remote update upstream  # 远程仓库分支(.git/refs/remotes/*) -> 远程分支(.git/refs/heads/\*)
+
+git merge  # 远程分支 -> 本地分支
+git merge --squash  # squash策略的压缩merge
+```
 
 
-#### 合并和解决冲突
+
+
+
+#### merge合并和解决冲突
 
 方式1：git合并方式
 
@@ -528,6 +558,54 @@ git checkout -b new-branch origin/main
 
 
 
+#### commit
+
+commit 格式 `<type>(<scope>): <subject>`
+
+type
+	**feat**：新增功能
+	**fix**：修复Bug
+	docs：文档变更
+	style：代码格式（不影响代码运行的变动）
+	refactor：重构（即不是新增功能，也不是修改Bug的代码变动）
+	test：增加测试
+	chore：构建过程或辅助工具的变动(杂货)
+	sync()
+scope影响范围
+	root
+subject内容
+
+
+
+
+
+#### 撤销commit
+
+```bash
+git reset HEAD^  # 回退所有内容到上一个版本
+git reset  HEAD~3  # 向前回退到第3个版本
+
+git reset HEAD^ test.txt  # 回退test.txt这个文件的版本到上一个版本
+
+git reset 51363e6  # 回退到某个版本51363e6
+```
+
+
+
+#### PR
+
+origin：是默认名，一般约定为自己的远程仓库
+upstream：一般约定为fork的源仓库
+
+```bash
+git remote add upstream https://github.com/user/project.git
+git pull upstream master:<branch_name>
+修改代码，并commit
+git pull --rebase upstream master:<branch_name>
+git push origin <branch_name>
+提交PR
+```
+
 
 
 
@@ -540,8 +618,8 @@ git checkout -b new-branch origin/main
 | --------------- | ------------------------------------------------------------ |
 | – 将被 Git 忽略 | 注释                                                         |
 | **目录**        |                                                              |
-| build/          | 忽略 build/ 目录下的所有文件                                 |
-| /mtk/           | 过滤整个文件夹                                               |
+| build/          | 忽略所有 build/ 目录下的所有文件                            |
+| /mtk/           | 忽略根目录下的整个文件夹                              |
 | **文件**        |                                                              |
 | /mtk/do.c       | 过滤某个具体文件                                             |
 | /TODO           | 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO         |
@@ -553,7 +631,35 @@ git checkout -b new-branch origin/main
 
 
 
+
+
+## .gitattributes 
+
+用于处理行尾
+
+```.gitattributes
+# text  # 标记为文本文件
+# eol = lf    # 入库时将行尾规范为LF，检出时不操作(保持LF)(推荐)
+# eol = crlf  # 入库时将行尾规范为LF，检出时将行尾转换为CRLF
+
+* text=auto
+*.cpp text eol=lf
+*.h text eol=lf
+*.c text eol=lf
+*.hpp text eol=lf
+*.cmake text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.png binary
+```
+
+
+
+
+
 ## 证书
+
+https://open-source-license-chooser.toolsnav.top/zh/
 
 | License           | 许可协议             |
 | ----------------- | -------------------- |

@@ -378,6 +378,17 @@ rebase：嫁接
 
 
 
+### 存档库操作
+
+| 命令                                                         | 释义 |
+| ------------------------------------------------------------ | ---- |
+| git stash list                                               |      |
+| git stash<br />git stash push -m "stash(mquant/adapter): only import order" |      |
+| git stash apply stash@{9}                                    |      |
+| git stash drop stash@{9}                                     |      |
+
+
+
 ### 场景(重点)
 
 #### 上传新项目
@@ -472,6 +483,15 @@ git merge --squash  # squash策略的压缩merge
 
 #### merge合并和解决冲突
 
+```bash
+git merge  # 默认为Fast-Forward Merge
+当前分支的 HEAD 指针在要合并的分支的历史提交之前，即当前分支没有任何新的提交。当前分支直接指向最后一个提交
+
+git merge --no-ff
+```
+
+
+
 方式1：git合并方式
 
 在feature-xxx特性分支上进行开发并提交change
@@ -525,7 +545,7 @@ git push orgin main
 
 #### 创建新本地分支
 
-`git clone -b <name> <url>` 只能 clone 到新目录
+`git clone -b <name> <url | base_branch-name(默认为当前分支)>` 只能 clone 到新目录
 
 ```bash
 # 查看分支
@@ -539,11 +559,11 @@ git show-branch
 --
 *+ [feature-atxfile] add get_prev_trade_date
 
-git branch -v  # 推荐
+git branch -vv  # 推荐
 * feature-atxfile d3030e5 add get_prev_trade_date
   main            d3030e5 add get_prev_trade_date
 
-git branch -a  # 推荐
+git branch -a
 * feature-atxfile
   main
   remotes/origin/HEAD -> origin/main
@@ -555,6 +575,15 @@ git remote add origin <url>
 git fetch origin  # 更新远程仓库分支的最新状态(引用) .git/refs/heads/<branch-name>
 git checkout -b new-branch origin/main
 ```
+
+
+
+```bash
+git branch -d feature/baseinfo  # 删除本地分支
+git push origin :feature/baseinfo  # 删除远程分支
+```
+
+
 
 
 
@@ -607,6 +636,14 @@ git push origin <branch_name>
 ```
 
 
+
+#### 设置上游仓库
+
+```bash
+git branch -vv
+git branch --set-upstream-to=<远程仓库>/<远程分支>
+git branch --unset-upstream
+```
 
 
 
@@ -852,6 +889,111 @@ img-bot：压缩图像
 
 
 
+# Gitflow
+
+[掘金教程](https://juejin.cn/post/6982166300806086692)
+
+```bash
+git flow help
+
+git flow init  # 创建分支
+git flow feature start fname  # 创建共享分支feature/fname
+git flow feature finish fname  # git merge —no-ff
+git flow release start 1.1.5  # hotfix的基础分支是master、其它是dev
+git flow release finish 1.1.5
+
+git checkout -b feature/fname-person  # 创建个人分支
+
+# 写代码之前merge共享分支
+git checkout feature/test
+git pull origin feature/test
+git checkout feature/test-username
+git merge feature/test
+
+# 为个人分支创建PR合并到共享分支
+```
+
+```bash
+# git-flow 等价的 git命令
+
+# 创建一个仓库
+mkdir gitflow
+cd gitflow
+git init
+
+touch README.md
+# ... 编辑 README.md
+git add README.md
+git commit -m "add README.md"
+
+# 创建develop长期分支
+git checkout -b develop
+# develop分支必须先与feature分支推到远程仓库中
+git push origin develop
+# 获取远程仓库的develop分支到本地develop分支
+# git fetch origin develop:develop
+
+# 在develop的基础上创建功能分支
+git checkout -b feature/baseinfo develop
+# ... 开发功能 feature/baseinfo
+git push origin feature/baseinfo
+# 合并开发好且通过测试的feature/baseinfo到develop
+git checkout develop
+git merge --no-ff feature/baseinfo
+
+# 移除开发完成的功能分支feature/baseinfo
+git branch -d feature/baseinfo
+# 删除远程仓库的功能分支
+git push origin :feature/baseinfo
+
+# ... 继续开发合并其他分支
+
+# 预发布
+git checkout -b release/v0.1.0 develop
+git commit -a -m "initial version  v0.1.0"
+# ... 在release/v0.1.0上修改bugs
+
+# 发布线上版本
+git checkout master
+git merge --no-ff release/v0.1.0
+# commit note: initial version v0.1.1
+git tag v0.1.0
+git push origin master
+git push origin v0.1.0
+
+# 将release中修改过的代码合并到develop中
+git checkout develop
+git merge --no-ff release/v0.1.0
+
+# 删除不需要的release分支
+# 删除本地release分支
+git branch -d release/v0.1.0
+# 删除远程release分支
+git push origin :release/v0.1.0
+
+# 在线上发现一个Bug，需要紧急修复，一般来说，v0是还没有上线的版本
+git checkout -b hotfix/v0.1.0 master
+# ... 修复bugs
+# 重新发布一个版本，修订号加上1
+git checkout master
+git merge --no-ff hotfix/v0.1.0
+# commit note: bump version to v0.1.1
+git tag v0.1.1
+git push origin master
+git push origin v0.1.1
+
+# 将hotfix分支合并到develop中，如果此时有未发布的release分支，则合并到release分支中
+git checkout develop
+git merge --no-ff hotfix/v0.1.0
+git push origin develop
+
+# 删除hotfix分支
+git branch -d hotfix/v0.1.0
+git push origin :hotfix/v0.1.0
+```
+
+
+
 # 未整理
 
 ## 架构
@@ -958,15 +1100,6 @@ Git 常用命令速查表：
 |                        |                                                              |
 
 
-
-### 存档库操作
-
-| 命令            | 释义 |
-| --------------- | ---- |
-| git stash       |      |
-| git stash list  |      |
-| git stash apply |      |
-| git stash drop  |      |
 
 
 

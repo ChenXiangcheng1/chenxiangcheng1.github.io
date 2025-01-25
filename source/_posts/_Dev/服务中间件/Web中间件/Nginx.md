@@ -13,6 +13,8 @@ top_img:
 cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_08_26_56.png
 ---
 
+
+
 # Nginx1.25.2
 
 一个HTTP和反向代理服务器，DNS和负载均衡可以交给Nginx或Docker处理

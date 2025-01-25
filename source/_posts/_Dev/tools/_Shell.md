@@ -14,12 +14,27 @@ zsh：是对bash的改进，支持高级自动补全、主题、插件
 
 ## powershell
 
+```powershell
+Test-NetConnection -ComputerName 127.0.0.1 -Port 7890
+
+ComputerName     : 127.0.0.1
+RemoteAddress    : 127.0.0.1
+RemotePort       : 7890
+InterfaceAlias   : Loopback Pseudo-Interface 1
+SourceAddress    : 127.0.0.1
+TcpTestSucceeded : True  # 表示端口可访问且有服务器监听
+```
+
 
 
 ## bash
 
 可看Linux笔记
 目前，我Windows使用bash、Linux使用zsh
+
+```bash
+Nmap -p7890 127.0.0.1  # 看端口是否开放与是什么服务
+```
 
 
 

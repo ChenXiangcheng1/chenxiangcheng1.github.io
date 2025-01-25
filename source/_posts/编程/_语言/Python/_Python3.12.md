@@ -43,9 +43,11 @@ IronPython: 基于.NET, 用于与 .net 结合的项目
 
 
 
+## 命令行
 
-
-
+```bash
+python -m pip --version  # python -m 运行库模块
+```
 
 
 
@@ -633,10 +635,6 @@ type
 
 
 字典
-
-python -m pip --version：-m表示模块，可以用于辨别python解释器是哪一个
-
-
 
 
 

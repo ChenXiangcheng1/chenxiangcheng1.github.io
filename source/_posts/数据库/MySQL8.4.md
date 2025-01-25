@@ -692,6 +692,30 @@ utf8mb4_0900_ai_ci的排序规则：1, ab, abc, ac, b, bb, c
 
 
 
+#### 分布式事务 3PC
+
+https://v2ex.com/t/716441
+
+https://v2ex.com/t/820265
+
+https://www.v2ex.com/t/796220
+
+https://www.cnblogs.com/wzh2010/p/18031227
+
+https://v2ex.com/t/795964
+
+https://juejin.cn/post/7007040162676883486
+
+https://pdai.tech/md/arch/arch-z-transection.html#%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88
+
+
+
+#### 分布式系统设置 WAL
+
+分布式缓存 LRU
+
+
+
 ## 4语法SQL
 
 ### 系统变量和状态变量

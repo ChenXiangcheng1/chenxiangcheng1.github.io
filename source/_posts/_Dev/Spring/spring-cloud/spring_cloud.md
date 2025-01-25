@@ -24,20 +24,20 @@
 
 
 
-| 特征组件                                                     | SpringCloud                                      | SCN OSS      | SCA                          | 其他                                  |
-| ------------------------------------------------------------ | ------------------------------------------------ | ------------ | ---------------------------- | ------------------------------------- |
-| 配置中心 - 分布式/版本化的配置                               | Spring Cloud Config                              | ~~Archaius~~ | **Nacos Config**<br />ACM    | **Apollo**(携程)、Zookeeper、Consul、 |
-| 服务注册发现 - 注册中心                                      | Spring Cloud Consul                              | ~~Eureka~~   | **Nacos Discovery**<br />ANS | Zookeeper                             |
-| 流量控制熔断降级 Circuit Breakers 断路器                     |                                                  | ~~Hystrix~~  | **Sentinel**                 | Resilience4J                          |
-| 网关路由                                                     | **Spring Cloud Gateway**                         | ~~Zuul~~     | Dubbo                        | Nginx+Lua                             |
-| 服务调用                                                     | RestTemplate、WebClient、OpenFeign               | Feign        | Dubbo                        |                                       |
-| 负载均衡 Load balancing                                      | Spring Cloud Loadbalancer                        | ~~Ribbon~~   | Dubbo                        |                                       |
-| 链路跟踪                                                     |                                                  |              |                              | Zipkin、**Skywalking**、Pinpoint      |
-| 全局锁 Global locks                                          | Spring Cloud Cluster(已迁移到Spring Integration) |              |                              |                                       |
-| Leadership election and cluster state 领导选举与集群状态管理 | Spring Cloud Cluster(已迁移到Spring Integration) |              |                              |                                       |
-| 分布式消息                                                   | Spring Cloud Stream + Kafka/RabbitMQ             |              | **SCS + RocketMQ**           |                                       |
-| 分布式任务调度                                               |                                                  |              | SchedulerX                   |                                       |
-| 分布式事务                                                   |                                                  |              | Seata                        |                                       |
+| 特征组件                                                     | SpringCloud                                      | SCN OSS      | SCA                                    | 其他                                  |
+| ------------------------------------------------------------ | ------------------------------------------------ | ------------ | -------------------------------------- | ------------------------------------- |
+| 配置中心 - 分布式/版本化的配置                               | Spring Cloud Config                              | ~~Archaius~~ | **Nacos Config**<br />ACM              | **Apollo**(携程)、Zookeeper、Consul、 |
+| 服务注册发现 - 注册中心                                      | Spring Cloud Consul                              | ~~Eureka~~   | **Nacos Discovery**<br />ANS           | Zookeeper、K8S的etcd                  |
+| 流量控制熔断降级 Circuit Breakers 断路器                     |                                                  | ~~Hystrix~~  | **Sentinel**                           | Resilience4J                          |
+| 网关路由                                                     | **Spring Cloud Gateway**                         | ~~Zuul~~     | Dubbo                                  | Nginx+Lua                             |
+| 服务调用                                                     | RestTemplate、WebClient、OpenFeign               | Feign        | Dubbo(是RPC框架还达不到服务网关的级别) |                                       |
+| 负载均衡 Load balancing                                      | Spring Cloud Loadbalancer                        | ~~Ribbon~~   | Dubbo                                  |                                       |
+| 链路跟踪                                                     |                                                  |              |                                        | Zipkin、**Skywalking**、Pinpoint      |
+| 全局锁 Global locks                                          | Spring Cloud Cluster(已迁移到Spring Integration) |              |                                        |                                       |
+| Leadership election and cluster state 领导选举与集群状态管理 | Spring Cloud Cluster(已迁移到Spring Integration) |              |                                        |                                       |
+| 分布式消息                                                   | Spring Cloud Stream + Kafka/RabbitMQ             |              | **SCS + RocketMQ**                     |                                       |
+| 分布式任务调度                                               |                                                  |              | SchedulerX                             |                                       |
+| 分布式事务                                                   |                                                  |              | Seata                                  |                                       |
 
 2018 年 Netflix 公司宣布 SCN 核心组件 Archaius、Eureka、Hystrix、Zuul、Ribbon 等进入维护状态
 

@@ -4,6 +4,33 @@
 
 [mamba官方文档](https://mamba.readthedocs.io/en/latest/advanced_usage/more_concepts.html) [micromamba文档](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html)	|	[github](https://github.com/mamba-org/mamba)	|	[conda-forge通道官方文档](https://conda-forge.org/docs/)
 
+
+
+### 命令
+
+```bash
+# mamba init 在 git bash 中无效，可以使用 source activate！！！
+source activate mamba_python312
+```
+
+
+
+```bash
+doskey /macros
+conda="D:\Applications\Scoop\apps\mambaforge\current\condabin\conda.bat" $*
+doskey conda=  # 当前会话有效
+```
+
+
+
+
+
+```bash
+conda env export > environment.yml
+conda env create -f xxx.yaml
+conda env update -f xxx.yaml
+```
+
 | mamba [command] | 释义                    | 参数 |
 | --------------- | ----------------------- | ---- |
 | info            |                         | -e   |

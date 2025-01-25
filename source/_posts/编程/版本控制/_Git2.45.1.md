@@ -355,7 +355,9 @@ nc -vz 172.30.208.1 7890
 
 ```bash
 git status --short
-git clone --depth=1  # 只下载最新提交，适合获取代码简单查看不改
+git clone --depth=1  # 只下载最新提交，适合获取代码简单查看不改 --shallow-submodules # 浅克隆子模块
+git switch  # 替代 git checkout
+git restore  # 丢弃所有更改，恢复到最新提交状态(HEAD)
 ```
 
 
@@ -400,7 +402,7 @@ git commit -m "first commit"
 git remote add origin git@github.com:TrackyTian/testSSH.git  # 添加远程主机名
 git branch -m main  # 分支重命名
 git push origin main:main
-git checkout -b dev  # 切换并创建分支
+git checkout -b dev  # 切换并根据当前分支创建分支
 ```
 
 ```bash
@@ -784,6 +786,8 @@ Untracked files:
 
 # Github
 
+[skills.github.com](https://skills.github.com/)
+
 issue/milestones 版本发布规划
 
 ## Token
@@ -991,6 +995,86 @@ git push origin develop
 git branch -d hotfix/v0.1.0
 git push origin :hotfix/v0.1.0
 ```
+
+
+
+# .github
+
+## Actions
+
+CICD持续集成部署
+
+[官网](https://github.com/features/actions)	|	[demo](https://github.com/ChenXiangcheng1/skills-hello-github-actions)	|	[marketplace](https://github.com/marketplace?type=actions)	|	[actions/checkout](https://github.com/actions/checkout)
+
+```yaml
+# .github/workflows/xxx.yml
+name: Post welcome comment
+on:
+  workflow_dispatch:  # 人工触发
+    inputs:
+      xxYY:
+        description: "desc"
+        required: true
+        default: "xx"
+      tags:
+        description: "tags desc"
+  pull_request:
+    types: [opened]
+  schedule:  # 计时触发
+    - cron: "*/15 * * * *"
+  fork:
+  watch:  # star
+  issues:
+  push:
+permissions:
+  pull-requests: write
+jobs:  # 运行在runner server上
+  build:
+    name: Post welcome comment
+    runs-on: ubuntu-latest
+    steps:
+     - name: just a simple ls command
+        runs: ls -la
+      - name: Checkout repository
+        uses: actions/checkout@v4  # 复用 # 克隆仓库到虚拟机上
+        with:  # 参数
+          arg: 1
+      - run: gh pr comment $PR_URL --body "Welcome to the repository!"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+  run1:
+    needs: [build]
+  run2:
+    needs: [build, run1]  
+```
+
+
+
+## Dependabot
+
+```yaml
+# .github/dependabot.yml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+
+version: 2
+updates:
+  - package-ecosystem: "npm"  # pip 支持的包管理器有限
+    directory: "/frontend" # Update this path if your package.json is in a different directory
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+```
+
+
 
 
 

@@ -88,12 +88,12 @@ https://github.com/VSCodeVim/Vim
 
 GUN的子项目
 MinGW(Minimalist GNU For Windows)：是一直到Windows的GNU工具集合，停止更新GCC版本停滞
-MinGW-w64(推荐)：能编译生成64位可执行程序 `scoop install main/mingw`
+MinGW-w64：能编译生成64位可执行程序 `scoop install main/mingw`
 	GCC13.2.0(GNU C Compiler / GNU Compiler Collection)：编译C/C++
 	G++：编译C++
 
-LLVM(Low Level Virtual Machine)的子项目
-Clang：兼容GCC
+**LLVM**(Low Level Virtual Machine)的子项目(推荐)
+Clang前端：兼容GCC
 
 MSVC(Microsoft Visual C/C++ Compiler)
 
@@ -106,6 +106,32 @@ MSVC(Microsoft Visual C/C++ Compiler)
 
 MAKE：写makefile
 CMAKE(推荐)：写cmakefile.txt
+
+LS: `.clangd` [官网](https://clangd.llvm.org/)
+静态代码分析: clang-tidy 通过`.clangd` 配置
+格式化: `.clang-format`
+Debug: [codelldb](https://github.com/vadimcn/codelldb)、cppdbg
+build工具: [cmake-tools](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/README.md)
+build system(Generator): ninja
+
+```bash
+clang-format --style=LLVM -i main.cpp
+clang-format --style=LLVM --dump-config > .clang-format
+```
+
+
+
+TODO:
+
+clangd配置
+clangd插件配置
+最佳实践
+
+
+
+#### LSP
+
+配置：.clangd 或 使用clangd插件配置
 
 
 

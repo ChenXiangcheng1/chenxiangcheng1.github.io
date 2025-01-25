@@ -423,6 +423,7 @@ apt-cache search searched-package 返回包含所要搜索字符串的软件包�
 |                                                |                                                              | u         | 升级已安装的包，不包括不在软件库中的本地包                   |
 |                                                |                                                              | yy        | 强制下载最新的软件列表清单，即使已经是最新                   |
 | -Q                                             | 查询本地库                                                   | s <regex> | 在本地仓库搜索对应的包                                       |
+|                                                |                                                              | e         | 明确安装                                                     |
 | -R                                             | 删除                                                         | s         | 删除不需要的依赖项                                           |
 | -U                                             | `pacman -U 本地软件包路径.pkg.tar.xz` <br />`pacman -U http://www.example.com/repo/example.pkg.tar.xz` |           |                                                              |
 
@@ -673,6 +674,15 @@ hostname = "WSL-ARCH"
 #root = /mnt/
 #options = "metadata,umask=22,fmask=111"
 #mountFsTab = true
+
+[wsl2]
+networkingMode=NAT  # mirrored
+dnsTunneling=true
+firewall=true
+autoProxy=true
+
+[experimental]
+bestEffortDnsParsing=true
 ```
 
 
@@ -688,7 +698,7 @@ Optimize-VHD -Path E:/Applications/Scoop/persist/archwsl/data/ext4.vhdx -Mode Fu
 
 ### 网络互访
 
-WSL IP：**127.0.0.1**、`cat /etc/resolv.conf`内的固定IP
+WSL IP：**127.0.0.1**、`cat /etc/resolv.conf`内的固定IP、wsl-hostname.local
 
 宿主机IP：**DESKTOP-2DAQ5TI**
 
@@ -738,13 +748,15 @@ wsl ls
 | /boot/grub/grub.cfg                                          | 配置grub开机引导                                             |
 | /dev                                                         | 存放设备文件.                                                |
 | **/etc（etcetera附加物表示配置）**                           | 存放软件的全局配置文件                                       |
+| /etc/group                                                   | 配置 组名:密码占位符(x或*):组ID(GID):组成员列表（逗号分隔）  |
 | /etc/hosts                                                   | DNS解析，配置映射关系hostname:IP                             |
 | **/etc/hostname**                                            | 配置 hostname                                                |
 | /etc/my.cnf                                                  | mysql配置文件                                                |
-| /etc/passwd                                                  | 配置 用户名:对应的SHELL (bash、zsh)                          |
+| **/etc/passwd**                                              | 配置 用户名:密码占位符(x或*):用户ID(UID):组ID(GID):用户描述:家目录:登录Shell |
 | **/etc/profile**                                             | 环境变量，注释符 #，<br />更改完环境变量使用source profile命令 |
 | /etc/rc.d/rc.local                                           | 配置开机启动项                                               |
 | /etc/resolv.conf                                             | DNS服务器地址配置                                            |
+| /etc/shadow                                                  | 存储用户加密密码信息                                         |
 | /etc/yum.repos.d/xx                                          | yum.repo源                                                   |
 | /etc/sysconfig/network                                       | 配置hostname                                                 |
 | /etc/sysconfig/network-scripts/ifcfg-eth0_or_33              | 网络接口配置文件，修改需要root权限                           |
@@ -759,7 +771,8 @@ wsl ls
 | /root                                                        | 超级管理员根目录.                                            |
 |                                                              |                                                              |
 | ~                                                            | 当前用户的主目录 /username，~目录下有一些隐藏 .用户配置文件  |
-| ~/.bashrc                                                    | bash用户,配置文件<br />执行命令 source ~/.zshrc 来生效修改的配置，而不需要重新登录<br /><br />CMD：链接器配置文件，是存放链接器的配置信息的，我们简称为命令文件,该文件的作用是指明如何链接程序的。<br />.xxrc：rc 是run command 表示与运行终端有关的配置 |
+| ~/.bashrc                                                    | 每次打开shell触发<br />bash用户,配置文件<br />执行命令 source ~/.zshrc 来生效修改的配置，而不需要重新登录<br /><br />CMD：链接器配置文件，是存放链接器的配置信息的，我们简称为命令文件,该文件的作用是指明如何链接程序的。<br />.xxrc：rc 是run command 表示与运行终端有关的配置 |
+| ~/.bash_profile                                              | 登陆时触发                                                   |
 | ~/maven_resp                                                 | maven的本地仓库（默认是在根目录的.m2，不是太建议）           |
 | ~/software下                                                 | 软件的安装包                                                 |
 | ~/app                                                        | 软件的安装目录                                               |
@@ -832,12 +845,15 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | chsh                                                         | 改变SHELL(bash、zsh)<br />cat /etc/shells 查看目前支持的shell<br />echo $SHELL 打印当前SHELL |                                                              |
 | clear                                                        | 清屏，向下一页                                               |                                                              |
 | curl [options...] <url>                                      | client URL，发送 http 请求<br />访问 cip.cc 可用于测试是否使用代理<br/> | -X Get 指定HTTP请求方法<br />-A 指定User-Agent<br />-b 指定Cookie<br />-d 指定Post请求正文<br />-F 上传二进制文件<br />-k 跳过 SSL 检测<br />-o 将响应保存为文件<br />-x 指定代理<br />-f 快速失败，根据HTTP响应状态码返回成功0失败非0 |
+| df                                                           | 显示文件系统使用情况                                         |                                                              |
 | echo $HADOOP_HOME                                            | 可以看一些软件的安装路径                                     |                                                              |
 | env                                                          | 查看环境变量<br />env \|grep -i poxy #查看系统代理配置情况   |                                                              |
+| fdisk                                                        | 磁盘分区                                                     |                                                              |
 | **find** [path] [options] expression                         | 在指定目录下递归查找文件路径<br />find / -name "head*"<br />-iname 对大小写不敏感 |                                                              |
 | firewall-cmd --list-ports                                    | 查看firewall已经开放的端口                                   |                                                              |
 | firewall-cmd --zone=public --*add*-*port=80/tcp* --permanent | 开启端口，–zone #作用域  添加端口，端口/通讯协议  永久生效，没有此参数重启后失效 |                                                              |
 | firewall-cmd --reload                                        | #重启firewall                                                |                                                              |
+| free -h                                                      | 显示内存使用情况                                             |                                                              |
 | **grep** [option] pattern [file]                             | 查找文件里符合条件的字符串的整行内容。Globally search a Regular Expression and Print<br />grep “txt” “head*”<br />不指定file，grep "txt" 会等待输入从键盘获取stdin<br />find path \| grep “exp” 正则查找文件<br />grep -o 只输出了匹配到的部分，而不是整行的内容。<br />grep -v 过滤掉相关字符串的内容。可以通过管道操作符组合使用 |                                                              |
 | groupadd xxgroup                                             | 创建新的用户组                                               | -r 系统用户组                                                |
 | groups  user1  /  passwd  password2                          | 位于root状态下，查看user1用户的所属组                        |                                                              |
@@ -849,6 +865,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | kill -9 Pid                                                  | 强制杀死进程                                                 |                                                              |
 | **less**                                                     | 查看文件，h显示帮助                                          |                                                              |
 | ls -lath                                                     | 展示当前目录下的文件与目录.并根据颜色区分类型.<br />–a显示隐藏文件<br />-i显示inode编号 <br /> -l 附加显示详细信息<br />-t 按时间排序<br />-r 反序<br />-h 文件大小单位变为kb<br />白(一般文件)、蓝(目录)、浅蓝(链接文件)、绿(可执行)、红(压缩)<br />黄背景(Set Group ID)、红背景(Set User ID)、绿背景(粘滞位) |                                                              |
+| lsblk -f                                                     | 显示文件系统                                                 |                                                              |
 | man                                                          | 可以用info命令替代                                           |                                                              |
 | mkdir myfloder                                               | 创建空目录.  <br />mkdir –p myfloder:  如果已经存在,也不报错提示. <br />mkdir无法创建多层目录,所以可以用 : mkdir –p a/b/c ) |                                                              |
 | ~~more~~                                                     | less命令更好用                                               |                                                              |
@@ -866,7 +883,8 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | sh -c [string]                                               | 执行脚本                                                     |                                                              |
 | shutdown [option] [time] [message]                           |                                                              |                                                              |
 | shutdown -h now                                              | 马上关机                                                     |                                                              |
-| **source profile**                                           | 使环境变量 profile 文件生效                                  |                                                              |
+| **source profile**                                           | 使环境变量 profile 文件生效<br />读profile并在当前shell执行  |                                                              |
+| ss                                                           | 显示sockets<br />l 显示正在监听的<br />t 只显示TCP sockets   |                                                              |
 | **ssh 用户名@ip**                                            | ssh登录远程主机                                              | -T                                                           |
 | sudo -i                                                      | 切换到root用户                                               |                                                              |
 | su xxyy                                                      | 换到普通用户                                                 |                                                              |
@@ -876,9 +894,11 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | vf<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法 |                                                              |
 | telnet                                                       | 远程登入，可以测试端口的连通性 **应用层**                    |                                                              |
 | tracepath [options] <destination>                            | 路径探测跟踪                                                 |                                                              |
+| ulimit -n                                                    | 打印最打文件描述符数量(Linux一切皆文件)                      |                                                              |
 | **uname -a**                                                 | 打印所有系统信息，包括linux版本，主机名                      |                                                              |
-| useradd  xxuser                                              | 创建新的用户                                                 | -r 系统用户                                                  |
+| useradd  xxuser                                              | 创建新的用户<br />sudo useradd -m -g users -s /bin/bash nemesis<br />sudo passwd nemesis | -r 系统用户                                                  |
 | vim                                                          | 编辑文本                                                     |                                                              |
+| visudo                                                       | export EDITOR=vim  # 默认是vi，export临时生效<br />testuser ALL=(ALL:ALL) ALL  # <用户名> <主机名>=(\<运行用户:运行组>) <命令列表> |                                                              |
 | wget url                                                     | 下载xx源                                                     |                                                              |
 | which [cmd]                                                  | 显示命令所在路径                                             |                                                              |
 | xargs [OPTION]... COMMAND [INITIAL-ARGS]...                  | extended argument ，默认情况下，将换行符和空格作为分隔符，把stdin分解成一个个命令行参数 |                                                              |

@@ -65,6 +65,15 @@ any_name2: &config2
 k2: *config2  # 引用
 ```
 
+```yaml
+any_name3: 
+- &config1: {
+	address: 127.0.0.1,
+  	address2: 127.0.0.1
+}
+- &config2: {address: 127.0.0.1, address2: 127.0.0.1}  # 同时定义多个锚点
+```
+
 & 锚点
 
 \* 引用

@@ -426,6 +426,10 @@ git rm -r --cached <target_file>  # 删除暂存区文件
 git checkout dev
 git stash
 git pull --rebase origin main  # 拉取远程主分支的最新更新并合并到本地分支。如果有冲突则需要手动解决冲突
+# 如果有冲突:
+# 1 解决冲突后 git rebase --continue
+# 2 跳过冲突的提交 git rebase --skip
+# 3 中止rebase，回到变基前 git rebase --abort
 git stash pop
 
 # 等价于
@@ -446,7 +450,7 @@ git rebase --continue
 
 在feature-xxx特性分支上进行开发并提交change
 切换回主分支，pull最新的change
-执行合并操作 (git merge) 将feature-xxx特性分支的change合并到主分支
+执行合并操作 (git merge) 将feature-xxx特性分支的change合并到主分支：git rebase dev(线性结构清晰，发生冲突需要强制推送) 或 git merge dev(发生冲突不需要强制推送，合并提交不清晰)
 如果在合并过程中发生冲突，手动解决冲突并提交解决方案。
 进行代码审核和测试
 推送主分支的更改到远程仓库
@@ -641,14 +645,16 @@ Untracked files:
 
 # Github
 
+[docs](https://docs.github.com/zh)
+
 issue/milestones 版本发布规划
 
-## Token
 
-| Token                                    | 用于访问个人Github API           |
-| ---------------------------------------- | -------------------------------- |
-| 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 | 用于 PicGO访问 image-hosting图床 |
-|                                          |                                  |
+
+杂
+
+api limit：`https://api.github.com/rate_limit` 
+仓库大小：`https://api.github.com/repos/Eikanya/Live2d-model`
 
 
 

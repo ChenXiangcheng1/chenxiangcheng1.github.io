@@ -22,6 +22,12 @@
 
 
 
+### Comment Translate
+
+能够翻译悬浮窗口中的API文档 (强烈推荐)
+
+
+
 ### Vim
 
 https://github.com/VSCodeVim/Vim
@@ -86,26 +92,197 @@ https://github.com/VSCodeVim/Vim
 
 ### C++
 
-GUN的子项目
-MinGW(Minimalist GNU For Windows)：是一直到Windows的GNU工具集合，停止更新GCC版本停滞
-MinGW-w64(推荐)：能编译生成64位可执行程序 `scoop install main/mingw`
-	GCC13.2.0(GNU C Compiler / GNU Compiler Collection)：编译C/C++
-	G++：编译C++
+#### C/C++扩展
 
-LLVM(Low Level Virtual Machine)的子项目
-Clang：兼容GCC
+[Microsoft C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 
-MSVC(Microsoft Visual C/C++ Compiler)
+##### 一代配置
 
-|          | MinGW-w64 | Clang |
-| -------- | --------- | ----- |
-| 构建工具 | Make      | CMake |
-| 调试     | GDB       | LLDB  |
+```json
+// https://code.visualstudio.com/docs/editor/tasks
+// 在调试会话之前执行的任务，一般为编译程序，包含编译命令如g++ test.cpp -o test
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build", // 任务名称，与launch.json的preLaunchTask相对应
+            "type": "process", // process是vsc把预定义变量和转义解析后直接全部传给command；shell相当于先打开shell再输入命令，所以args还会经过shell再解析一遍
+            // "problemMatcher":"$gcc", // 此选项可以捕捉编译时终端里的报错信息；但因为有Lint，再开这个可能有双重报错
+            "group": {
+                "kind": "build",
+                "isDefault": true // 不为true时ctrl shift B就要手动选择了
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always", // 执行任务时是否跳转到终端面板，可以为always，silent，never。具体参见VSC的文档
+                "focus": false,     // 设为true后可以使执行task时焦点聚集在终端，但对编译C/C++来说，设为true没有意义
+                "panel": "shared"   // 不同的文件的编译信息共享一个终端面板
+            },
+            "command": "g++", // 要使用的编译器，C用gcc，C++用g++
+            "windows": {
+                "args": [
+                    "-g", // 生成和调试有关的信息
+                    "${file}",
+                    "-o", // 指定输出文件名，不加该参数则默认输出a.exe，Linux下默认a.out
+                    "${fileDirname}/exeFiles/${fileBasenameNoExtension}.exe",  // 编译输出目录
+                    "-Wall", // 开启额外警告，如果不想要额外警告，可以删除
+                    "-static-libgcc",     // 静态链接libgcc，一般都会加上
+                    "-fexec-charset=GBK", // 生成的程序使用GBK编码，不加这一条会导致Win下输出中文乱码 Linux下不需要加
+                    // "-std=c11",
+                    //"-std=c++17", // C++最新标准为c++17，或根据自己的需要进行修改
+                ]
+            }
+        }
+    ]
+}
+```
+
+```json
+// https://github.com/Microsoft/vscode-cpptools/blob/master/launch.md
+// 调试配置，也就是用gdb来调试program，按照args参数执行命令
+// 调试会用到mingw中的gdb，gdb不支持中文路径
+// 点击变量中Register，会退出调试
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "preLaunchTask": "build", // 在调试会话之前执行的任务，一般为编译程序。与tasks.json的label相对应
+            "type": "cppdbg", // 配置类型，cppdbg对应cpptools提供的调试功能，此处只能是cppdbg
+            "request": "launch",
+            "program": "${fileDirname}/exeFiles/${fileBasenameNoExtension}.exe", // 将要进行调试的程序的路径
+            "args": [], // 程序调试时传递给程序的命令行参数，一般设为空即可
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}", // 调试程序时的工作目录
+            "environment": [],
+            "externalConsole": false, // 为true时使用单独的cmd窗口，与其它IDE一致；为false可调用VSC内置终端
+            "internalConsoleOptions": "neverOpen", // 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
+            "MIMode": "gdb",  // 指定连接的调试器
+            "miDebuggerPath": "E:/Develop/mingw64/bin/gdb.exe", // 调试器路径，Windows下后缀不能省略，Linux下则不要，注意替换成自己的路径
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": false
+                }
+            ]
+        }
+    ]
+}
+//${workspaceFolder}：工作区文件夹
+//${fileDirname}：文件所在目录
+```
 
 
 
-MAKE：写makefile
-CMAKE(推荐)：写cmakefile.txt
+##### 最终配置
+
+```json
+{
+    "configurations": [
+        {
+            "name": "Nemesis的配置",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.17134.0",  // TODO
+            "cStandard": "c23",  // TODO
+            "cppStandard": "c++23",  // TODO
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerPath": "E:/Develop/mingw64/bin/g++.exe"  // TODO
+        }
+    ],
+    "version": 4
+}
+```
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Nemesis生成可执行文件",
+            "type": "process",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "command": "g++",  // TODO
+            "windows": {
+                "args": [
+                    "-g",
+                    "${file}",
+                    "-o",
+                    "${fileDirname}/exeFiles/${fileBasenameNoExtension}.exe",  // TODO
+                    "-Wall",
+                    "-static-libgcc",
+                    "-fexec-charset=UTF-8",
+                    "-std=c++23"  // TODO:
+                    // g++ -dM -E -x c++ - < /dev/null | grep __cplusplus  // 显示 #define __cplusplus 201703L 表示默认 C++17
+                ]
+            }
+        }
+    ]
+}
+```
+
+```json
+{
+    "configurations": [
+        {
+            "name": "Nemesis来DEBUG可执行文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/exeFiles/${fileBasenameNoExtension}.exe",  // TODO
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,  // TODO
+            "MIMode": "gdb",
+            "miDebuggerPath": "E:\\Develop\\mingw64\\bin\\gdb.exe",  // TODO
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",  // 为 gdb 启用整齐打印
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",  // 将反汇编风格设置为 Intel
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Nemesis生成可执行文件"  // TODO
+        }
+    ],
+    "version": "2.0.0"
+}
+```
+
+```markdown
+C/C++插件提供了IntelliSense, debugging的功能，配置是json with comment格式在.vscode目录中
+
+| 配置                  | 释义                      |  文档|
+| --------------------- | ------------------------- | ---- |
+| c_cpp_properties.json | 设置编译器路径和智能感知  | |
+| tasks json            | 设置build构建(编译、链接) | [变量](https://code.visualstudio.com/docs/editor/variables-reference) |
+| launch.json           | 设置debugger              | |
+
+tasks 生成可执行文件，launch进行调试
+```
+
+
+
+
 
 
 
@@ -437,7 +614,7 @@ json打开方式：ctrl+shift+p keyboard.json
 | ------------------------------- | ---------------- |
 | ctrl k ctrl s                   | 键盘快捷方式设置 |
 | ctrl p                          | 快速打开文件     |
-| ctrl shift p                    | 快捷命令         |
+| ctrl shift p                    | 打开命令面板     |
 |                                 |                  |
 | ctrl i                          | 代码提示         |
 | Shift + Alt + F(右键菜单更方便) | 全局格式化代码   |

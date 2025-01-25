@@ -33,7 +33,7 @@
 https://github.com/VSCodeVim/Vim
 
 ```json
-// vim插件配置 Start 
+// vim插件配置 Start
 "vim.incsearch": true,  // 增量搜索
 "vim.useSystemClipboard": true,  // vim使用系统剪切板
 "vim.useCtrlKeys": true,  // 启用vscode Ctrl键，而不是vim键
@@ -95,6 +95,14 @@ https://github.com/VSCodeVim/Vim
 #### C/C++扩展
 
 [Microsoft C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+GUN的子项目
+MinGW(Minimalist GNU For Windows)：是一直到Windows的GNU工具集合，停止更新GCC版本停滞
+MinGW-w64：能编译生成64位可执行程序 `scoop install main/mingw`
+	GCC13.2.0(GNU C Compiler / GNU Compiler Collection)：编译C/C++
+	G++：编译C++
+
+**LLVM**(Low Level Virtual Machine)的子项目(推荐)
+Clang前端：兼容GCC
 
 ##### 一代配置
 
@@ -284,6 +292,32 @@ tasks 生成可执行文件，launch进行调试
 
 
 
+LS: `.clangd` [官网](https://clangd.llvm.org/)
+静态代码分析: clang-tidy 通过`.clangd` 配置
+格式化: `.clang-format`
+Debug: [codelldb](https://github.com/vadimcn/codelldb)、cppdbg
+build工具: [cmake-tools](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/README.md)
+build system(Generator): ninja
+
+```bash
+clang-format --style=LLVM -i main.cpp
+clang-format --style=LLVM --dump-config > .clang-format
+```
+
+
+
+TODO:
+
+clangd配置
+clangd插件配置
+最佳实践
+
+
+
+#### LSP
+
+配置：.clangd 或 使用clangd插件配置
+
 
 
 ### Python
@@ -368,7 +402,7 @@ select = [
 	"I",
 	"UP",
 	"W",
-	
+
 ]
 ignore = []  # lint时忽略
 
@@ -489,11 +523,11 @@ https://github.com/psf/black
 			]
 		}
 	},
-	
+
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [9000],
 
-	// Use 'portsAttributes' to set default properties for specific forwarded ports. 
+	// Use 'portsAttributes' to set default properties for specific forwarded ports.
 	// More info: https://containers.dev/implementors/json_reference/#port-attributes
 	"portsAttributes": {
 		"9000": {
@@ -546,12 +580,12 @@ json打开方式：ctrl+shift+p keyboard.json
 // 下面的配置权重更高，会覆盖上面的配置
 [
     {
-        "key": "enter", 
+        "key": "enter",
         "command": "acceptSelectedSuggestion",  // 选择建议
         "when": "suggestWidgetVisible && textInputFocus"
     },
     // {
-    //     "key": "space", 
+    //     "key": "space",
     //     "command": "acceptSelectedSuggestion",  // 选择建议
     //     "when": "suggestWidgetVisible && textInputFocus"
     // },

@@ -1,8 +1,6 @@
-
-
 # Dubbo
 
-Dubbo :是一个RPC框架，`SOA框架 (Service-Oriented Architecture 面向服务架构)`
+Dubbo :是一个RPC框架+自动注册与发现，`SOA框架 (Service-Oriented Architecture 面向服务架构)`
 
 作为RPC：使用 Dubbo 协议进行`节点间通信`，Dubbo 协议默认使用 Netty 作为基础通信组件，长连接进行传输且支持各种传输协议，用于实现`各进程节点之间的内部通信`。
 

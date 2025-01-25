@@ -15,6 +15,27 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_29
 
 # Java主要考点
 
+[云原生时代，Java 的危与机 周志明](https://www.bilibili.com/video/BV1CY411N7o2)
+
+
+
+对于一种语言关注：
+Null Safety：运行时通过Optional检查
+
+
+
+服务端方向云原生架构：应用以容器部署，快速启动
+JVM优点：多线程锁优化(但异步编程不好)、GC强，Spring生态丰富、适合团队开发
+JVM缺点(依赖运行时环境VM 属于重量级编程语言 解决方案: GraalVM虚拟机  quarkus框架)：占内存(运营成本 解决: Valhalla值类型无需解引用)、启动慢(解决方案: AOT 提前编译 但是大量反射还是慢)、包大、~~人守旧(新特性)~~
+
+期待：GraalVM、Loom虚拟线程
+
+
+
+其它：Spring WebFlux 不如 vert.x
+
+
+
 ![image-20230329223218824](https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_29_22_32.png)
 
 

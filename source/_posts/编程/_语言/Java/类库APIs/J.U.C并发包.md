@@ -557,6 +557,8 @@ new Thread(task).start();  // 两个线程竞争的是同一个锁
 
 ### Condition 接口
 
+**条件变量：为线程提供等待条件变量和条件变量通知的机制**
+
 Condition 分解 Object 的 monitor 方法为不同的对象。
 Lock 替换 synchronized 的使用，Condition 替换对象 monitor 方法的使用。条件变量为线程提供了等待和通知的方法。
 

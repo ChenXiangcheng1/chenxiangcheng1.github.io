@@ -15,7 +15,7 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_09_01
 
 
 
-# Docker
+# Docker24.0.6
 
 Docker Desktop = Docker Engine + Kubernetes + Compose V2
 
@@ -25,7 +25,7 @@ Registry：[docker hub](https://hub.docker.com/search?q=)	|	[quay](https://quay.
 
 
 
-TODO：先学完 [dockertips](https://dockertips.readthedocs.io/en/latest/docker-image/get-image.html)+ali网盘网课，再看官方文档
+TODO：先学完 [dockertips](https://dockertips.readthedocs.io/en/latest/docker-image/docker-image-basic.html)+ali网盘网课，再看官方文档
 
 
 
@@ -139,6 +139,12 @@ ARM(苹果M系列芯片就是ARM架构)
 
 
 
+#### 常见tag
+
+contrib(contributed)、distroless(为CI准备的)
+
+
+
 #### scratch
 
 https://hub.docker.com/_/scratch
@@ -218,6 +224,91 @@ docker container run --name cloudflared --restart unless-stopped cloudflare/clou
 
 
 
+#### envoy
+
+```makefile
+# bash环境执行
+help:
+	@echo "make help"
+	@echo "make direct"
+	@echo "make podman"
+	@echo "make validate"
+	@echo "make true_help"
+	@echo "make test"
+direct:
+	envoy -config-path ./envoy-demo.yaml
+	--config-yaml "$(cat ./envoy-override.yaml)"
+	--log-path ./custom.log
+	--log-level info
+	--component-log-level upstream:debug,connection:trace
+podman:
+	podman run --rm -d -v $(pwd)/envoy-demo.yaml:/etc/envoy/envoy-custom.yaml -p 9901:9901 -p 10000:10000 -p 9902:9902 envoyproxy/envoy:v1.32.3 --config-path /etc/envoy/envoy-custom.yaml --config-yaml "$(cat envoy-override.yaml)"
+validate:	
+	podman run --rm -it -v $(pwd)/envoy-demo.yaml:/etc/envoy/envoy-custom.yaml -p 9901:9901 -p 10000:10000 -p 9902:9902 envoyproxy/envoy:v1.32.3 \
+	--config-path /etc/envoy/envoy-custom.yaml \
+	--config-yaml "$(cat envoy-override.yaml)" \
+	--mode validate
+true_help:
+	podman run --rm -it envoyproxy/envoy:v1.32.3 --help
+test:
+	cat ./envoy-override.yaml
+```
+
+```bash
+docker run --rm -it \
+	-v $(pwd)/envoy-custom.yaml:/etc/envoy/envoy-custom.yaml \
+	-p 9901:9901 -p 10000:10000 \
+	envoyproxy/envoy:v1.32.3 \
+	
+	-c /etc/envoy/envoy-custom.yaml \  # 默认是 /etc/envoy/envoy.yaml
+	--config-yaml "$(cat envoy-override.yaml)"  # append配置
+	# --mode validate
+```
+
+```envoy-override.yaml
+admin:
+  address:
+    socket_address:
+      address: 127.0.0.1
+      port_value: 9902
+```
+
+admin页面: http://localhost:9901/
+demo路由到home的页面: http://localhost:10000/
+
+
+
+#### watchtower 
+
+```bash
+docker run -d \
+    --name watchtower \
+    --restart always \
+    -v /run/podman/podman.sock:/var/run/docker.sock \
+    -v /run/podman/io.podman:/var/run/docker.sock \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -e TZ=Asia/Shanghai \
+    containrrr/watchtower \
+    --cleanup
+    # --interval 86400  # 一天(86400秒)更新一次
+    -schedule "0 0 1 * * *"  # Cron表达式: "秒 分钟 小时 日 月 年"
+	nginx redis  # 需要更新的容器名
+```
+
+不支持win平台的docker
+
+
+
+#### uptime-kuma
+
+一个监控项目
+
+```cmd
+podman run -d --restart=always -p 3001:3001 -v /mnt/E/dev-projects/docker_volume/uptime-kuma/data:/app/data --name uptime-kuma louislam/uptime-kuma:1
+```
+
+
+
 ### container 容器
 
 容器状态：Created、Up XX minutes、Exited(1) XX seconds age        // restarting
@@ -225,8 +316,8 @@ docker container run --name cloudflared --restart unless-stopped cloudflare/clou
 | docker container [arg] <COMMAND>           | 释义                                                         | 参数                                                         |
 | ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | ls                                         | 列出所有正在运行的容器                                       | -a 显示所有容器<br />-q 只显示容器IDs                        |
-| run <image>  [command]                     | 从镜像创建并运行一个新容器，若镜像不存在则去 docker hub 拉取 | -d 分离(detach)模式在后台运行<br />-p 指定端口转发，将主机端口映射到容器端口，例如-p 8080:80，效果0.0.0.0:8080->80/tcp<br />-i 交互的<br />-t 分配一个伪tty(终端)<br />--name 分配一个名字给容器<br />--rm 当容器退出自动删除<br />-v <list> 挂载一个卷，例如 `-v volumename:/path`<br />-e 设置环境参数<br />--network 指定网络<br />--restart=always(on-failure:5、unless-stopped、默认no) 设置启动docker守护进程时的重启策略 |
-| update <container>                         | 更新CPU设置、内存设置、restart策略                           | --restart=always(on-failure:5、unless-stopped、默认no)       |
+| run <image>  [command]                     | 从镜像创建并运行一个新容器，若镜像不存在则去 docker hub 拉取 | -d 分离(detach)模式在后台运行<br />-p 指定端口转发，将主机端口映射到容器端口，例如-p 8080:80，效果0.0.0.0:8080->80/tcp、127.0.0.1:8080:80只允许本机访问<br />-i 交互的 stdin打开<br />-t 分配一个伪tty(终端) 让shell能正常运行<br />--name 分配一个名字给容器，不指定则随机<br />--rm 当容器退出自动删除<br />-v <list> 挂载一个卷，例如 `-v volumename:/path`<br />-e 设置环境参数<br />--network 指定网络<br />--restart=always(on-failure:5、unless-stopped、默认no) 设置启动docker守护进程时的重启策略 |
+| update <container>                         | 更新CPU设置、内存设置、restart策略                           | --restart=always(on-failure:5、unless-stopped、默认no)<br />设置为restart=always的，在需要关闭时需要update restart为其它值 |
 | stop <container>                           | 暂停正在运行的容器                                           |                                                              |
 | restart <container>                        | 重启已退出运行的容器                                         |                                                              |
 | rm <container>                             | 移除容器                                                     |                                                              |
@@ -394,7 +485,7 @@ env/
 
 ## 3容器编排工具
 
-指容器的自动化创建、配置、部署和管理工具
+指**多容器**的自动化创建、配置、部署和管理工具
 
 
 
@@ -514,20 +605,85 @@ docker-compose up -d
 
 
 
-# Podman
+# Podman5.3.1
 
 技术选型：
 
 [CRI(Container Runtime Interface)官网]( https://opencontainers.org/)
 
-|      | docker(推荐)             | Podman                                      | macOS OrbStack(推荐) | nerdctl          |
-| ---- | ------------------------ | ------------------------------------------- | -------------------- | ---------------- |
-| 优点 | **生态好**               | 兼容docker-compose(也有在线转换podman run)  |                      | 底层是containerd |
-| 缺点 | docker desktop商业要收费 | 存在build可能与docker不一致的问题(巨大劣势) |                      |                  |
+|                           | docker(推荐且在linux系统)                                    | Podman                                                       | macOS OrbStack(推荐) | nerdctl    |
+| ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------- | ---------- |
+| 优点                      | **生态好**<br />docker-compose                               | 兼容docker-compose(也有在线转换podman run)<br />pod(对接k8s)<br />原生rootless<br />**RHEL支持** |                      |            |
+| 缺点                      | docker desktop商业要收费<br />C/S架构<br />RHEL 不再支持 Docker | 存在build可能与docker不一致的问题(巨大劣势)<br />不支持watchtower(因为其实现通过unix://.sock或TCP连接docker而这不能连接podman) |                      |            |
+| ContainerRuntimeInterface | containerd                                                   | cri-o                                                        |                      | containerd |
 
 
 
+## 配置
+
+ container image registries
 
 
-# 我的安装
+
+## 问题
+
+问题1：
+
+```cmd
+> podman search httpd
+Cannot connect to Podman. Please verify your connection to the Linux system using `podman system connection list`, or try `podman machine init` and `podman machine start` to manage a new Linux VM
+Error: unable to connect to Podman socket: failed to connect: dial tcp 127.0.0.1:49502: connectex: No connection could be made because the target machine actively refused it.
+```
+
+原因：podman system connection default 设置错误
+解决：
+
+```powershell
+Test-NetConnection -ComputerName 127.0.0.1 -Port 49502  # 不能访问
+```
+
+```bash
+wsl -d podman-machine-default
+ps -ef  # 发现sshd启动有对ssh的监听
+ss -l -t  # 发现有对0.0.0.0:59592的监听，wsl是正确的
+netsh int ipv4 show excludedportrange protocol=tcp  # 发现端口也没被HyperV占用
+```
+
+```cmd
+podman machine inspect  # 发现存在的machine是podman-machine-default是59592
+podman system connection list
+podman system connection default podman-machine-default  # 问题出在启动的machine错误
+podman machine start
+```
+
+
+
+问题2：
+
+```bash
+podman image search uptime-kuma
+Error: 1 error occurred:
+        * couldn't search registry "docker.io": pinging container registry index.docker.io: Get "https://index.docker.io/v2/": dial tcp 128.121.243.77:443: i/o timeout
+```
+
+原因：网络问题
+解决：检查代理
+
+
+
+问题3：podman-desktop与podman不同步
+暂时解决：不使用代理
+
+
+
+问题4：已经走clash了，podman machine init 还是慢 (如果没走说明环境变量http_proxy不起作用，可以使用proxychains-ng)
+暂时解决：大概率代理或wsl问题，不使用wsl环境
+
+
+
+问题4：windows cmd不支持$()、cat  `$(cat ./envoy-override.yaml)`
+git bash 当 `-v envoy-demo.yaml:/etc/envoy/envoy-custom.yaml` 
+会报错 invalid container path "\\Applications\\Scoop\\apps\\git\\2.47.0.2\\etc\\envoy\\envoy-custom.yaml", must be an absolute path
+原因：git bash 将路径转换了在传给宿主机
+解决：`export MSYS_NO_PATHCONV=1  # 禁用路径转换` 要想每次自动生成，将其添加到 `~/.bashrc`
 

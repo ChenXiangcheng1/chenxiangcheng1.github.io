@@ -4,6 +4,13 @@
 
 **强烈建议在Windows上在WSL中使用Git**
 
+![](https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/wz/202410160846187.png)
+
+工作区(最底下)：Changes not staged for commit
+暂存区：Changes to be committed
+
+
+
 ## 资料
 
 [Git游戏](https://learngitbranching.js.org/?demonoemo=&locale=zh_CN)
@@ -40,19 +47,19 @@
 	email = chenxiangcheng1@gmail.com  # Git提交使用邮件区分
 [core]
 	autocrlf = false
-	# false都不变  # 
+	# false都不变  #
 	# true拉取为CRLF，提交为LF  # win  # 不建议因为本地LF会warn，很烦
     # input拉取不变，提交为LF  # linux
-	quotepath = false  # 取消文件名字符转义，使 git status 能显示中文	
-	editor = vim  
+	quotepath = false  # 取消文件名字符转义，使 git status 能显示中文
+	editor = vim
 	# git config --global core.editor "'E:/Applications/Scoop\apps/notepadplusplus/current/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"  # 设置默认编辑器为notepad++
 [http]
     proxy = socks5://127.0.0.1:7890  # 可删，因为若docker内应用host.docker.internal
 [https]
     proxy = socks5://127.0.0.1:7890
-[credential]	
+[credential]
 	helper = manager  # 使用Https协议访问Git版本库需要用户名和密码  manager选项使用windows存储的密码
-	# git config --global credential.helper 
+	# git config --global credential.helper
 # [credential "helperselector"]  # 不需要配置
 # 	selected = manager
 # TODO: 查下面这配置什么意思
@@ -121,7 +128,7 @@ SSH (Secure Shell) 是应用层协议，openSSH是实现。
 ```zsh
 pacman -Ss openssh
 pacman -S openssh
-ssh --help                                                                                                   
+ssh --help
 OpenSSL version mismatch. Built against 30100010, you have 30000080  // openssh发生错误，有冲突
 pacman -Su openssh  // 更新后openssh正常
 ```
@@ -197,21 +204,21 @@ cat ~/.ssh/id_ed25519_github.pub
 Host github.com
   User git
   ProxyCommand ncat --proxy-type socks5 --proxy 172.26.128.1:7890 %h %p
-  
+
 Host github.com
      HostName github.com
          #ProxyCommand nc -X connect -x 127.0.0.1:1080 %h %p
          ProxyCommand ncat --proxy 127.0.0.1:1080 %h %p
      User git
-     Port 22  
-     
+     Port 22
+
 Host github.com
     Hostname ssh.github.com  # 实际IP地址
     Port 443
     User git
     ProxyCommand ncat --proxy-type socks5 --proxy ${PROXY_SOCKS5} %h %p
-    
-    
+
+
 # 配置代理
 # https://dowww.spencerwoo.com/2-cli/2-3-cli-tools.html#%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE
 # Fetch Windows ip address inside WSL environment
@@ -300,7 +307,7 @@ git@github.com: Permission denied (publickey).
 **5问题2：**
 
 ```bash
-ssh -vT git@github.com                                                                                       
+ssh -vT git@github.com
 Connection closed by UNKNOWN port 65535
 ```
 
@@ -346,6 +353,17 @@ nc -vz 172.30.208.1 7890
 
 ## 命令
 
+```bash
+git status --short
+git clone --depth=1  # 只下载最新提交，适合获取代码简单查看不改 --shallow-submodules # 浅克隆子模块
+git switch  # 替代 git checkout
+git restore  # 丢弃所有更改，恢复到最新提交状态(HEAD)
+```
+
+
+
+
+
 ### git merge 和 rebase 的区别
 
 共：把一个分支的提交合并到另一个分支
@@ -362,6 +380,17 @@ rebase：嫁接
 
 
 
+### 存档库操作
+
+| 命令                                                         | 释义 |
+| ------------------------------------------------------------ | ---- |
+| git stash list                                               |      |
+| git stash<br />git stash push -m "stash(mquant/adapter): only import order" |      |
+| git stash apply stash@{9}                                    |      |
+| git stash drop stash@{9}                                     |      |
+
+
+
 ### 场景(重点)
 
 #### 上传新项目
@@ -373,7 +402,7 @@ git commit -m "first commit"
 git remote add origin git@github.com:TrackyTian/testSSH.git  # 添加远程主机名
 git branch -m main  # 分支重命名
 git push origin main:main
-git checkout -b dev  # 切换并创建分支
+git checkout -b dev  # 切换并根据当前分支创建分支
 ```
 
 ```bash
@@ -420,17 +449,17 @@ git rm -r --cached <target_file>  # 删除暂存区文件
 
 
 
-#### 定期从远程主分支拉取更新
+#### rebase定期从远程主分支拉取更新
 
 ```bash
 git checkout dev
 git stash
 git pull --rebase origin main  # 拉取远程主分支的最新更新并合并到本地分支。如果有冲突则需要手动解决冲突
-# 如果有冲突:
+# 若有冲突，手动解决冲突:
 # 1 解决冲突后 git rebase --continue
 # 2 跳过冲突的提交 git rebase --skip
 # 3 中止rebase，回到变基前 git rebase --abort
-git stash pop
+git stash pop  # 本质上是 git stash apply、git stash drop  # 冲突时不执行drop，再次pop确保 git stash list 为空
 
 # 等价于
 git fetch
@@ -442,9 +471,30 @@ git rebase --continue
 # 之后就可以commit、push origin main啦
 ```
 
+```bash
+# 扩展git pull本质
+git pull = fetch + merge
+
+git fetch upstream origin == git remote update upstream  # 远程仓库分支(.git/refs/remotes/*) -> 远程分支(.git/refs/heads/\*)
+
+git merge  # 远程分支 -> 本地分支
+git merge --squash  # squash策略的压缩merge
+```
 
 
-#### 合并和解决冲突
+
+
+
+#### merge合并和解决冲突
+
+```bash
+git merge  # 默认为Fast-Forward Merge
+当前分支的 HEAD 指针在要合并的分支的历史提交之前，即当前分支没有任何新的提交。当前分支直接指向最后一个提交
+
+git merge --no-ff
+```
+
+
 
 方式1：git合并方式
 
@@ -461,7 +511,7 @@ git status
 git add .
 git commit -m "完成开发"
 git checkout main
-git pull 
+git pull
 git merge feature-xxx
 手动解决冲突
 git add <files>
@@ -499,7 +549,7 @@ git push orgin main
 
 #### 创建新本地分支
 
-`git clone -b <name> <url>` 只能 clone 到新目录
+`git clone -b <name> <url | base_branch-name(默认为当前分支)>` 只能 clone 到新目录
 
 ```bash
 # 查看分支
@@ -513,11 +563,11 @@ git show-branch
 --
 *+ [feature-atxfile] add get_prev_trade_date
 
-git branch -v  # 推荐
+git branch -vv  # 推荐
 * feature-atxfile d3030e5 add get_prev_trade_date
   main            d3030e5 add get_prev_trade_date
 
-git branch -a  # 推荐
+git branch -a
 * feature-atxfile
   main
   remotes/origin/HEAD -> origin/main
@@ -532,7 +582,72 @@ git checkout -b new-branch origin/main
 
 
 
+```bash
+git branch -d feature/baseinfo  # 删除本地分支
+git push origin :feature/baseinfo  # 删除远程分支
+```
 
+
+
+
+
+#### commit
+
+commit 格式 `<type>(<scope>): <subject>`
+
+type
+	**feat**：新增功能
+	**fix**：修复Bug
+	docs：文档变更
+	style：代码格式（不影响代码运行的变动）
+	refactor：重构（即不是新增功能，也不是修改Bug的代码变动）
+	test：增加测试
+	chore：构建过程或辅助工具的变动(杂货)
+	sync()
+scope影响范围
+	root
+subject内容
+
+
+
+
+
+#### 撤销commit
+
+```bash
+git reset HEAD^  # 回退所有内容到上一个版本
+git reset  HEAD~3  # 向前回退到第3个版本
+
+git reset HEAD^ test.txt  # 回退test.txt这个文件的版本到上一个版本
+
+git reset 51363e6  # 回退到某个版本51363e6
+```
+
+
+
+#### PR
+
+origin：是默认名，一般约定为自己的远程仓库
+upstream：一般约定为fork的源仓库
+
+```bash
+git remote add upstream https://github.com/user/project.git
+git pull upstream master:<branch_name>
+修改代码，并commit
+git pull --rebase upstream master:<branch_name>
+git push origin <branch_name>
+提交PR
+```
+
+
+
+#### 设置上游仓库
+
+```bash
+git branch -vv
+git branch --set-upstream-to=<远程仓库>/<远程分支>
+git branch --unset-upstream
+```
 
 
 
@@ -544,8 +659,8 @@ git checkout -b new-branch origin/main
 | --------------- | ------------------------------------------------------------ |
 | – 将被 Git 忽略 | 注释                                                         |
 | **目录**        |                                                              |
-| build/          | 忽略 build/ 目录下的所有文件                                 |
-| /mtk/           | 过滤整个文件夹                                               |
+| build/          | 忽略所有 build/ 目录下的所有文件                            |
+| /mtk/           | 忽略根目录下的整个文件夹                              |
 | **文件**        |                                                              |
 | /mtk/do.c       | 过滤某个具体文件                                             |
 | /TODO           | 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO         |
@@ -557,7 +672,35 @@ git checkout -b new-branch origin/main
 
 
 
+
+
+## .gitattributes
+
+用于处理行尾
+
+```.gitattributes
+# text  # 标记为文本文件
+# eol = lf    # 入库时将行尾规范为LF，检出时不操作(保持LF)(推荐)
+# eol = crlf  # 入库时将行尾规范为LF，检出时将行尾转换为CRLF
+
+* text=auto
+*.cpp text eol=lf
+*.h text eol=lf
+*.c text eol=lf
+*.hpp text eol=lf
+*.cmake text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.png binary
+```
+
+
+
+
+
 ## 证书
+
+https://open-source-license-chooser.toolsnav.top/zh/
 
 | License           | 许可协议             |
 | ----------------- | -------------------- |
@@ -580,7 +723,7 @@ On branch main
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-        modified:   DDB閲忓寲閲戣瀺鑼冧緥/ddb_example_1.dos        
+        modified:   DDB閲忓寲閲戣瀺鑼冧緥/ddb_example_1.dos
         modified:   WorldQuant 101 Alpha 鍥犲瓙鎸囨爣搴?calc_factor.dos
 ```
 
@@ -611,11 +754,11 @@ Untracked files:
 
 ```.gitconfig
 # .gitconfig
-[gui]  
-    encoding = utf-8  #代码库统一使用utf-8  
-[i18n]  
-    commitencoding = utf-8  #log编码  
-[svn]  
+[gui]
+    encoding = utf-8  #代码库统一使用utf-8
+[i18n]
+    commitencoding = utf-8  #log编码
+[svn]
     pathnameencoding = utf-8  #支持中文路径
 ```
 
@@ -645,7 +788,7 @@ Untracked files:
 
 # Github
 
-[docs](https://docs.github.com/zh)
+[docs](https://docs.github.com/zh)  | [skills.github.com](https://skills.github.com/)
 
 issue/milestones 版本发布规划
 
@@ -653,7 +796,7 @@ issue/milestones 版本发布规划
 
 杂
 
-api limit：`https://api.github.com/rate_limit` 
+api limit：`https://api.github.com/rate_limit`
 仓库大小：`https://api.github.com/repos/Eikanya/Live2d-model`
 
 
@@ -705,7 +848,7 @@ api limit：`https://api.github.com/rate_limit`
 国际化域名(特殊字符域名)需要配置Punycode编码版本的CNAME
 
 3
-DNS提供商 (例如[阿里云](https://dns.console.aliyun.com/#/dns/setting/haruharu.top)) 
+DNS提供商 (例如[阿里云](https://dns.console.aliyun.com/#/dns/setting/haruharu.top))
 
 | 记录类型 |                  | 指向             |
 | -------- | ---------------- | ---------------- |
@@ -752,6 +895,191 @@ img-bot：压缩图像
 
 
 
+# Gitflow
+
+[掘金教程](https://juejin.cn/post/6982166300806086692)
+
+```bash
+git flow help
+
+git flow init  # 创建分支
+git flow feature start fname  # 创建共享分支feature/fname
+git flow feature finish fname  # git merge —no-ff
+git flow release start 1.1.5  # hotfix的基础分支是master、其它是dev
+git flow release finish 1.1.5
+
+git checkout -b feature/fname-person  # 创建个人分支
+
+# 写代码之前merge共享分支
+git checkout feature/test
+git pull origin feature/test
+git checkout feature/test-username
+git merge feature/test
+
+# 为个人分支创建PR合并到共享分支
+```
+
+```bash
+# git-flow 等价的 git命令
+
+# 创建一个仓库
+mkdir gitflow
+cd gitflow
+git init
+
+touch README.md
+# ... 编辑 README.md
+git add README.md
+git commit -m "add README.md"
+
+# 创建develop长期分支
+git checkout -b develop
+# develop分支必须先与feature分支推到远程仓库中
+git push origin develop
+# 获取远程仓库的develop分支到本地develop分支
+# git fetch origin develop:develop
+
+# 在develop的基础上创建功能分支
+git checkout -b feature/baseinfo develop
+# ... 开发功能 feature/baseinfo
+git push origin feature/baseinfo
+# 合并开发好且通过测试的feature/baseinfo到develop
+git checkout develop
+git merge --no-ff feature/baseinfo
+
+# 移除开发完成的功能分支feature/baseinfo
+git branch -d feature/baseinfo
+# 删除远程仓库的功能分支
+git push origin :feature/baseinfo
+
+# ... 继续开发合并其他分支
+
+# 预发布
+git checkout -b release/v0.1.0 develop
+git commit -a -m "initial version  v0.1.0"
+# ... 在release/v0.1.0上修改bugs
+
+# 发布线上版本
+git checkout master
+git merge --no-ff release/v0.1.0
+# commit note: initial version v0.1.1
+git tag v0.1.0
+git push origin master
+git push origin v0.1.0
+
+# 将release中修改过的代码合并到develop中
+git checkout develop
+git merge --no-ff release/v0.1.0
+
+# 删除不需要的release分支
+# 删除本地release分支
+git branch -d release/v0.1.0
+# 删除远程release分支
+git push origin :release/v0.1.0
+
+# 在线上发现一个Bug，需要紧急修复，一般来说，v0是还没有上线的版本
+git checkout -b hotfix/v0.1.0 master
+# ... 修复bugs
+# 重新发布一个版本，修订号加上1
+git checkout master
+git merge --no-ff hotfix/v0.1.0
+# commit note: bump version to v0.1.1
+git tag v0.1.1
+git push origin master
+git push origin v0.1.1
+
+# 将hotfix分支合并到develop中，如果此时有未发布的release分支，则合并到release分支中
+git checkout develop
+git merge --no-ff hotfix/v0.1.0
+git push origin develop
+
+# 删除hotfix分支
+git branch -d hotfix/v0.1.0
+git push origin :hotfix/v0.1.0
+```
+
+
+
+# .github
+
+## Actions
+
+CICD持续集成部署
+
+[官网](https://github.com/features/actions)	|	[demo](https://github.com/ChenXiangcheng1/skills-hello-github-actions)	|	[marketplace](https://github.com/marketplace?type=actions)	|	[actions/checkout](https://github.com/actions/checkout)
+
+```yaml
+# .github/workflows/xxx.yml
+name: Post welcome comment
+on:
+  workflow_dispatch:  # 人工触发
+    inputs:
+      xxYY:
+        description: "desc"
+        required: true
+        default: "xx"
+      tags:
+        description: "tags desc"
+  pull_request:
+    types: [opened]
+  schedule:  # 计时触发
+    - cron: "*/15 * * * *"
+  fork:
+  watch:  # star
+  issues:
+  push:
+permissions:
+  pull-requests: write
+jobs:  # 运行在runner server上
+  build:
+    name: Post welcome comment
+    runs-on: ubuntu-latest
+    steps:
+     - name: just a simple ls command
+        runs: ls -la
+      - name: Checkout repository
+        uses: actions/checkout@v4  # 复用 # 克隆仓库到虚拟机上
+        with:  # 参数
+          arg: 1
+      - run: gh pr comment $PR_URL --body "Welcome to the repository!"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+  run1:
+    needs: [build]
+  run2:
+    needs: [build, run1]
+```
+
+
+
+## Dependabot
+
+```yaml
+# .github/dependabot.yml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+
+version: 2
+updates:
+  - package-ecosystem: "npm"  # pip 支持的包管理器有限
+    directory: "/frontend" # Update this path if your package.json is in a different directory
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+```
+
+
+
+
+
 # 未整理
 
 ## 架构
@@ -768,7 +1096,7 @@ img-bot：压缩图像
 
 HEAD：最后一次提交，提交树的当前提交位置。
 cat .git/COMMIT_EDITMSG 查看HEAD指向
-git symbolic-ref HEAD 
+git symbolic-ref HEAD
 分离 HEAD 的状态：这是因为不能直接在v1标签上面做 commit。
 
 
@@ -859,15 +1187,6 @@ Git 常用命令速查表：
 
 
 
-### 存档库操作
-
-| 命令            | 释义 |
-| --------------- | ---- |
-| git stash       |      |
-| git stash list  |      |
-| git stash apply |      |
-| git stash drop  |      |
-
 
 
 
@@ -933,7 +1252,7 @@ Tabby 终端中 Git Bash Shell 中的 VIM 键盘乱码
 
 因为：辣鸡 Tabby
 
-1 重启 Tabby 
+1 重启 Tabby
 
 
 
@@ -1052,17 +1371,17 @@ git clone 地址
 
 命令行说明格式 | 释义
 -- | --
- [] | 表示其中的元素可选择一个或多个，也可以不选 
- {}，斜体 | 必须在其中选择一个 
- <> | 表示其中的元素至少选择一个 
- \| | 管道符号，含义是“或者”（不可同时选择两个） 
- ... | 省略号，表示前述元素可以在命令行中多次重复 
+ [] | 表示其中的元素可选择一个或多个，也可以不选
+ {}，斜体 | 必须在其中选择一个
+ <> | 表示其中的元素至少选择一个
+ \| | 管道符号，含义是“或者”（不可同时选择两个）
+ ... | 省略号，表示前述元素可以在命令行中多次重复
 
-Git Bash 命令 | 释义                     
+Git Bash 命令 | 释义
 -- | --
-git --version | 查看git版本 
-git config --global user.name "……" | 配置全局的用户名 
-git config --global user.email "……" | 配置全局的用户邮件 
-git config --list | 查看配置列表 
-git [--help] <command> [<args>] | 查看Manual命令手册 
+git --version | 查看git版本
+git config --global user.name "……" | 配置全局的用户名
+git config --global user.email "……" | 配置全局的用户邮件
+git config --list | 查看配置列表
+git [--help] <command> [<args>] | 查看Manual命令手册
 

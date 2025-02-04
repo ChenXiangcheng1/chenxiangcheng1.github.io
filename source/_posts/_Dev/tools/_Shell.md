@@ -3,6 +3,7 @@
 sh：可能不支持方向键，会打印`^[[A`
 bash：是对sh的改进，支持自动补全、历史记录、脚本编程
 zsh：是对bash的改进，支持高级自动补全、主题、插件
+最佳实践：服务器上不要修改 /etc/passwd 的 /bin/bash，而是在客户端配置
 
 [字体：Fira Code](./../toools/Font.md)
 
@@ -29,9 +30,6 @@ TcpTestSucceeded : True  # 表示端口可访问且有服务器监听
 
 ## bash
 
-可看Linux笔记
-目前，我Windows使用bash、Linux使用zsh
-
 ```bash
 Nmap -p7890 127.0.0.1  # 看端口是否开放与是什么服务
 ```
@@ -40,25 +38,42 @@ Nmap -p7890 127.0.0.1  # 看端口是否开放与是什么服务
 
 ### 配置
 
-`~/.bashrc` 等同`C:\Users\qq109\.bashrc`，zsh也有zshrc，每次打开终端时执行，可以自定义命令别名
-
-```
-alias hi="echo 'frank is awesome'"
-```
-
+`~/.bashrc` 每次打开终端时执行
 `~/.bash_profile` 在登录时执行
 
+```~/.bashrc
+alias hi="echo 'frank is awesome'"  # 自定义命令别名
+```
 
 
-## zsh(推荐)
 
-###  oh-my-zsh
+## zsh
+
+
+
+### 插件管理器
+
+[zim#比较插件管理器延迟](https://github.com/zimfw/zimfw?tab=readme-ov-file)
+
+
+
+#### zinit(半推荐)
+
+之前zinit作者删库不维护了，现在的 [zinit github](https://github.com/zdharma-continuum/zinit) 由社区维护
+
+异步加载
+
+snippet 支持omz插件
+
+
+
+####  oh-my-zsh(omz)
 
 oh-my-zsh：zsh管理工具
 
 
 
-#### 配置
+##### 配置
 
 `~/.zshrc`
 
@@ -74,25 +89,80 @@ p10k configure
 ```bash
 # 插件 https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/
 plugins=(
-  git  # git命令缩写
-  z  # z跳转命令  
+  git
+  z
   # 第三方插件
-  zsh-autosuggestions  # 右键补全
-  zsh-syntax-highlighting  # 语法检查
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 ```
 
 
 
-## fish
+## fish(推荐)
 
-不兼容bash语法
+缺点：不兼容bash语法，执行bash脚本需要切换shell
+优点：基本功能由fish支持、**0配置开箱即用方便同步**
+我的选择：感觉zsh的插件管理器还是冷门，omz无异步不想用，还是推荐 fish + starship 只需要配置一下prompt
+
+[官网](https://fishshell.com/)	|	[github](https://github.com/fish-shell/fish-shell)	|	TODO: 有空可以看 [fish教程tutorial](https://fishshell.com/docs/current/tutorial.html)
+[插件管理器fisher](https://github.com/jorgebucaran/fisher)	|	[插件](https://github.com/jorgebucaran/awsm.fish)
 
 
 
-## terminal
+## 插件
 
-[tabby](https://github.com/Eugeny/tabby)	|	[WindTerm](https://github.com/kingToolbox/WindTerm)
+| 插件                                                         | shell | 意图                                                         |
+| ------------------------------------------------------------ | ----- | ------------------------------------------------------------ |
+| git                                                          | zsh   | git命令别名                                                  |
+| docker                                                       | zsh   | docker命令别名                                               |
+| autojump                                                     | zsh   | j 跳转                                                       |
+| jethrokuan/z (推荐)                                          | zsh   | z 跳转                                                       |
+| zsh-syntax-highlighting                                      | zsh   | 语法检查高亮                                                 |
+| zsh-autosuggestions                                          | zsh   | ctrl -> 自动补全                                             |
+| fzf-tab                                                      | zsh   | tab增强 模糊搜索                                             |
+| zsh-history-substring-search                                 | zsh   | 历史命令搜索<br />ctrl r 反向命令搜索使用前缀匹配，而fzf是字符串匹配 |
+|                                                              |       |                                                              |
+| gitstatus(推荐)<br />romkatv写的其他插件(p10k)也可以看看，但有限支持 | zsh   | 异步(守护进程) prompt for git                                |
+| [hydro](https://github.com/jorgebucaran/hydro) 贡献还比较少，异步很重要，非异步会增加延迟 | fish  | 异步 prompt for git                                          |
+|                                                              |       |                                                              |
+
+
+
+# **prompt**
+
+不止theme，关键还需要提供异步 prompt for git (会显示[⇡] 表示git 状态)
+
+[基准测试](https://github.com/romkatv/zsh-bench#prompt)
+
+
+
+## Powerlevel10k
+
+a zsh prompt theme
+作者romkatv，zsh插件大佬
+
+
+
+## starship(推荐)
+
+**跨平台**(外部进程)
+虽然基准测试显示速度不如gitstatus，但是跨平台
+
+
+
+配置：`~/.config/starship.toml`
+
+```toml
+```
+
+
+
+
+
+# terminal
+
+[tabby](https://github.com/Eugeny/tabby)	|	[WindTerm](https://github.com/kingToolbox/WindTerm)	|	[warp(收费)](https://www.warp.dev/)
 
 
 

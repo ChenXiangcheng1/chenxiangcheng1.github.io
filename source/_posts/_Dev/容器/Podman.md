@@ -220,6 +220,8 @@ docker run -d -p 8848:8848 --name dolphindb dolphindb/dolphindb:v3.00.0
 
 ```bash
 docker container run --name cloudflared --restart unless-stopped cloudflare/cloudflared:latest tunnel --protocol http2 --no-autoupdate run --token eyJhIjoiMDI3N2U5YTQ2MjNiNDdlYjg1MzQ5M2I0MTNlOWFjYjQiLCJ0IjoiMjQxYjBjOGMtODliMi00YmE5LWI5ZTMtNTFmNTllOTI5MTNjIiwicyI6IllUTXpOekJtWTJFdFltUTBOeTAwTnpCbExUbGtOREV0T0dSbFpESTBNbVE0TmpZMiJ9
+
+docker container run --name cloudflared --restart always cloudflare/cloudflared:latest tunnel --protocol http2 --no-autoupdate run --token WwCmcFQLTad8T6tGU1T0lfxNhf5plbisWmDxuAfe
 ```
 
 
@@ -280,22 +282,26 @@ demo路由到home的页面: http://localhost:10000/
 
 #### watchtower 
 
+[官方文档](https://containrrr.dev/watchtower/notifications/)
+
 ```bash
 docker run -d \
     --name watchtower \
     --restart always \
-    -v /run/podman/podman.sock:/var/run/docker.sock \
+    -v /run/podman/podman.sock:/var/run/docker.sock \  # docker守护进程的listener(port or sock)
     -v /run/podman/io.podman:/var/run/docker.sock \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e TZ=Asia/Shanghai \
     containrrr/watchtower \
-    --cleanup
+    --cleanup  # 删除旧镜像  # WATCHTOWER_CLEANUP
     # --interval 86400  # 一天(86400秒)更新一次
     -schedule "0 0 1 * * *"  # Cron表达式: "秒 分钟 小时 日 月 年"
 	nginx redis  # 需要更新的容器名
+	--remove-volumes  # 删除匿名卷，不删命名卷 # WATCHTOWER_REMOVE_VOLUMES
 ```
 
-不支持win平台的docker
+windows 没有 docker.sock，不支持win平台
+Podman 没有守护进程，不支持Podman
 
 
 
@@ -305,6 +311,16 @@ docker run -d \
 
 ```cmd
 podman run -d --restart=always -p 3001:3001 -v /mnt/E/dev-projects/docker_volume/uptime-kuma/data:/app/data --name uptime-kuma louislam/uptime-kuma:1
+```
+
+
+
+#### hello-world
+
+用于看docker是否正常安装
+
+```bash
+podman run --rm docker.io/hello-world  # 打印Hello
 ```
 
 
@@ -358,9 +374,9 @@ docker container rm $(docker container ls -aq)  # 批量操作
 
 [挂载笔记](https://www.jianshu.com/p/f97e14532c83)
 
-* Data Volume, 存储位置**由Docker管理** (Linux 数据存储在/var/lib/docker/volumes/)
+* Data Volume(**命名卷**), 存储位置**由Docker管理** (Linux 数据存储在/var/lib/docker/volumes/)
 
-* Bind Mount，由**用户指定**数据存储的具体位置
+* Bind Mount(**匿名卷**)，由**用户指定**数据存储的具体位置
 
 创建的文件被保存在一个可写的容器层中
 

@@ -136,11 +136,14 @@ pacman -Su openssh  // 更新后openssh正常
 **2生成SSH密钥**
 
 ```bash
-ssh-keygen -t ed25519 -C "chenxiangcheng1@gamil.com"
-ssh-keygen -t rsa -b 4096 -C "chenxiangcheng1@gamil.com"
+ssh-keygen -t ed25519 -C "chenxiangcheng1@gamil.com" -f ~/.ssh/id_ed25519_github
+# ssh-keygen -t rsa -b 4096 -C "chenxiangcheng1@gamil.com"
 ```
 
 **3启动ssh-agent代理并添加私钥**
+
+ssh-agent 是基于内存的SSH私钥存储，可在多个会话服用无需每次输入密码
+ssh-add
 
 **for ArchLinux ZSH**
 
@@ -150,7 +153,18 @@ eval "$(ssh-agent -s)"  # eval将环境遍历
 ssh-add ~/.ssh/id_ed25519_github  # 对私钥高速缓存
 ```
 
-**for Git Bash**
+**for powershell**
+
+```powershell
+Get-Service -Name ssh-agent  # 获取服务dispaly名称OpenSSH Authentication Agent
+Get-Service -Name ssh-agent | Set-Service -StartupType Manual  # 设置OpenSSH Authentication Agent服务手动启动
+Start-Service ssh-agent
+ssh-add ~/.ssh/id_ed25519_github
+```
+
+**for Git for win**
+
+[github#git for win 自动启动ssh-agent](https://docs.github.com/zh/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-git-for-windows)
 
 ```bash
 ############################################################################################

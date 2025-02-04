@@ -79,3 +79,11 @@ any_name3:
 \* 引用
 
 << 合并键
+
+```yaml
+image: ${IMAGE}  # 配置.env环境变量使用
+```
+
+```env
+IMAGE=clickhouse/clickhouse-server:latest
+```

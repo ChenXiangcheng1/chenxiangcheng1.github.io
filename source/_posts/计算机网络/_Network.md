@@ -240,6 +240,64 @@ TCP拥塞控制：是指通过不同的机制来控制发送方的数据发送�
 
 
 
+## 应用层
+
+### SSH
+
+SSH：建立连接，交换密钥，使用非对称加密发送消息
+
+
+
+建立连接
+TCP握手、SSH握手(协议版本、密钥交换初始化、ECDH密钥交换初始化)
+
+密钥交换过程(DH算法)：(加密==签名)
+确保中间人拿不到：sender用私钥加密发送，receiver也用私钥加密发送，sender解密发送，receiver解密拿到数据
+确保中间人没篡改哈希值：sender哈希发送，receiver需要确保计算哈希值和接受哈希值一致
+
+对称加密：sender、receiver使用同一个密钥
+非对称加密：sender有公钥和私钥，用私钥加密信息发送；receiver只有公钥，用公钥解密
+
+
+
+过程：客户端临时私钥
+客户端临时公钥
+获得服务端临时公钥，后生成和服务端一样的共享安全密钥和交换哈希值
+获得服务端交换哈希值[服务端host临时私钥签名]，并用服务端host临时公钥解密得到交换哈希值，与计算出来的交换哈希值比较
+
+服务端临时私钥
+**服务端临时公钥**
+服务端host临时私钥
+**服务端host临时公钥**
+共享安全密钥 = 服务端临时私钥 + 服务端临时公钥 + 客户端临时公钥
+交换哈希值 = 共享安全密钥 + ...
+**交换哈希值[服务端host临时私钥签名]**
+
+
+
+其实第一次登录收到的服务端host临时公钥还是不安全的
+解决一：可以Client用ssh-keygen生成密钥对、ssh-copy-id将Client公钥放服务器，之后不用密码登录
+解决二：将收到的服务器host临时公钥，与服务器公开的临时公钥对比 (github就是这样)
+
+```bash
+ssh-keygen -t <ed25519|dsa|ecdsa|rsa> -b 4096 -C "xxyy"  # 在Client端执行，在~/.ssh目录下生成密钥对id_<ed25519|dsa|ecdsa|rsa>私钥和 id_<ed25519|dsa|ecdsa|rsa>.pub公钥
+# 将公钥复制到Server端 `~/.ssh/authorized_keys`，之后不用密码登录
+```
+
+```bash
+ssh-keygen -A  # 在Server端执行，在/etc/ssh目录下生成 ssh_host_<ed25519|dsa|ecdsa|rsa>_key私钥 和 .pub公钥  
+# 用于启动sshd.service服务，所需的生成服务端host临时公钥  
+# 用于Client首次连接到Server, Client将Server公钥保存到~/.ssh/known_hosts
+```
+
+
+
+```bash
+ssh -p 22 root@192.168.100.101 
+```
+
+
+
 ## 网络层
 
 ### IP地址

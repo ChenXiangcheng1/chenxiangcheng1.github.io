@@ -428,7 +428,7 @@ apt-cache search searched-package 返回包含所要搜索字符串的软件包�
 |                                                |                                                              | u         | 升级已安装的包，不包括不在软件库中的本地包                   |
 |                                                |                                                              | yy        | 强制下载最新的软件列表清单，即使已经是最新                   |
 | -Q                                             | 查询本地库                                                   | s <regex> | 在本地仓库搜索对应的包                                       |
-|                                                |                                                              | e         | 明确安装                                                     |
+|                                                |                                                              | e         | 打印明确安装的软件包                                         |
 | -R                                             | 删除                                                         | s         | 删除不需要的依赖项                                           |
 | -U                                             | `pacman -U 本地软件包路径.pkg.tar.xz` <br />`pacman -U http://www.example.com/repo/example.pkg.tar.xz` |           |                                                              |
 
@@ -1317,7 +1317,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | firewall-cmd --list-ports                                    | 查看firewall已经开放的端口                                   |                                                              |
 | firewall-cmd --zone=public --*add*-*port=80/tcp* --permanent | 开启端口，–zone #作用域  添加端口，端口/通讯协议  永久生效，没有此参数重启后失效 |                                                              |
 | firewall-cmd --reload                                        | #重启firewall                                                |                                                              |
-| free -h                                                      | 显示内存使用情况                                             |                                                              |
+| free -h                                                      | 查看内存swap空间状态(swap=swapfile+zram)                     | h human-readable<br />m  mebitypes单位                       |
 | fsck /dev/sdax                                               | file system check 检查并修复文件系统错误 (建议在umount的设备上执行) | -f 强制                                                      |
 | genfstab                                                     | genfstab -U /mnt >> /mnt/etc/fstab                           | genfstab会将当前系统中已挂载的文件系统的挂载信息添加到 `/etc/fstab` 文件中<br />`/etc/fstab` 系统文件表用于系统启动时挂载指定的文件系统 |
 | **grep** [option] pattern [file]                             | 查找文件里符合条件的字符串的整行内容。Globally search a Regular Expression and Print<br />grep “txt” “head*”<br />不指定file，grep "txt" 会等待输入从键盘获取stdin<br />find path \| grep “exp” 正则查找文件<br />grep -o 只输出了匹配到的部分，而不是整行的内容。<br />grep -v 过滤掉相关字符串的内容。可以通过管道操作符组合使用 |                                                              |
@@ -1385,12 +1385,13 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | yum [list remove install]                                    | Yellow dog Updater, Modified<br />属于 Redhat 系列 (如，CentOS) 包管理工具；Debin系列 (如，Ubuntu) 使用 apt-get<br />基于RPM包管理工具，能从指定的服务器离线下载 rpm 包并且自动安装，会自动处理依赖问题，还能更新系统。 |                                                              |
 | zramctl                                                      | 查看zram设备状态                                             |                                                              |
 | **\|**                                                       | 管道操作符，将左指令的stdout作为右指令的stdin<br />需要注意：**右边命令必须能接受标准输入流**，否则传递过程中的数据会被抛弃、不处理左边命令的错误<br />常用接收stdin的命令: sed, awk, grep查, cut, head查, top资源, less, more, wc统计, join, sort, split |                                                              |
+| >                                                            | `agent_run_state=$(ssh-add -l >|/dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout` <br />文件描述符 1:stdout 2:stderr<br />`echo $?` 获取前一个命令的退出状态码 |                                                              |
 | >>                                                           | 输出重定向<br />cat ~./ssh/id_rsa.pub  >>  ~/.ssh/authorized_keys  把公钥追加到authorized_keys中 |                                                              |
 | &                                                            | 表示在后台执行                                               |                                                              |
 | &&                                                           | 表示前一条命令执行成功才执行后一条命令                       |                                                              |
-| $()                                                          | powershell：${}，例如${pwd}                                  |                                                              |
+| $()                                                          | `$()` 捕获括号内的stdout<br />powershell：${}，例如${pwd}    |                                                              |
 
-​           
+
 
 # 安装系统
 
@@ -2014,7 +2015,7 @@ paman -Syyu
 
 
 
-##### 配置openssh_sshd、ssh-agent
+##### 配置openssh_sshd
 
 [arch wiki#OpenSSH](https://wiki.archlinux.org/title/OpenSSH)	|	[官方使用说明](https://www.openssh.com/manual.html)	|	[sshd-config](https://man.openbsd.org/sshd_config)
 
@@ -2029,7 +2030,7 @@ vim /etc/ssh/sshd_config.d/80-custom.conf
 ```bash
 # 将id_rsa.pub公钥复制到Server端 `~/.ssh/authorized_keys
 # 客户端执行:
-ssh-keygen -t rsa -b 4096 -C "arch.alpha" -f ~/.ssh/id_rsa_archalpha  # 不支持ed25519
+ssh-keygen -t ed25519 -b 4096 -C "arch.alpha_work" -f ~/.ssh/id_ed25519_archalpha
 ssh-add ~/.ssh/id_rsa_archalpha
 ssh-add -L
 
@@ -2233,6 +2234,60 @@ Host unix/* vsock/* machine/*
 
 
 
+###### 配置ssh-agent
+
+cmd and powershell
+
+```powershell
+Get-Service -Name ssh-agent  # 获取服务dispaly名称OpenSSH Authentication Agent
+Get-Service -Name ssh-agent | Set-Service -StartupType Automatic  # 设置OpenSSH Authentication Agent服务自动启动
+Start-Service ssh-agent
+ssh-add ~/.ssh/id_ed25519_github
+ssh-add -L
+```
+
+git bash
+
+[github#git for win 自动启动ssh-agent](https://docs.github.com/zh/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-git-for-windows)
+
+```bash
+vim ~/.bashrc
+source ~/.bashrc
+ssh-add -L
+
+############################################################################################
+# 启动 ssh-agent
+
+env=~/.ssh/agent.env
+agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+agent_load_env  # 加载环境变量
+
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start  # 环境变量SSH_AUTH_SOCK未设置、变量agent_run_state==2则启动ssh-agent
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add
+fi
+
+unset env
+
+ssh-add /c/Users/qq109/.ssh/id_ed25519_github
+echo '启动ssh-agent 并ssh-add添加私钥'
+
+############################################################################################
+```
+
+
+
+
+
+
+
 ##### 配置snapper
 
 ```bash
@@ -2320,7 +2375,14 @@ Filename                                Type            Size            Used    
 
 
 
-# TODO
+##### 安装 neofetch
+
+```bash
+pacman -S neofetch
+neofetch  # 打印系统信息
+```
+
+
 
 ##### 收尾
 
@@ -2328,27 +2390,49 @@ Filename                                Type            Size            Used    
 # check
 timedatectl  # 确保时间、时区、NTP服务正确
 ping archlinux.org
-zramctl
 cat /proc/swaps
-systemctl list-unit-files --type=service  # 自启动服务：systemd-networkd、systemd-resolved、sshd、snapper-timeline.timer、snapper-cleanup.timer、systemd-zram-setup@zram0.service
+systemctl list-unit-files --type=service  
+systemctl list-unit-files --type=service --state enable  # 自启动服务：systemd-networkd、systemd-resolved、sshd  # snapper-timeline.timer、snapper-cleanup.timer
+$ free -h  # 看内存占用
+               total        used        free      shared  buff/cache   available
+Mem:           893Mi       269Mi       543Mi       2.1Mi       214Mi       624Mi
+Swap:          8.4Gi          0B       8.4Gi
+$ neofetch  # 看OS内存占用
+                   -`                    nemesis@Alpha 
+                  .o+`                   ------------- 
+                 `ooo/                   OS: Arch Linux x86_64 
+                `+oooo:                  Host: Alibaba Cloud ECS pc-i440fx-2.1 
+               `+oooooo:                 Kernel: 6.13.1-arch1-1 
+               -+oooooo+:                Uptime: 15 hours, 41 mins 
+             `/:-:++oooo+:               Packages: 167 (pacman) 
+            `/++++/+++++++:              Shell: bash 5.2.37 
+           `/++++++++++++++:             Resolution: 1024x768 
+          `/+++ooooooooooooo/`           Terminal: /dev/pts/0 
+         ./ooosssso++osssssso+`          CPU: Intel Xeon Platinum (2) @ 2.500GHz 
+        .oossssso-````/ossssss+`         GPU: 00:02.0 Cirrus Logic GD 5446 
+       -osssssso.      :ssssssso.        Memory: 133MiB / 893MiB 
+      :osssssss/        osssso+++.
+     /ossssssss/        +ssssooo/-                               
+   `/ossssso+/:-        -:/+osssso+-                             
+  `+sso+:-`                 `.-/+oso:
+ `++:.                           `-/+/
+ .`                                 `/
 
 # 4重新启动计算机
 exit  # 退出chroot环境
 umount -R /mnt  # 手动卸载被挂载的分区，用于查看是否有繁忙分区
 reboot  # systemd会自动卸载被挂载的分区
-
-# 配置starship
-pacman -S starship
-vim ~/.config/starship.toml
 ```
 
 
 
-##### TODO
+##### 不打算做的
 
 ```
 # 未配置的
-git
+git neovim
+# 不打算安装的
+starship  # 感觉不需要git prompt 
 ```
 
 

@@ -168,23 +168,19 @@ ssh-add ~/.ssh/id_ed25519_github
 
 ```bash
 ############################################################################################
-
 # 启动 ssh-agent
-env=~/.ssh/agent.env
 
+env=~/.ssh/agent.env
 agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+agent_load_env  # 加载环境变量
 
 agent_start () {
     (umask 077; ssh-agent >| "$env")
     . "$env" >| /dev/null ; }
-
-agent_load_env
-
 # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
-agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout
 if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-    agent_start
+    agent_start  # 环境变量SSH_AUTH_SOCK未设置、变量agent_run_state==2则启动ssh-agent
     ssh-add
 elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
     ssh-add

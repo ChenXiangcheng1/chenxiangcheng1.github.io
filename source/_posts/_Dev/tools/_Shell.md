@@ -123,7 +123,7 @@ plugins=(
 | fzf-tab                                                      | zsh   | tab增强 模糊搜索                                             |
 | zsh-history-substring-search                                 | zsh   | 历史命令搜索<br />ctrl r 反向命令搜索使用前缀匹配，而fzf是字符串匹配 |
 |                                                              |       |                                                              |
-| gitstatus(推荐)<br />romkatv写的其他插件(p10k)也可以看看，但有限支持 | zsh   | 异步(守护进程) prompt for git                                |
+| [gitstatus](https://github.com/romkatv/gitstatus)(推荐)<br />romkatv写的其他插件(p10k)也可以看看，但有限支持 | zsh   | 异步(守护进程) prompt for git                                |
 | [hydro](https://github.com/jorgebucaran/hydro) 贡献还比较少，异步很重要，非异步会增加延迟 | fish  | 异步 prompt for git                                          |
 |                                                              |       |                                                              |
 
@@ -146,15 +146,62 @@ a zsh prompt theme
 
 ## starship(推荐)
 
-**跨平台**(外部进程)
+一个**跨平台**(外部进程)的prompt
 虽然基准测试显示速度不如gitstatus，但是跨平台
+
+[官方文档](https://starship.rs/zh-CN/config/)	|	[github](https://github.com/starship/starship)
+
+
+
+安装：
+
+```bash
+scoop bucket add nerd-fonts
+scoop install nerd-fonts/FiraCode-NF
+# terminal set FiraCode-NF
+
+scoop install main/starship
+# powersehll
+echo $PROFILE
+C:\Users\vp11\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+echo "Invoke-Expression (&starship init powershell)" >> ./Microsoft.PowerShell_profile.ps1
+# bash
+echo 'eval "$(starship init bash)"' >> ~/.bashrc
+# zsh
+echo 'eval "$(starship init zsh)"' >> ~/.bashrc
+# fish
+echo 'starship init fish | source' >> ~/.config/fish/config.fish
+# cmd  # 问题1:目录promt不变
+# 配置clink
+# clink官网: https://chrisant996.github.io/clink/clink.html
+# github: https://github.com/chrisant996/clink
+# https://chrisant996.github.io/clink/clink.html#gettingstarted_customprompt
+scoop install main/clink  # 对cmd.exe的增强，提供的feature含 Scriptable Prompt
+clink --help
+clink inject  # 注入cmd.exe进程
+clink autorun show
+clink autorun install  # 在cmd.exe's autorun安装一个用于启动clink的命令
+# clink安装几个popular-scripts
+scoop install main/clink-completions
+# clink集成starship  # https://chrisant996.github.io/clink/clink.html#popular-scripts
+clink info  # 找到clink script directory
+echo 'load(io.popen('starship init cmd'):read("*a"))()' >> D:\Applications\Scoop\apps\clink\current\starship.lua
+```
+
+
+
+使用
+
+```bash
+starship --help
+starship explain  # 解释当前显示的模块
+```
 
 
 
 配置：`~/.config/starship.toml`
 
-```toml
-```
+目前预设preset是Nerd Font Symbols
 
 
 

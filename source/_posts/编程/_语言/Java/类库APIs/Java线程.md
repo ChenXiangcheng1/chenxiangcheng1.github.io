@@ -1325,6 +1325,7 @@ class NetworkService implements Runnable {
 java.lang.ThreadLocal<T>
 
 该类提供线程局部变量，每个线程都有该变量的自己的独立初始化的副本。ThreadLocal 实例通常是与线程相关的私有静态字段(例如用户ID或事务ID)
+thread-local storage(TLS): 上下文存储方案：ThreadLocal、ScopedValue、将上下数据作为方法参数显示传递、类属性或实例属性(传递this/self)
 
 
 

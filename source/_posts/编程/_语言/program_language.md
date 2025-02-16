@@ -1,5 +1,9 @@
 # Program_Language
 
+TODO：https://jingwei.link/2020/05/21/go-java-python-language-model.html
+
+
+
 金字塔：C++、Rust、Golang
 
 |                | Python                                                       | Java                                                         |

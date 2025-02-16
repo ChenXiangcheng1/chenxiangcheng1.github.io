@@ -100,6 +100,18 @@ docker+对象类型+具体操作command+参数+对象
 
 
 
+### machine
+
+| podman machine [command] | 释义       | 参数 |
+| ------------------------ | ---------- | ---- |
+| list                     | 打印VM列表 |      |
+| init                     | 初始化VM   |      |
+| rm                       | 移除指定VM |      |
+| start                    | 运行       |      |
+| stop                     | 停止       |      |
+
+
+
 ### image 镜像
 
 <IMAGE>：name:tag(默认为latest)
@@ -244,23 +256,24 @@ direct:
 	--log-level info
 	--component-log-level upstream:debug,connection:trace
 podman:
-	podman run --rm -d -v $(pwd)/envoy-demo.yaml:/etc/envoy/envoy-custom.yaml -p 9901:9901 -p 10000:10000 -p 9902:9902 envoyproxy/envoy:v1.32.3 --config-path /etc/envoy/envoy-custom.yaml --config-yaml "$(cat envoy-override.yaml)"
-validate:	
+	podman run --rm -d -v $(pwd)/envoy-demo.yaml:/etc/envoy/envoy-custom.yaml:ro -p 9901:9901 -p 10000:10000 -p 9902:9902 envoyproxy/envoy:v1.32.3 --config-path /etc/envoy/envoy-custom.yaml --config-yaml "$(cat envoy-override.yaml)"
+validate:
 	podman run --rm -it -v $(pwd)/envoy-demo.yaml:/etc/envoy/envoy-custom.yaml -p 9901:9901 -p 10000:10000 -p 9902:9902 envoyproxy/envoy:v1.32.3 \
 	--config-path /etc/envoy/envoy-custom.yaml \
 	--config-yaml "$(cat envoy-override.yaml)" \
 	--mode validate
-true_help:
+envoy_help:
 	podman run --rm -it envoyproxy/envoy:v1.32.3 --help
 test:
 	cat ./envoy-override.yaml
 ```
 
 ```bash
+# 没有latest Tags, 需手动指定Tags
 docker run --rm -it \
-	-v $(pwd)/envoy-custom.yaml:/etc/envoy/envoy-custom.yaml \
+	-v $(pwd)/envoy-custom.yaml:/etc/envoy/envoy-custom.yaml:ro \
 	-p 9901:9901 -p 10000:10000 \
-	envoyproxy/envoy:v1.32.3 \
+	envoyproxy/envoy:v1.33-latest \
 	
 	-c /etc/envoy/envoy-custom.yaml \  # 默认是 /etc/envoy/envoy.yaml
 	--config-yaml "$(cat envoy-override.yaml)"  # append配置
@@ -329,19 +342,19 @@ podman run --rm docker.io/hello-world  # 打印Hello
 
 容器状态：Created、Up XX minutes、Exited(1) XX seconds age        // restarting
 
-| docker container [arg] <COMMAND>           | 释义                                                         | 参数                                                         |
-| ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ls                                         | 列出所有正在运行的容器                                       | -a 显示所有容器<br />-q 只显示容器IDs                        |
-| run <image>  [command]                     | 从镜像创建并运行一个新容器，若镜像不存在则去 docker hub 拉取 | -d 分离(detach)模式在后台运行<br />-p 指定端口转发，将主机端口映射到容器端口，例如-p 8080:80，效果0.0.0.0:8080->80/tcp、127.0.0.1:8080:80只允许本机访问<br />-i 交互的 stdin打开<br />-t 分配一个伪tty(终端) 让shell能正常运行<br />--name 分配一个名字给容器，不指定则随机<br />--rm 当容器退出自动删除<br />-v <list> 挂载一个卷，例如 `-v volumename:/path`<br />-e 设置环境参数<br />--network 指定网络<br />--restart=always(on-failure:5、unless-stopped、默认no) 设置启动docker守护进程时的重启策略 |
-| update <container>                         | 更新CPU设置、内存设置、restart策略                           | --restart=always(on-failure:5、unless-stopped、默认no)<br />设置为restart=always的，在需要关闭时需要update restart为其它值 |
-| stop <container>                           | 暂停正在运行的容器                                           |                                                              |
-| restart <container>                        | 重启已退出运行的容器                                         |                                                              |
-| rm <container>                             | 移除容器                                                     |                                                              |
-| logs [OPTIONS] CONTAINER                   | 获得一个容器的日志                                           | -f 跟踪日志输出                                              |
-| top <container>                            | 显示正在运行的容器的进程                                     |                                                              |
-| commit <container> [repository[:tag]]      | 从容器的更改创建镜像                                         |                                                              |
-| inspect [OPTIONS] CONTAINER [CONTAINER...] | 显示容器的详细信息                                           | --format 使用自定义模板格式化输出<br />https://docs.docker.com/go/formatting/ |
-| cp src_path dest_path                      |                                                              |                                                              |
+| 释义                                                         | docker container [arg] <COMMAND>           | 参数                                                         |
+| ------------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------ |
+| 列出所有正在运行的容器                                       | ls                                         | -a 显示所有容器<br />-q 只显示容器IDs                        |
+| 从镜像创建并运行一个新容器，若镜像不存在则去 docker hub 拉取 | run <image>  [command]                     | -d 分离(detach)模式在后台运行<br />-p 指定端口转发，将主机端口映射到容器端口，例如-p 8080:80，效果0.0.0.0:8080->80/tcp、127.0.0.1:8080:80只允许本机访问<br />-i 交互的 stdin打开<br />-t 分配一个伪tty(终端) 让shell能正常运行<br />--name 分配一个名字给容器，不指定则随机<br />--rm 当容器退出自动删除<br />-v <list> 挂载一个卷，例如 `-v volumename:/path:ro(容器内部只读)`<br />-e TZ=Asia/Shanghai(适用于Debian/CentOS含tzdata包、不适用于Alpine/Ubuntu) 设置环境变量<br />**--tz Asia/Shanghai (重要)**<br />--network 指定网络<br />--restart=always(on-failure:5、unless-stopped、默认no) 设置启动docker守护进程时的重启策略 |
+| 更新CPU设置、内存设置、restart策略                           | update <container>                         | --restart=always(on-failure:5、unless-stopped、默认no)<br />设置为restart=always的，在需要关闭时需要update restart为其它值 |
+| 暂停正在运行的容器                                           | stop <container>                           |                                                              |
+| 重启已退出运行的容器                                         | restart <container>                        |                                                              |
+| 移除容器                                                     | rm <container>                             |                                                              |
+| 获得一个容器的日志                                           | logs [OPTIONS] CONTAINER                   | -f 跟踪日志输出                                              |
+| 显示正在运行的容器的进程                                     | top <container>                            |                                                              |
+| 从容器的更改创建镜像                                         | commit <container> [repository[:tag]]      |                                                              |
+| 显示容器的详细信息                                           | inspect [OPTIONS] CONTAINER [CONTAINER...] | --format 使用自定义模板格式化输出<br />https://docs.docker.com/go/formatting/ |
+|                                                              | cp src_path dest_path                      |                                                              |
 
 docker container run示例(WSL Arch内)：`docker container run --name mariadb -p 3307:3306 -e MYSQL_ROOT_PASSWORD=Mariadb1610 -v /mnt/e/Develop/docker_mount/data/mariadb/data:/var/lib/mysql -d --restart unless-stopped mariadb:latest`
 
@@ -393,7 +406,8 @@ docker container rm $(docker container ls -aq)  # 批量操作
 
 ### network
 
-容器Ping宿主机：host.docker.internal
+docker容器Ping宿主机：host.docker.internal
+podman容器Ping宿主机：host.containers.internal
 
 Drive: bridge、host、null
 
@@ -682,8 +696,10 @@ Error: 1 error occurred:
         * couldn't search registry "docker.io": pinging container registry index.docker.io: Get "https://index.docker.io/v2/": dial tcp 128.121.243.77:443: i/o timeout
 ```
 
-原因：网络问题
-解决：检查代理
+原因：网络问题，wsl podman-machine-default内无法科学上网
+解决：
+检查代理(可能是适配器掉了，shell无法代理)，让wsl podman-machine-default内能ping通google.com
+用HTTP代理不行，换Clash Tunnel可以
 
 
 

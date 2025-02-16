@@ -45,6 +45,64 @@ Nmap -p7890 127.0.0.1  # 看端口是否开放与是什么服务
 alias hi="echo 'frank is awesome'"  # 自定义命令别名
 ```
 
+```bash
+############################################################################################
+# gitbash禁用路径转换，不让绝对路径转相对
+export MSYS_NO_PATHCONV=1
+
+############################################################################################
+# custom
+# 启动 ssh-agent
+env=~/.ssh/agent.env
+agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+agent_load_env  # 加载环境变量
+
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start  # 环境变量SSH_AUTH_SOCK未设置、变量agent_run_state==2则启动ssh-agent
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add
+fi
+
+unset env
+
+ssh-add ~/.ssh/id_ed25519_archalpha
+echo '启动ssh-agent 并ssh-add添加私钥'
+
+############################################################################################
+# bash整合starship
+eval "$(starship init bash)"
+echo "bash整合starship"
+
+############################################################################################
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if [ -f '/d/Applications/Scoop/apps/mambaforge/current/Scripts/conda.exe' ]; then
+    eval "$('/d/Applications/Scoop/apps/mambaforge/current/Scripts/conda.exe' 'shell.bash' 'hook')"
+fi
+
+if [ -f "/d/Applications/Scoop/apps/mambaforge/current/etc/profile.d/mamba.sh" ]; then
+    . "/d/Applications/Scoop/apps/mambaforge/current/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+echo "conda mamba 初始化"
+
+############################################################################################
+
+echo "fake resolve bug in gitbash in vscode"
+source /d/Applications/Scoop/apps/mambaforge/current/etc/profile.d/conda.sh  # 解决vscode中gitbash: D:\Applications\Scooppps/mamba: No such file or directory
+conda --version
+
+############################################################################################
+
+```
+
 
 
 ## zsh
@@ -195,6 +253,7 @@ echo 'load(io.popen('starship init cmd'):read("*a"))()' >> D:\Applications\Scoop
 ```bash
 starship --help
 starship explain  # 解释当前显示的模块
+starship preset no-nerd-font -o ~/.config/starship.toml
 ```
 
 

@@ -519,6 +519,15 @@ Include = /etc/pacman.d/archlinuxcn-mirrorlist
 
 
 
+##### AUR
+
+TODO
+
+第三方软件包管理工具：https://wiki.archlinuxcn.org/wiki/AUR_%E5%8A%A9%E6%89%8B，yay、paru、aura
+安装yay：https://aur.archlinux.org/packages/yay
+
+
+
 ### Linux高级使用
 
 #### 进程监控
@@ -730,7 +739,7 @@ Optimize-VHD -Path E:/Applications/Scoop/persist/archwsl/data/ext4.vhdx -Mode Fu
 
 WSL IP：**127.0.0.1**、`cat /etc/resolv.conf`内的固定IP、wsl-hostname.local
 
-宿主机IP：**DESKTOP-2DAQ5TI**
+宿主机IP：**主机名**
 
 ```bash
 ip route | grep default | awk '{print $3}'
@@ -1356,7 +1365,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | sh -c [string]                                               | 执行脚本                                                     |                                                              |
 | shutdown [option] [time] [message]                           |                                                              |                                                              |
 | shutdown -h now                                              | 马上关机                                                     |                                                              |
-| **source <profile>**                                         | 使环境变量 profile 文件生效<br />读profile并在当前shell执行  |                                                              |
+| **source <file>** (等价于. <file>)                           | 在当前shell环境，执行脚本文件中的命令                        |                                                              |
 | **ss**                                                       | 显示sockets                                                  | t 显示TCP sockets<br />u 实现 udp<br />n 显示端口，不解析为服务名称<br />l 显示正在监听的 |
 | **ssh 用户名@ip**                                            | ssh登录远程主机                                              | -T                                                           |
 | ssh-add <私钥文件>                                           | 向ssh-agent添加私钥身份identity<br />OpenSSH要求私钥文件不能被其他用户访问 | -L 打印所有公钥<br />-l 打印所有fingerprints <br />-D 删除所有<br />-d 删除该密钥<br />-v Verbose<br />-K 从FIDO验证器操作常驻密钥 |

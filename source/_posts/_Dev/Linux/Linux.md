@@ -694,43 +694,68 @@ TODO: 有空继续看 目前看到这里 [Dev on WSL](https://dowww.spencerwoo.c
 全局配置：`%UserProfile%/.wslconfig`(不用)
 单发行配置：`/etc/wsl.conf`
 
-```/etc/wsl.conf
-[boot]
-systemd=true
-
-[automount]
-enabled = true
-options = "metadata"
-mountFsTab = true
-
-[network]
-hostname = "WSL-ARCH"
-
-# 能解决win目录内ls背景色问题，但是不推荐，建议通过 ~/.zshrc 解决
-# 问题原因：挂载win权限问题
-#[automount]
-#enabled = true
-#root = /mnt/
-#options = "metadata,umask=22,fmask=111"
-#mountFsTab = true
-
-[wsl2]
-networkingMode=NAT  # mirrored
-dnsTunneling=true
-firewall=true
-autoProxy=true
-
-[experimental]
-bestEffortDnsParsing=true
-```
 
 
-
-存储位置：`E:\Applications\Scoop\persist\archwsl\data\ext4.vhdx`，240525目前占用5.5G
+存储位置：`E:\Applications\Scoop\persist\archwsl\data\ext4.vhdx`，240525目前占用5.5G  20250215:11G
 
 ```bash
 # 优化 WSL 2 虚拟磁盘占用空间
 Optimize-VHD -Path E:/Applications/Scoop/persist/archwsl/data/ext4.vhdx -Mode Full
+```
+
+
+
+#### .wslconfig
+
+windows version >= 19041
+
+```.wslconfig
+[wsl2]  # path必须
+networkingMode=NAT  
+# NAT(推荐): 虚拟机和宿主机不在同一个子网, 虚拟机流量被宿主机代理, 此模式宿主机可以访问虚拟机端口, 但是docker容器内部无法访问宿主机端口! 
+# mirrored: 镜像网络模式, 虚拟机和宿主机在同一个子网, 共享网络接口(同localhost), 不需要这个模式
+
+# nestedVirtualization = true  # win11支持
+dnsProxy=true  # DNS使用宿主机NAT  # 需要networkingMode=NAT
+firewall=true  # windows防火墙作用域WSL流量
+dnsTunneling=true  # DNS请求代理到windows
+autoProxy=true  # WSL使用windows的HTTP代理信息
+defaultVhdSize=1099511627776  # 虚拟硬盘VHD大小, 1TB
+
+[experimental]
+bestEffortDnsParsing=true  # 需要dnsTunneling=true
+```
+
+
+
+#### wsl.conf
+
+```/etc/wsl.conf
+[automount]
+root = /mnt/
+enabled = true
+options = "metadata"
+mountFsTab = true
+# 问题：能win目录内ls背景色问题
+# 原因：挂载win权限问题
+# 解决：
+# options = "metadata,umask=22,fmask=111"  # 但是不推荐，建议通过 ~/.zshrc 解决
+
+[network]
+hostname = "WSL-ARCH"
+generateHosts = true
+generateResolvConf = true
+
+[interop]
+enabled = true
+appendWindowsPath = true
+
+[user]
+default = nemesis
+
+[boot]
+systemd=true
+# command="echo 'hello wsl'"  # win11
 ```
 
 
@@ -1394,7 +1419,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | yum [list remove install]                                    | Yellow dog Updater, Modified<br />属于 Redhat 系列 (如，CentOS) 包管理工具；Debin系列 (如，Ubuntu) 使用 apt-get<br />基于RPM包管理工具，能从指定的服务器离线下载 rpm 包并且自动安装，会自动处理依赖问题，还能更新系统。 |                                                              |
 | zramctl                                                      | 查看zram设备状态                                             |                                                              |
 | **\|**                                                       | 管道操作符，将左指令的stdout作为右指令的stdin<br />需要注意：**右边命令必须能接受标准输入流**，否则传递过程中的数据会被抛弃、不处理左边命令的错误<br />常用接收stdin的命令: sed, awk, grep查, cut, head查, top资源, less, more, wc统计, join, sort, split |                                                              |
-| >                                                            | `agent_run_state=$(ssh-add -l >|/dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout` <br />文件描述符 1:stdout 2:stderr<br />`echo $?` 获取前一个命令的退出状态码 |                                                              |
+| >                                                            | `agent_run_state=$(ssh-add -l >/dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout` <br />文件描述符 1:stdout 2:stderr<br />`echo $?` 获取前一个命令的退出状态码 |                                                              |
 | >>                                                           | 输出重定向<br />cat ~./ssh/id_rsa.pub  >>  ~/.ssh/authorized_keys  把公钥追加到authorized_keys中 |                                                              |
 | &                                                            | 表示在后台执行                                               |                                                              |
 | &&                                                           | 表示前一条命令执行成功才执行后一条命令                       |                                                              |
@@ -2637,6 +2662,15 @@ System Requirements: at least 4GB of RAM is recommended
 
 
 ​      
+
+# TODO
+
+**supervisor 监督工具：**
+
+- **systemd (Linux):** 现代 Linux 系统中常用的初始化系统和服务管理器，也具有 supervision 功能。
+- **supervisord:** 一个功能强大的进程监控工具，支持多种配置方式和平台。
+- **pm2 (Node.js):** 专门用于 Node.js 应用程序的进程管理器。
+- **runit:** 一个轻量级的进程监督工具，易于使用和配置。
 
 ​      
 

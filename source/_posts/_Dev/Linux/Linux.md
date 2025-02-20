@@ -324,6 +324,7 @@ wget 不是安装方式，是一种下载工具，支持HTTP，HTTPS和FTP协议
 |          |          |      |
 
 下载工具推荐 aria2c，但 wget 也必装因为部分软件下载会依赖wget
+其它curl -O
 
 
 
@@ -430,6 +431,7 @@ apt-cache search searched-package 返回包含所要搜索字符串的软件包�
 | -Q                                             | 查询本地库                                                   | s <regex> | 在本地仓库搜索对应的包                                       |
 |                                                |                                                              | e         | 打印明确安装的软件包                                         |
 | -R                                             | 删除                                                         | s         | 删除不需要的依赖项                                           |
+|                                                |                                                              | n         | 移除配置文件                                                 |
 | -U                                             | `pacman -U 本地软件包路径.pkg.tar.xz` <br />`pacman -U http://www.example.com/repo/example.pkg.tar.xz` |           |                                                              |
 
 非官方软件包：就是软件包是开发者签名的，Arch仓库并不信任，用户需要用自己的密钥对开发者公钥签名，使arch信任公钥
@@ -824,7 +826,7 @@ wsl ls
 | unzip     |                                                              |
 | nmap      | 是 netcat(nc) 的高级替代。可以使用 ncat 命令，用于配置 SSH 通过代理访问目标主机 |
 | neovim    |                                                              |
-|           |                                                              |
+| inetutils | 含telnet用于测试tcp                                          |
 
 
 
@@ -1402,7 +1404,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | systemctl [OPTIONS...] COMMAND ...                           | 查询或发送控制命令到系统管理器<br />UNIT服务单元：network,mysql,firewalld,mongod,mysqld<br />q 退出<br />本质是启动 unit.service | status [PATTERN...\|PID...] 显示正在运行的该服务状态<br />start UNIT...<br />enable<br />stop UNIT...<br />disable UNIT... 开机不启动<br />reload UNIT... 重载配置文件<br />restart UNIT... 重启服务<br />**list-unit-files --type=service 列出所有服务单元文件**<br />daemon-reload 用于更新systemd配置、单元文件(.service .mount .device .socket) |
 | sz xxyy                                                      | 导出xxyy到本地快速访问download中                             |                                                              |
 | tail -n 20 filename                                          | 查看文件最后末尾20行                                         |                                                              |
-| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法 |                                                              |
+| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tf <file> | cut -d/ -f1 | uniq  # 查看顶层目录`        | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法 |
 | telnet                                                       | 远程登入，可以测试端口的连通性 **应用层**                    |                                                              |
 | timedatectl                                                  | 查看系统时间                                                 |                                                              |
 | tracepath [options] <destination>                            | 路径探测跟踪                                                 |                                                              |

@@ -11,6 +11,20 @@ zsh：是对bash的改进，支持高级自动补全、主题、插件
 
 ## cmd
 
+防火墙
+
+```bash
+netsh advfirewall firewall add rule name="Allow gRPC" dir=in action=allow protocol=TCP localport=50051
+```
+
+端口转发
+
+```bash
+netsh interface portproxy add v4tov4 listenport=<本机监听端口> listenaddress=<本机监听IP地址> connectport=<目标机器端口> connectaddress=<目标机器IP地址>
+netsh interface portproxy show all
+netsh interface portproxy delete v4tov4 listenport=50051 listenaddress=0.0.0.0
+```
+
 
 
 ## powershell

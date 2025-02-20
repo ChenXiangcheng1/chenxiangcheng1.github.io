@@ -15,6 +15,144 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_09_01
 
 
 
+# Container
+
+技术选型：
+
+[CRI(Container Runtime Interface)官网]( https://opencontainers.org/)
+
+|                           | docker(在linux系统)                                          | Podman(推荐)                                                 | macOS OrbStack(推荐) | nerdctl    |
+| ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------- | ---------- |
+| 优点                      | **生态好**<br />docker-compose                               | 兼容docker-compose(也有在线转换podman run)<br />pod(对接k8s)<br />原生rootless<br />**RHEL支持**<br />提供PythonSDK |                      |            |
+| 缺点                      | docker desktop商业要收费<br />C/S架构<br />RHEL 不再支持 Docker | 存在build可能与docker不一致的问题(巨大劣势)<br />~~不支持watchtower(因为其实现通过unix://.sock或TCP连接docker而这不能连接podman)~~ |                      |            |
+| ContainerRuntimeInterface | containerd                                                   | cri-o                                                        |                      | containerd |
+
+
+
+## Podman5.3.1
+
+[github](https://github.com/containers/podman)	|	[官网](https://podman.io/)	|	[tutorials](https://github.com/containers/podman/tree/main/docs/tutorials)
+
+[RedHat#使用容器](https://docs.redhat.com/zh-cn/documentation/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index)	|	[archlinux#podman(好 有一些最新的最佳实践)](https://wiki.archlinux.org/title/Podman)	|	[mam#podman](https://man.archlinux.org/listing/extra/podman/)
+
+
+
+需要WSL>=18362, arm64(windows)>=19041
+embeds a guest Linux system is Fedora(RedHat系)
+
+
+
+### 配置
+
+`wsl -d podman-machine-default`
+
+
+
+`/ect/containers/containers.conf` 参考 `/usr/share/contaienrs/containers.conf`
+
+```conf
+# /ect/containers/containers.conf
+```
+
+
+
+```conf
+# /etc/containers/registries.conf.d/00-shortnames.conf  
+# 拷贝一份 https://github.com/containers/shortnames/blob/main/shortnames.conf
+```
+
+
+
+```conf
+# /etc/containers/registries.conf.d/10-unqualified-search-registries.conf
+unqualified-search-registries = ["docker.io"]
+```
+
+```conf
+# /etc/containers/registries.conf.d/999-podman-machine.conf
+# docker.io docker hub
+# ghcr.io github container registry
+# gcr.io google container registry
+unqualified-search-registries=["docker.io", "quay.io", "gcr.io", "ghcr.io"]
+```
+
+
+
+> To automatically start containers with a restart policy, enable podman-restart.service.
+
+```bash
+systemctl list-unit-files --type service
+systemctl enable podman-restart.service
+```
+
+
+
+### 问题
+
+问题1：
+
+```cmd
+> podman search httpd
+Cannot connect to Podman. Please verify your connection to the Linux system using `podman system connection list`, or try `podman machine init` and `podman machine start` to manage a new Linux VM
+Error: unable to connect to Podman socket: failed to connect: dial tcp 127.0.0.1:49502: connectex: No connection could be made because the target machine actively refused it.
+```
+
+原因：podman system connection default 设置错误
+解决：
+
+```powershell
+Test-NetConnection -ComputerName 127.0.0.1 -Port 49502  # 不能访问
+```
+
+```bash
+wsl -d podman-machine-default
+ps -ef  # 发现sshd启动有对ssh的监听
+ss -l -t  # 发现有对0.0.0.0:59592的监听，wsl是正确的
+netsh int ipv4 show excludedportrange protocol=tcp  # 发现端口也没被HyperV占用
+```
+
+```cmd
+podman machine inspect  # 发现存在的machine是podman-machine-default是59592
+podman system connection list
+podman system connection default podman-machine-default  # 问题出在启动的machine错误
+podman machine start
+```
+
+
+
+问题2：
+
+```bash
+podman image search uptime-kuma
+Error: 1 error occurred:
+        * couldn't search registry "docker.io": pinging container registry index.docker.io: Get "https://index.docker.io/v2/": dial tcp 128.121.243.77:443: i/o timeout
+```
+
+原因：网络问题，wsl podman-machine-default内无法科学上网
+解决：
+检查代理(可能是适配器掉了，shell无法代理)，让wsl podman-machine-default内能ping通google.com
+用HTTP代理不行，换Clash Tunnel可以
+
+
+
+问题3：podman-desktop与podman不同步
+暂时解决：不使用代理
+
+
+
+问题4：已经走clash了，podman machine init 还是慢 (如果没走说明环境变量http_proxy不起作用，可以使用proxychains-ng)
+暂时解决：大概率代理或wsl问题，不使用wsl环境
+
+
+
+问题4：windows cmd不支持$()、cat  `$(cat ./envoy-override.yaml)`
+git bash 当 `-v envoy-demo.yaml:/etc/envoy/envoy-custom.yaml` 
+会报错 invalid container path "\\Applications\\Scoop\\apps\\git\\2.47.0.2\\etc\\envoy\\envoy-custom.yaml", must be an absolute path
+原因：git bash 将路径转换了在传给宿主机
+解决：`export MSYS_NO_PATHCONV=1  # 禁用路径转换` 要想每次自动生成，将其添加到 `~/.bashrc`
+
+
+
 # Docker24.0.6
 
 Docker Desktop = Docker Engine + Kubernetes + Compose V2
@@ -208,6 +346,17 @@ ENTRYPOINT ["mysql"]
 
 
 
+#### netshoot(好用)
+
+网络测试容器，含很多不同层的网络性能观测工具，例如tcpdump、netstat、nmap、netcat、grpcurl
+
+```bash
+podman run -it --net container:<container_name> nicolaka/netshoot
+podman run -it --net host docker.io/nicolaka/netshoot
+```
+
+
+
 #### mysql
 
 
@@ -298,10 +447,12 @@ demo路由到home的页面: http://localhost:10000/
 [官方文档](https://containrrr.dev/watchtower/notifications/)
 
 ```bash
+podman run --rm containrrr/watchtower --help
+
 docker run -d \
     --name watchtower \
     --restart always \
-    -v /run/podman/podman.sock:/var/run/docker.sock \  # docker守护进程的listener(port or sock)
+    -v /run/podman/podman.sock:/var/run/docker.sock \  # docker守护进程的listener(port or sock)  # podman info 
     -v /run/podman/io.podman:/var/run/docker.sock \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e TZ=Asia/Shanghai \
@@ -311,9 +462,21 @@ docker run -d \
     -schedule "0 0 1 * * *"  # Cron表达式: "秒 分钟 小时 日 月 年"
 	nginx redis  # 需要更新的容器名
 	--remove-volumes  # 删除匿名卷，不删命名卷 # WATCHTOWER_REMOVE_VOLUMES
+
+
+wsl -d podman-machine-default
+podman run -d \
+    --name watchtower \
+    --restart always \
+    --tz Asia/Shanghai \
+    -v /run/user/1000/podman/podman.sock:/var/run/docker.sock \
+    containrrr/watchtower \
+    --cleanup \
+   	--interval 86400 \
+	uptime-kuma
 ```
 
-windows 没有 docker.sock，不支持win平台
+~~windows 没有 docker.sock，不支持win平台~~ 可以 `wsl -d podman-machine-default` 后执行
 Podman 没有守护进程，不支持Podman
 
 
@@ -345,7 +508,7 @@ podman run --rm docker.io/hello-world  # 打印Hello
 | 释义                                                         | docker container [arg] <COMMAND>           | 参数                                                         |
 | ------------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------ |
 | 列出所有正在运行的容器                                       | ls                                         | -a 显示所有容器<br />-q 只显示容器IDs                        |
-| 从镜像创建并运行一个新容器，若镜像不存在则去 docker hub 拉取 | run <image>  [command]                     | -d 分离(detach)模式在后台运行<br />-p 指定端口转发，将主机端口映射到容器端口，例如-p 8080:80，效果0.0.0.0:8080->80/tcp、127.0.0.1:8080:80只允许本机访问<br />-i 交互的 stdin打开<br />-t 分配一个伪tty(终端) 让shell能正常运行<br />--name 分配一个名字给容器，不指定则随机<br />--rm 当容器退出自动删除<br />-v <list> 挂载一个卷，例如 `-v volumename:/path:ro(容器内部只读)`<br />-e TZ=Asia/Shanghai(适用于Debian/CentOS含tzdata包、不适用于Alpine/Ubuntu) 设置环境变量<br />**--tz Asia/Shanghai (重要)**<br />--network 指定网络<br />--restart=always(on-failure:5、unless-stopped、默认no) 设置启动docker守护进程时的重启策略 |
+| 从镜像创建并运行一个新容器，若镜像不存在则去 docker hub 拉取 | run <image>  [command]                     | -d 分离(detach)模式在后台运行<br />-p 指定端口转发，将主机端口映射到容器端口，例如-p 8080:80，效果0.0.0.0:8080->80/tcp、127.0.0.1:8080:80只允许本机访问<br />-i 交互的 stdin打开<br />-t 分配一个伪tty(终端) 让shell能正常运行<br />--name 分配一个名字给容器，不指定则随机<br />--rm 当容器退出自动删除<br />-v <list> 挂载一个卷，例如 `-v volumename:/path:ro(容器内部只读)` <br />-e TZ=Asia/Shanghai(适用于Debian/CentOS含tzdata包、不适用于Alpine/Ubuntu) 设置环境变量<br />**--tz Asia/Shanghai (重要)**<br />--network 指定网络<br />--restart=always(on-failure:5、unless-stopped、默认no) 设置启动docker守护进程时的重启策略<br />--userns=auto |
 | 更新CPU设置、内存设置、restart策略                           | update <container>                         | --restart=always(on-failure:5、unless-stopped、默认no)<br />设置为restart=always的，在需要关闭时需要update restart为其它值 |
 | 暂停正在运行的容器                                           | stop <container>                           |                                                              |
 | 重启已退出运行的容器                                         | restart <container>                        |                                                              |
@@ -404,10 +567,17 @@ docker container rm $(docker container ls -aq)  # 批量操作
 
 
 
+podman windows path 支持：
+`c:\Users\User\myfolder  # Windows Style`
+`/c/Users/User/myfolder  # Unixy`
+`/var/myfolder  # WSL`
+
+
+
 ### network
 
 docker容器Ping宿主机：host.docker.internal
-podman容器Ping宿主机：host.containers.internal
+podman容器Ping宿主机：host.containers.internal，需要 wsl's networkmode=mirror or Linux、需要 [podman blog202410#pasta imporoved](https://blog.podman.io/2024/10/podman-5-3-changes-for-improved-networking-experience-with-pasta/)
 
 Drive: bridge、host、null
 
@@ -442,6 +612,22 @@ Docker就是通过iptables实现了容器和宿主机的网络隔离、请求转
 | rm                                  |                        |                                                              |
 | connect [OPTIONS] NETWORK CONTAINER | 连接一个容器到一个网络 |                                                              |
 | disconnect                          | 断连容器从一个网路     |                                                              |
+
+
+
+>Poaman man1
+>
+>podman nework create --driver
+>Currently `bridge`, `macvlan` and `ipvlan` are supported.
+>
+>podman container run --network  # https://docs.podman.io/en/latest/markdown/podman-run.1.html
+>支持host、slirp4netns (rootless实现容器宿主机通信的网络工具(network backend)，同样的工具还有pasta但不支持allow_host_loopback)
+
+
+
+
+
+
 
 
 
@@ -634,88 +820,4 @@ docker-compose up -d
 适合用于生产环境
 
 
-
-# Podman5.3.1
-
-技术选型：
-
-[CRI(Container Runtime Interface)官网]( https://opencontainers.org/)
-
-|                           | docker(推荐且在linux系统)                                    | Podman                                                       | macOS OrbStack(推荐) | nerdctl    |
-| ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------- | ---------- |
-| 优点                      | **生态好**<br />docker-compose                               | 兼容docker-compose(也有在线转换podman run)<br />pod(对接k8s)<br />原生rootless<br />**RHEL支持** |                      |            |
-| 缺点                      | docker desktop商业要收费<br />C/S架构<br />RHEL 不再支持 Docker | 存在build可能与docker不一致的问题(巨大劣势)<br />不支持watchtower(因为其实现通过unix://.sock或TCP连接docker而这不能连接podman) |                      |            |
-| ContainerRuntimeInterface | containerd                                                   | cri-o                                                        |                      | containerd |
-
-
-
-## 配置
-
- container image registries
-
-
-
-## 问题
-
-问题1：
-
-```cmd
-> podman search httpd
-Cannot connect to Podman. Please verify your connection to the Linux system using `podman system connection list`, or try `podman machine init` and `podman machine start` to manage a new Linux VM
-Error: unable to connect to Podman socket: failed to connect: dial tcp 127.0.0.1:49502: connectex: No connection could be made because the target machine actively refused it.
-```
-
-原因：podman system connection default 设置错误
-解决：
-
-```powershell
-Test-NetConnection -ComputerName 127.0.0.1 -Port 49502  # 不能访问
-```
-
-```bash
-wsl -d podman-machine-default
-ps -ef  # 发现sshd启动有对ssh的监听
-ss -l -t  # 发现有对0.0.0.0:59592的监听，wsl是正确的
-netsh int ipv4 show excludedportrange protocol=tcp  # 发现端口也没被HyperV占用
-```
-
-```cmd
-podman machine inspect  # 发现存在的machine是podman-machine-default是59592
-podman system connection list
-podman system connection default podman-machine-default  # 问题出在启动的machine错误
-podman machine start
-```
-
-
-
-问题2：
-
-```bash
-podman image search uptime-kuma
-Error: 1 error occurred:
-        * couldn't search registry "docker.io": pinging container registry index.docker.io: Get "https://index.docker.io/v2/": dial tcp 128.121.243.77:443: i/o timeout
-```
-
-原因：网络问题，wsl podman-machine-default内无法科学上网
-解决：
-检查代理(可能是适配器掉了，shell无法代理)，让wsl podman-machine-default内能ping通google.com
-用HTTP代理不行，换Clash Tunnel可以
-
-
-
-问题3：podman-desktop与podman不同步
-暂时解决：不使用代理
-
-
-
-问题4：已经走clash了，podman machine init 还是慢 (如果没走说明环境变量http_proxy不起作用，可以使用proxychains-ng)
-暂时解决：大概率代理或wsl问题，不使用wsl环境
-
-
-
-问题4：windows cmd不支持$()、cat  `$(cat ./envoy-override.yaml)`
-git bash 当 `-v envoy-demo.yaml:/etc/envoy/envoy-custom.yaml` 
-会报错 invalid container path "\\Applications\\Scoop\\apps\\git\\2.47.0.2\\etc\\envoy\\envoy-custom.yaml", must be an absolute path
-原因：git bash 将路径转换了在传给宿主机
-解决：`export MSYS_NO_PATHCONV=1  # 禁用路径转换` 要想每次自动生成，将其添加到 `~/.bashrc`
 

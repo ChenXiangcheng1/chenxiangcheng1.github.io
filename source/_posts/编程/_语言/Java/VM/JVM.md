@@ -498,7 +498,7 @@ true
 
 
 
-#### 引用计数法
+#### 引用计数法(Python)
 
 通过判断对象的引用数量来决定对象是否可以被回收
 
@@ -510,7 +510,7 @@ true
 
 
 
-#### 可达性分析
+#### 可达性分析(JVM、Golang)
 
 Reachability analysis，通过判断对象的引用链是否可达来决定对象是否可以被回收
 
@@ -526,6 +526,20 @@ Reachability analysis，通过判断对象的引用链是否可达来决定对�
 RootSet = 全局根+线程根
 
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_09_10_01_48.png" alt="image-20230910014801040" style="zoom: 67%;" />
+
+
+
+##### 三色标记法
+
+三色标记法是可达性分析的具体实现，可以并发执行
+
+白色(垃圾)：尚未被标记的对象，代表垃圾。
+灰色(待处理)：已被标记但尚未完全扫描的对象。
+黑色(存活)：已被标记并且其所有引用的对象都已扫描的对象。
+
+最终一致性约束：
+强三色不变性：黑色对象不会指向白色对象，只会指向灰色对象或者黑色对象
+弱三色不变性(主流)：黑色对象指向的白色对象必须包含一条从灰色对象经由多个白色对象的可达路径 (支持应用线程与GC线程并发)
 
 
 
@@ -597,8 +611,6 @@ Compacting 压缩 Collector 收集器<br/>
 </table>
 
 
-
-
 ### 常见的垃圾收集器
 
 [指定JVM指定版本的垃圾收集器的可用性](https://chriswhocodes.com/gc-explorer.html)
@@ -621,6 +633,8 @@ Compacting 压缩 Collector 收集器<br/>
 |                | ~~CMS~~            | `-XX:+UseConcMarkSweepGC`        | 并发标记-清除算法 | 多线程 | 并发             | 适用于追求低延迟的应用，但可能产生较多的碎片。**内存小低延迟** |
 | 7 (9默认)      | G1                 | `-XX:+UseG1GC`                   | 标记-整理算法     | 多线程 | 并发             | 适用于大内存的应用，目标是在保持吞吐量的同时降低停顿时间。**内存大低延时** |
 | 11(21支持分代) | 分代ZGC            | `-XX:+UseZGC -XX:+ZGenerational` | 标记-整理算法     | 多线程 | 并发             | 低延迟                                                       |
+|                |                    |                                  |                   |        |                  |                                                              |
+|                |                    |                                  |                   |        |                  |                                                              |
 
 `-XX:+UseAdaptiveSizePolicy`：自适应策略，将设置堆大小的任务交给虚拟机
 
@@ -741,7 +755,7 @@ Safepoint (安全点) 是应用程序线程暂停的位置，暂停应用程序�
 动态线程数量，不需要指定 `-XX:ConcGCThreads`
 
 核心技术：
-ZGC 通过染色指针(colored pointer)、读屏障(load barriers)、存储屏障(store barriers)，为GC线程、并发的应用线程提供一致的对象视图(object graph view)，实现了GC线程与应用程序线程的并发
+ZGC 通过染色指针(colored pointer)、读屏障(load barriers)、存储屏障(store barriers)，为GC线程、并发的应用线程提供一致的**对象图(object graph view)**，实现了GC线程与应用程序线程的并发
 
 **染色指针**(colored pointer)：64位的指针指向堆中对象，提供**对象地址和元数据位**(remapped, marked0, marked1, Finalizable)，是一种多映射内存技术(Multi-mapped memory)，未分代ZGC将多个虚拟地址指向同一块物理内存
 优点：
@@ -753,7 +767,12 @@ ZGC 通过染色指针(colored pointer)、读屏障(load barriers)、存储屏�
 
 读屏障(load barriers)：是被JIT(即时编译)注入到应用程序的机械指令，更新时指针指向重定位(relocated)对象(重定位时指针不会被急更新，而是当应用遇到该指针时懒更新)
 
-写屏障(store barriers)：保证共享变量的修改可以被其他线程及时感知，帮助标记可达对象(标记loaded对象为alive)
+写屏障(store barriers)：保证共享变量的修改可以被其他线程及时感知，帮助标记可达对象(标记loaded对象为alive)，**实现应用线程与GC线程并发**
+	Dijkstra 插入屏障：引用写入时触发，插入前白变灰 (本轮标记结束需要重新扫描)
+	Yuasa 删除屏障：引用删除、更改时触发，插入前对指针所在对象着色 (不需要重新扫描)
+	混合写屏障：Dijkstra 插入屏障+Yuasa 删除屏障
+
+
 
 记忆集(remembered-set)：指从老年代到年轻代的指针(old-to-young generation pointers)
 卡表标记(card table marking)：通过记忆集合技术，用于跟踪代际间指针(inter-generational pointers)

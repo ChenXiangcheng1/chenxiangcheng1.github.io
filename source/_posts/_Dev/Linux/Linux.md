@@ -1143,7 +1143,7 @@ systemctl enable --now zramd.service
 | **/etc/hostname**                                            | 配置 hostname                                                |
 | /etc/my.cnf                                                  | mysql配置文件                                                |
 | **/etc/passwd**                                              | 查看所有用户，配置 用户名:密码占位符(x或*):用户ID(UID):组ID(GID):用户描述:家目录:登录Shell |
-| **/etc/profile**                                             | 环境变量，注释符 #，<br />更改完环境变量使用source profile命令 |
+| **/etc/profile**                                             | 环境变量，注释符 #，<br />更改完环境变量使用source profile命令<br />推荐去改 /etc/profile.d/custom.sh |
 | /etc/rc.d/rc.local                                           | 配置开机启动项                                               |
 | /etc/resolv.conf                                             | 手动配置DNS服务器地址，也可以用网络管理器(systemd-resolved等)替代 |
 | /etc/services                                                | 服务及其端口                                                 |
@@ -1871,10 +1871,7 @@ $ cat /etc/passwd
 $ useradd -m -G wheel -s /bin/bash nemesis
 $ passwd nemesis
 $ cat /etc/subuid
-$ cat /etc/subgid
-$ pacman -Qs vim
-$ EDITOR=vim visudo  # 取消注释 %wheel ALL=(ALL:ALL) ALL
-$ usermod -aG users nemesis  # 将用户nemesis添加到附属组users
+$ cat /etc/ # 将用户nemesis添加到附属组users
 $ getent group users  # 从/etc/group查询
 $ id nemesis  # 查用户的uid、gid、groups
 ```

@@ -496,6 +496,17 @@ https://github.com/psf/black
 
 
 
+### Golang
+
+[vscode-go](https://github.com/golang/vscode-go/wiki): 配置有点多，建议抄别人的
+
+LSP: gopls
+linter: golangci-lint
+
+TODO: 先学Golang，再看linter
+
+
+
 ## 开发容器
 
 我的评价：感觉不够灵活，例如想使用conda等麻烦，做不到无痛隔绝环境

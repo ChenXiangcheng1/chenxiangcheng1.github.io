@@ -425,11 +425,16 @@ apt-cache search searched-package 返回包含所要搜索字符串的软件包�
 | 命令 pacman <operation> [options] [package(s)] | 释义                                                         | 选项      | 释义                                                         |
 | ---------------------------------------------- | ------------------------------------------------------------ | --------- | ------------------------------------------------------------ |
 | -S                                             | 查询同步库<br />pacman -Syyu                                 | s <regex> | 在远程仓库搜索对应的包(本地已安装的会标记)                   |
+|                                                |                                                              | i         | 打印软件包信息                                               |
 |                                                |                                                              | y         | 从服务器下载最新的软件包数据库(即软件列表清单core,extra,community,archlinuxcn)，单y短时内多次运行可能不同步 |
 |                                                |                                                              | u         | 升级已安装的包，不包括不在软件库中的本地包                   |
+|                                                |                                                              | --needed  | 不重新安装最新包                                             |
 |                                                |                                                              | yy        | 强制下载最新的软件列表清单，即使已经是最新                   |
+|                                                |                                                              | c         | 清理缓冲的旧软件包                                           |
 | -Q                                             | 查询本地库                                                   | s <regex> | 在本地仓库搜索对应的包                                       |
+|                                                |                                                              | i         | 打印软件包信息                                               |
 |                                                |                                                              | e         | 打印明确安装的软件包                                         |
+|                                                |                                                              | u         | **打印可用更新**                                             |
 | -R                                             | 删除                                                         | s         | 删除不需要的依赖项                                           |
 |                                                |                                                              | n         | 移除配置文件                                                 |
 | -U                                             | `pacman -U 本地软件包路径.pkg.tar.xz` <br />`pacman -U http://www.example.com/repo/example.pkg.tar.xz` |           |                                                              |
@@ -515,18 +520,47 @@ Include = /etc/pacman.d/archlinuxcn-mirrorlist
 
 
 
-##### AUG用户仓库
+##### Arch User Repository
 
-[AUR 用户软件仓库](https://wiki.archlinuxcn.org/wiki/Arch_%E7%94%A8%E6%88%B7%E8%BD%AF%E4%BB%B6%E4%BB%93%E5%BA%93_(AUR))：需要自己更新软件包	|	[AUR 助手]()
+[wiki#Arch User Repository](https://wiki.archlinux.org/title/Arch_User_Repository)	|	[AUR首页(搜索软件包)(重要)](https://aur.archlinux.org/)
 
 
 
-##### AUR
+[wiki#makepkg](https://wiki.archlinux.org/title/Makepkg)：通过PKGBUILD(软件包生成shell脚本)，makepkg -s生成pkgname.pkg.tar.zst，再由pacman -U安装。官方定期会从中挑选软件包进入extra仓库
+makepkg配置: 如果有需要再去设置MAKEFLAGS等变量
 
-TODO
+```/etc/makepkg/.conf.d/custom.conf
+# /etc/makepkg.conf.d/custom.conf
+MAKEFLAGS="-j$(nproc)"  # 并行
+BUILDDIR=/tmp/makepkg  # df -h /tmp, /tmp是tmpfs  # 内存文件系统
+LDFLAGS="... -Wl,--separate-debug-file"  # 使用mold有的项目不能编译取消了
+# LDFLAGS="... -fuse-ld=mold -Wl,--separate-debug-file"  # paru -S mold  # -Wl表示后面的选项是给链接器的  # --separate-debug-file表示生成独立的.debug调试信息文件
+```
 
-第三方软件包管理工具：https://wiki.archlinuxcn.org/wiki/AUR_%E5%8A%A9%E6%89%8B，yay、paru、aura
-安装yay：https://aur.archlinux.org/packages/yay
+
+
+手动下载/更新软件包：pacman不支持AUR，所以需要手动升级或使用pacman封装
+	1git pull <AUR_Git_URL> 或 下载快照
+	2解压
+	3检查PKGBUILD等文件
+	4makepkg -s
+	5pacman -U
+
+
+
+pacman封装：不能root安装软件包
+[wiki#AUR helpers](https://wiki.archlinux.org/title/AUR_helpers)
+[github#yay](https://github.com/Jguer/yay)	|	[aur#yay](https://aur.archlinux.org/packages/yay)
+[github#paru(chroot隔离)(推荐)](https://github.com/morganamilo/paru)
+
+
+
+| paru(new operations)  | 释义                       | 选项 | 释义           |
+| --------------------- | -------------------------- | ---- | -------------- |
+| -P                    | show                       | s    | 系统软件包信息 |
+| -Sss                  | 相比-Ss 多显示URL、AUR URL |      |                |
+|                       |                            |      |                |
+| **pacman operations** | 扩展pacman支持AUR          |      |                |
 
 
 
@@ -830,13 +864,24 @@ wsl ls
 
 
 
+### pdsh
+
+pdsh(Parallel Distributed Shell)
+
+[github](https://github.com/chaos/pdsh)
+
+```bash
+pdsh -R ssh -w host_name1,host_name2,host_name3 uptime
+pdsh -R ssh -w host[1] uptime
+```
+
+
+
 ### nvim
 
 ```bash
 export EDITOR=nvim
 ```
-
-
 
 
 
@@ -1137,6 +1182,7 @@ systemctl enable --now zramd.service
 | /boot/grub/grub.cfg                                          | 配置grub开机引导                                             |
 | /dev                                                         | 存放设备文件.                                                |
 | **/etc（etcetera附加物表示配置）**                           | 存放软件的全局配置文件                                       |
+| /etc/bash.bashrc                                             | 系统级bashrc                                                 |
 | /etc/fstab                                                   | 配置开机自动挂载配                                           |
 | **/etc/group**                                               | 查看所有组，配置 组名:密码占位符(x或*):组ID(GID):组成员列表（逗号分隔） |
 | /etc/hosts                                                   | DNS解析，配置映射关系hostname:IP                             |

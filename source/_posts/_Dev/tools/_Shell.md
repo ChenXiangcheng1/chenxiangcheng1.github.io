@@ -25,6 +25,23 @@ netsh interface portproxy show all
 netsh interface portproxy delete v4tov4 listenport=50051 listenaddress=0.0.0.0
 ```
 
+call 调用.bat脚本
+
+直接调用另一个.bat批处理脚本控制权会转移，执行完后不返回到原来的.bat脚本
+mamba实现是通过脚本实现，而不是一个独立的可执行程序
+
+```bash
+call mamba --version
+```
+
+
+
+```bash
+cd /d E:/xx
+```
+
+
+
 
 
 ## powershell

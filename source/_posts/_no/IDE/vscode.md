@@ -16,6 +16,33 @@
 
 
 
+### launch.json
+
+```json
+{
+	// 使用 IntelliSense 了解相关属性。
+	// 悬停以查看现有属性的描述。
+	// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch Package",
+			"type": "go",
+			"request": "launch",
+			"mode": "auto",
+			"program": "${fileDirname}",  // 打开要执行的文件，点击开始调试
+			"cwd": "${workspaceFolder}",
+			"env": {},
+			"args": []
+		}
+	]
+}
+```
+
+
+
+
+
 ## 插件
 
 [插件市场](https://marketplace.visualstudio.com/vscode)
@@ -452,6 +479,8 @@ docstring-code-line-length = "dynamic"
 | PERF                               | pyperf                       | 检测一些性能问题。             |
 | RUF                                | Ruff                         | Ruff 社区自己实现的一些规则。  |
 
+
+
 #### linter
 
 ##### flake8
@@ -497,13 +526,6 @@ https://github.com/psf/black
 
 
 ### Golang
-
-[vscode-go](https://github.com/golang/vscode-go/wiki): 配置有点多，建议抄别人的
-
-LSP: gopls
-linter: golangci-lint
-
-TODO: 先学Golang，再看linter
 
 
 
@@ -642,6 +664,24 @@ json打开方式：ctrl+shift+p keyboard.json
     },
 ]
 ```
+
+
+
+#### 更改
+
+```json
+{
+    "key": "alt+left",
+    "command": "-workbench.action.navigateBack",  // 删除键绑定，因为和alt+H冲突了
+    "when": "canNavigateBack"
+}
+```
+
+
+
+
+
+
 
 ## 以下是我还没整理的
 

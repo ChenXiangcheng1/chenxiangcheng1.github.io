@@ -57,8 +57,10 @@
     proxy = socks5://127.0.0.1:7890  # 可删，因为若docker内应用host.docker.internal
 [https]
     proxy = socks5://127.0.0.1:7890
-[credential]
+[credential]  # 感觉不需要配置
 	helper = manager  # 使用Https协议访问Git版本库需要用户名和密码  manager选项使用windows存储的密码
+	provider = generic  # github(支持token)
+	# manager系统凭据管理器、store明文存储于~/.git-credentials
 	# git config --global credential.helper
 # [credential "helperselector"]  # 不需要配置
 # 	selected = manager
@@ -372,8 +374,6 @@ git restore  # 丢弃所有更改，恢复到最新提交状态(HEAD)
 
 
 
-
-
 ### git merge 和 rebase 的区别
 
 共：把一个分支的提交合并到另一个分支
@@ -408,10 +408,10 @@ rebase：嫁接
 ```bash
 git init
 git add ./README.md
-git commit -m "first commit"
+git commit -m "Initial commit"
 git remote add origin git@github.com:TrackyTian/testSSH.git  # 添加远程主机名
 git branch -m main  # 分支重命名
-git push origin main:main
+git push origin main:main  # 需要credentials(推荐使用person access token)
 git checkout -b dev  # 切换并根据当前分支创建分支
 ```
 
@@ -717,8 +717,6 @@ https://open-source-license-chooser.toolsnav.top/zh/
 | MIT License:      | 要开放就用这个       |
 | Apache License2.0 | 别人要用就要申请版权 |
 | GPL               |                      |
-
-
 
 
 
@@ -1395,3 +1393,10 @@ git config --global user.email "……" | 配置全局的用户邮件
 git config --list | 查看配置列表
 git [--help] <command> [<args>] | 查看Manual命令手册
 
+
+
+# TODO
+
+git tag
+
+git show

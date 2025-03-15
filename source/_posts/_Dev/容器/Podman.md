@@ -501,6 +501,16 @@ podman run --rm docker.io/hello-world  # 打印Hello
 
 
 
+#### hadoop
+
+~~学习推荐docker部署~~，没有官方的hadoop docker资料
+
+```bash
+podman run -it --rm --net host --name hadoop-single-node docker.io/apache/hadoop:3.4.1 bash
+```
+
+
+
 ### container 容器
 
 容器状态：Created、Up XX minutes、Exited(1) XX seconds age        // restarting

@@ -242,6 +242,17 @@ TCP拥塞控制：是指通过不同的机制来控制发送方的数据发送�
 
 ## 应用层
 
+### https
+
+```url
+https://<username>:<password>@<hostname>:<port>/<path>
+
+https://riot:WHqgo66Fw1eF9en3iUP3Kg@127.0.0.1:59190
+https://127.0.0.1:59190/lol-patch/v1/game-version
+```
+
+
+
 ### SSH
 
 SSH：建立连接，交换密钥，使用非对称加密发送消息

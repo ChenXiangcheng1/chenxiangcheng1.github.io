@@ -794,6 +794,12 @@ Untracked files:
 
 
 
+**问题6**：fatal: unable to access 'https://github.com/username/project.git/': Failed to connect to 172.23.144.1 port 7890 after 131875 ms: Could not connect to server 
+原因：出站规则针对程序应用无效
+解决：deproxy(走TUN)、设置防火墙出栈规则(针对端口 不要争对应用)、关闭防火墙
+
+
+
 # Github
 
 [docs](https://docs.github.com/zh)  | [skills.github.com](https://skills.github.com/)

@@ -583,6 +583,14 @@ https://github.com/psf/black
 
 
 
+## 问题
+
+问题1：deproxy+wsl内vscode插件使用127代理
+原因：当wsl上http_proxy不存在，会继承宿主机http_proxy
+解决：proxy、deproxy+Clash关闭系统代理(宿主机也无http_proxy，走TUN)
+
+
+
 # 未整理
 
 https://zhuanlan.zhihu.com/p/138579730

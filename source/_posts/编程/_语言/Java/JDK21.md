@@ -466,5 +466,15 @@ if (obj instanceof String s) {  //将目标与类型模式匹配，如果obj是S
 * JEP444：虚拟线程
   `Executors.newVirtualThreadPerTaskExecutor()`
 
-TODO：本月发布，有空去看
 
+
+### JDK24
+
+* JEP 491：Synchronize Virtual Threads without Pinning
+  Synchronize 获取的Monitor锁不与平台线程(对应操作系统线程)绑定，解放Virtual Threads
+
+
+
+### JDK25
+
+lts版

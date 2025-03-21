@@ -12,7 +12,19 @@
 
 ## 配置
 
+对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile`
+
+
+
 对应 defaultSettings.json 来设置 Perferences: User Settings (JSON)
+
+`/{user}/.vscode-server/data/Machine/settings.json`
+
+```json
+{
+	"http.useLocalProxyConfiguration": false
+}
+```
 
 
 

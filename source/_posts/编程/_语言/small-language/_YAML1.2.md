@@ -50,6 +50,8 @@ array2:  # 数组
 	- ch1 ch2  # string "ch1 ch2"
 	- true  # bool
 	- 3.14  # num
+	- ''  # 字面量字符串，不转义
+	- ""  # 转义\
 ```
 
 ```yaml
@@ -94,17 +96,20 @@ IMAGE=clickhouse/clickhouse-server:latest
 
 最小化配置，不支持锚点和引用
 
-```
+```toml
 # 注释
 title = """TOML
 Example\
 test"""
 
 winpath = 'C:\Users\Toml'  # 字面量字符串，不转义
+str = ""  # 转义\
 
 b = [
 	{x=1, y=2, z=3},  # 行内表
 	{x=1, y=2, z=3},
+	'',
+	""
 ]
 
 c.x = "c.x"  # 点分隔符定义表

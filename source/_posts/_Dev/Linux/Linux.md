@@ -179,6 +179,8 @@ write()：将数据从应用程序写入到FD文件描述符所表示的文件�
 
 todo：有空学习 https://www.zhihu.com/question/419924138
 
+遵循POSIX规范
+
 
 
 ### 测试端口连通性命令(常用)
@@ -1181,7 +1183,7 @@ systemctl enable --now zramd.service
 | /boot                                                        | 存放系统引导时使用的各种文件.                                |
 | /boot/grub/grub.cfg                                          | 配置grub开机引导                                             |
 | /dev                                                         | 存放设备文件.                                                |
-| **/etc（etcetera附加物表示配置）**                           | 存放软件的全局配置文件                                       |
+| **/etc（etcetera附加物表示配置）**                           | 存放软件的全局配置文件<br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile` |
 | /etc/bash.bashrc                                             | 系统级bashrc                                                 |
 | /etc/fstab                                                   | 配置开机自动挂载配                                           |
 | **/etc/group**                                               | 查看所有组，配置 组名:密码占位符(x或*):组ID(GID):组成员列表（逗号分隔） |
@@ -1211,8 +1213,8 @@ systemctl enable --now zramd.service
 | /root                                                        | 超级管理员根目录.                                            |
 |                                                              |                                                              |
 | ~                                                            | 当前用户的主目录 /username，~目录下有一些隐藏 .用户配置文件  |
-| ~/.bashrc                                                    | 每次打开shell触发<br />bash用户,配置文件<br />执行命令 source ~/.zshrc 来生效修改的配置，而不需要重新登录<br /><br />CMD：链接器配置文件，是存放链接器的配置信息的，我们简称为命令文件,该文件的作用是指明如何链接程序的。<br />.xxrc：rc 是run command 表示与运行终端有关的配置 |
-| ~/.bash_profile                                              | 登陆时触发                                                   |
+| ~/.bashrc                                                    | 每次打开shell触发<br />bash用户,配置文件<br />执行命令 source ~/.zshrc 来生效修改的配置，而不需要重新登录<br /><br />CMD：链接器配置文件，是存放链接器的配置信息的，我们简称为命令文件,该文件的作用是指明如何链接程序的。<br />.xxrc：rc 是run command 表示与运行终端有关的配置<br /><br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile` |
+| ~/.bash_profile                                              | 登陆时触发<br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile` |
 | ~/maven_resp                                                 | maven的本地仓库（默认是在根目录的.m2，不是太建议）           |
 | ~/software下                                                 | 软件的安装包                                                 |
 | ~/app                                                        | 软件的安装目录                                               |
@@ -2745,4 +2747,4 @@ System Requirements: at least 4GB of RAM is recommended
 
 ​      
 
- 
+ 	

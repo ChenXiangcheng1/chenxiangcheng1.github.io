@@ -168,7 +168,7 @@ onSubmit事件
 ### input输入标签
 
 ```html
-<input /> 表示输入标签，有三个必须属性type（text、password、submit、checkbox、radio）
+<input /> 表示输入标签，有三个必须属性type（text、password、submit、checkbox、radio、file）
 属性：
 name 是标签名字会被传到客户端URL栏
 value 值在标签内会被传到客户端的值上

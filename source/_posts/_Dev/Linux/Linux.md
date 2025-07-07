@@ -13,7 +13,7 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_04_30
 
 
 
-# Linux主要考点 
+# Linux主要考点
 
 ## 体系结构
 
@@ -31,21 +31,19 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_04_30
 
 * **用户态**（User Mode）：
 
-  - 当用户程序运行时，它处于用户态。在用户态下，程序只能**访问受限资源和执行受限操作**。
+  * 当用户程序运行时，它处于用户态。在用户态下，程序只能**访问受限资源和执行受限操作**。
 
-  - 用户态的程序**不能直接访问操作系统内核的功能和硬件资源**，例如直接访问硬件设备、修改内核数据结构等。
+  * 用户态的程序**不能直接访问操作系统内核的功能和硬件资源**，例如直接访问硬件设备、修改内核数据结构等。
 
-  - 用户态下的程序**执行速度相对较快**，因为不需要处理特权指令和保护操作系统资源。
+  * 用户态下的程序**执行速度相对较快**，因为不需要处理特权指令和保护操作系统资源。
 
 * **内核态**（Kernel Mode）：
 
-  - 内核态是操作系统内核执行时的特权级别。在内核态下，操作系统具有对系统硬件和资源的完全控制权限。
+  * 内核态是操作系统内核执行时的特权级别。在内核态下，操作系统具有对系统硬件和资源的完全控制权限。
 
-  - 内核态的程序可以执行**特权指令**、直接访问硬件设备和修改内核数据结构。
+  * 内核态的程序可以执行**特权指令**、直接访问硬件设备和修改内核数据结构。
 
-  - 内核态下的程序执行速度相对较慢，因为需要处理特权指令和进行安全检查。
-
-
+  * 内核态下的程序执行速度相对较慢，因为需要处理特权指令和进行安全检查。
 
 **用户态和内核态的转换过程：**
 
@@ -61,19 +59,13 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_04_30
   2. 处理器将用户程序的上下文从内核堆栈中恢复，包括程序计数器、寄存器和其他状态信息。
   3. 处理器从内核态切换回用户态，并将**控制权**交给用户程序，使其继续在用户态下执行。
 
-
-
 这种内核态和用户态之间的转换确保了操作系统内核的安全性和稳定性。内核态的权限受到限制，用户态的程序无法直接访问和修改核心资源，必须通过系统调用向内核请求服务。这种机制**确保了操作系统的稳定性和安全性**，并提供了对硬件资源的受控访问。
-
-
 
 ## 机制和策略
 
 机制是必须的
 
 策略是不同的可选优化
-
-
 
 ## 系统调用
 
@@ -87,17 +79,13 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_04_30
 
 Linux的Fork系统调用：创建子进程，使用写时复制策略。内核只为子进程创建虚拟空间，父子两进程使用相同的物理空间。只有父子进程发生更改时才会为子进程分配独立的物理空间。
 
-
-
 ### write() 的缓冲区
 
 write()：将数据从应用程序写入到FD文件描述符所表示的文件或设备
 
-为了提高文件写入效率，在现代操作系统中，当用户调用 write() 函数，将一些数据写入文件时，操作系统通常会将数据暂存到一个内存缓冲区里，当缓冲区的空间被填满或超过了指定阈值后，才真正将缓冲区的数据写入到磁盘里。 
+为了提高文件写入效率，在现代操作系统中，当用户调用 write() 函数，将一些数据写入文件时，操作系统通常会将数据暂存到一个内存缓冲区里，当缓冲区的空间被填满或超过了指定阈值后，才真正将缓冲区的数据写入到磁盘里。
 
 这样的操作虽然提高了效率，但也为数据写入带来了安全问题：如果计算机停机，内存缓冲区中的数据会丢失。为此，系统提供了fsync()、fdatasync() 同步函数，可以强制操作系统立刻将缓冲区中的数据写入到硬盘里，从而确保写入数据的安全性
-
-
 
 ## Shell命令
 
@@ -139,8 +127,6 @@ write()：将数据从应用程序写入到FD文件描述符所表示的文件�
 `sed -i's/Jack/me/g'replace.java`：逐行将全部Jack替换成me
 `sed -i '/^ *$/d' filename`：删除空行
 
-
-
 # 我的1
 
 ## 轻量级线程的实现
@@ -148,14 +134,10 @@ write()：将数据从应用程序写入到FD文件描述符所表示的文件�
 **在传统的多线程模型中**，线程的创建、销毁、切换等操作都由操作系统内核来管理，每个线程都有自己的内核级线程（Kernel-Level Thread）和内核级上下文。这种模型的缺点是创建和销毁线程的开销较大，并且线程的调度和切换需要频繁地切换到内核态，导致性能下降。
 **而在Linux中，轻量级线程的切换过程是在用户空间中完成的，不需要涉及操作系统内核的介入，这样就避免了频繁地切换到内核态，从而提高线程的创建、销毁和切换的效率，实现轻量级的线程管理。**
 
-
-
 轻量级线程是**在用户空间**中实现的，主要基于以下两个关键技术：
 
 1. **用户级线程库**（User-Level Thread Library）：用户级线程库是一个在用户空间中实现的线程管理库，它负责管理轻量级线程的创建、销毁、调度和切换等操作。用户级线程库提供了一组API，供开发人员在用户程序中使用，以便创建、控制和同步轻量级线程。
 2. 协作式调度（Cooperative Scheduling）：轻量级线程采用协作式调度方式，也称为合作式调度。在协作式调度中，线程主动释放CPU控制权，让其他线程执行，而不是由操作系统强制进行调度。线程在适当的时机显式地主动让出CPU，通过调用特定的函数或指令，通常称为"yield"或"yielding"操作。
-
-
 
 用户级线程的实现原理如下：
 
@@ -165,23 +147,15 @@ write()：将数据从应用程序写入到FD文件描述符所表示的文件�
 4. 线程的切换是在用户态下进行的，不涉及内核态和内核调度器的介入。线程的上下文切换仅涉及用户级线程库的管理，无需切换内核级线程的上下文。
 5. 用户级线程库根据线程的调度策略，决定在何时切换线程的执行，以实现线程的并发和调度。
 
-
-
 用户级线程的优势在于轻量级和灵活性，它可以在用户空间中自定义线程的调度策略、同步机制和资源管理。然而，由于用户级线程是在用户空间中实现的，它无法利用多核处理器的并行性，因为线程的调度和切换仅在单个核心上进行。此外，用户级线程无法直接利用操作系统提供的多线程特性，例如多核调度、多线程同步原语等。
-
-
 
 因此，在实际开发中，需要根据具体的应用场景和需求来选择使用用户级线程还是内核级线程。用户级线程适用于轻量级的并发任务和对线程管理具有高度控制需求的应用，而内核级线程适用于需要利用多核处理器的并行计算和利用操作系统提供的丰富多线程特性的应用。
 
-
-
 ## Shell命令按功能分（基础）
 
-todo：有空学习 https://www.zhihu.com/question/419924138
+todo：有空学习 <https://www.zhihu.com/question/419924138>
 
 遵循POSIX规范
-
-
 
 ### 测试端口连通性命令(常用)
 
@@ -191,8 +165,6 @@ telnet ip地址 端口号  # 测试TCP/IP连接
 nc -vz ip地址 端口号  # 创建TCP/UDP连接
 traceroute ip地址  # 查路由器问题
 ```
-
-
 
 ### 基本操作命令
 
@@ -207,7 +179,7 @@ traceroute ip地址  # 查路由器问题
 | cat a.txt  | 查看文件内部信息.                                            |      |
 |            |                                                              |      |
 
-###  文件和文件夹操作
+### 文件和文件夹操作
 
 | 命令                                  | 释义                                                         | 选项 |
 | ------------------------------------- | ------------------------------------------------------------ | ---- |
@@ -235,9 +207,7 @@ traceroute ip地址  # 查路由器问题
 
 硬链接：也就是一个文件。有两个链接，真实占用磁盘的两个地址,相互独立.这就是硬链接.
 
-软链接(符号链接)：就是一个文件,只有一个链接,占用了磁盘的一个存储地址, 将为该链接地址又创建了新的访问快捷方式.这就是符号链接. 
-
-
+软链接(符号链接)：就是一个文件,只有一个链接,占用了磁盘的一个存储地址, 将为该链接地址又创建了新的访问快捷方式.这就是符号链接.
 
 ### 用户
 
@@ -255,8 +225,6 @@ $ 普通用户
 cat /etc/group  # 查看组
 cat /etc/passwd  # 查看用户
 ```
-
-
 
 ### 权限
 
@@ -312,8 +280,6 @@ ll：分为七列。
 | du  -sh [ dir ] |                                   |      |
 |                 |                                   |      |
 
-
-
 ### 程序在线安装
 
 #### wget 下载工具
@@ -328,40 +294,36 @@ wget 不是安装方式，是一种下载工具，支持HTTP，HTTPS和FTP协议
 下载工具推荐 aria2c，但 wget 也必装因为部分软件下载会依赖wget
 其它curl -O
 
-
-
 #### RPM 软件包安装方式
 
 适用于 Redhat 系列系统 (包括 CentOS 系统)
 
-rpm -ivh package.rpm 安装一个rpm包 
-rpm -ivh --nodeeps package.rpm 安装一个rpm包而忽略依赖关系警告 
-rpm -U package.rpm 更新一个rpm包但不改变其配置文件 
-rpm -F package.rpm 更新一个确定已经安装的rpm包 
-rpm -e package_name.rpm 删除一个rpm包 
-rpm -qa 显示系统中所有已经安装的rpm包 
-rpm -qa | grep httpd 显示所有名称中包含 "httpd" 字样的rpm包 
-rpm -qi package_name 获取一个已安装包的特殊信息 
-rpm -qg "System Environment/Daemons" 显示一个组件的rpm包 
-rpm -ql package_name 显示一个已经安装的rpm包提供的文件列表 
-rpm -qc package_name 显示一个已经安装的rpm包提供的配置文件列表 
-rpm -q package_name --whatrequires 显示与一个rpm包存在依赖关系的列表 
-rpm -q package_name --whatprovides 显示一个rpm包所占的体积 
-rpm -q package_name --scripts 显示在安装/删除期间所执行的脚本l 
-rpm -q package_name --changelog 显示一个rpm包的修改历史 
-rpm -qf /etc/httpd/conf/httpd.conf 确认所给的文件由哪个rpm包所提供 
-rpm -qp package.rpm -l 显示由一个尚未安装的rpm包提供的文件列表 
-rpm --import /media/cdrom/RPM-GPG-KEY 导入公钥数字证书 
-rpm --checksig package.rpm 确认一个rpm包的完整性 
-rpm -qa gpg-pubkey 确认已安装的所有rpm包的完整性 
-rpm -V package_name 检查文件尺寸、 许可、类型、所有者、群组、MD5检查以及最后修改时间 
-rpm -Va 检查系统中所有已安装的rpm包- 小心使用 
-rpm -Vp package.rpm 确认一个rpm包还未安装 
-rpm2cpio package.rpm | cpio --extract --make-directories *bin* 从一个rpm包运行可执行文件 
-rpm -ivh /usr/src/redhat/RPMS/`arch`/package.rpm 从一个rpm源码安装一个构建好的包 
+rpm -ivh package.rpm 安装一个rpm包
+rpm -ivh --nodeeps package.rpm 安装一个rpm包而忽略依赖关系警告
+rpm -U package.rpm 更新一个rpm包但不改变其配置文件
+rpm -F package.rpm 更新一个确定已经安装的rpm包
+rpm -e package_name.rpm 删除一个rpm包
+rpm -qa 显示系统中所有已经安装的rpm包
+rpm -qa | grep httpd 显示所有名称中包含 "httpd" 字样的rpm包
+rpm -qi package_name 获取一个已安装包的特殊信息
+rpm -qg "System Environment/Daemons" 显示一个组件的rpm包
+rpm -ql package_name 显示一个已经安装的rpm包提供的文件列表
+rpm -qc package_name 显示一个已经安装的rpm包提供的配置文件列表
+rpm -q package_name --whatrequires 显示与一个rpm包存在依赖关系的列表
+rpm -q package_name --whatprovides 显示一个rpm包所占的体积
+rpm -q package_name --scripts 显示在安装/删除期间所执行的脚本l
+rpm -q package_name --changelog 显示一个rpm包的修改历史
+rpm -qf /etc/httpd/conf/httpd.conf 确认所给的文件由哪个rpm包所提供
+rpm -qp package.rpm -l 显示由一个尚未安装的rpm包提供的文件列表
+rpm --import /media/cdrom/RPM-GPG-KEY 导入公钥数字证书
+rpm --checksig package.rpm 确认一个rpm包的完整性
+rpm -qa gpg-pubkey 确认已安装的所有rpm包的完整性
+rpm -V package_name 检查文件尺寸、 许可、类型、所有者、群组、MD5检查以及最后修改时间
+rpm -Va 检查系统中所有已安装的rpm包- 小心使用
+rpm -Vp package.rpm 确认一个rpm包还未安装
+rpm2cpio package.rpm | cpio --extract --make-directories *bin* 从一个rpm包运行可执行文件
+rpm -ivh /usr/src/redhat/RPMS/`arch`/package.rpm 从一个rpm源码安装一个构建好的包
 rpmbuild --rebuild package_name.src.rpm 从一个rpm源码构建一个 rpm 包
-
-
 
 ##### YUM 软件包管理器
 
@@ -373,48 +335,42 @@ rpmbuild --rebuild package_name.src.rpm 从一个rpm源码构建一个 rpm 包
 | yum clean all                           | 清空安装包    |      |
 | yum remove tree                         | 删除程序      |      |
 
-yum install package_name 下载并安装一个rpm包 
-yum localinstall package_name.rpm 将安装一个rpm包，使用你自己的软件仓库为你解决所有依赖关系 
-yum update package_name.rpm 更新当前系统中所有安装的rpm包 
-yum update package_name 更新一个rpm包 
-yum remove package_name 删除一个rpm包 
-yum list 列出当前系统中安装的所有包 
-yum search package_name 在rpm仓库中搜寻软件包 
-yum clean packages 清理rpm缓存删除下载的包 
-yum clean headers 删除所有头文件 
+yum install package_name 下载并安装一个rpm包
+yum localinstall package_name.rpm 将安装一个rpm包，使用你自己的软件仓库为你解决所有依赖关系
+yum update package_name.rpm 更新当前系统中所有安装的rpm包
+yum update package_name 更新一个rpm包
+yum remove package_name 删除一个rpm包
+yum list 列出当前系统中安装的所有包
+yum search package_name 在rpm仓库中搜寻软件包
+yum clean packages 清理rpm缓存删除下载的包
+yum clean headers 删除所有头文件
 yum clean all 删除所有缓存的包和头文件
-
-
 
 #### DEB 软件包安装方式
 
 适用于 Debian 系列系统 (包括 Ubuntu 系统)
 
-dpkg -i package.deb 安装/更新一个 deb 包 
-dpkg -r package_name 从系统删除一个 deb 包 
-dpkg -l 显示系统中所有已经安装的 deb 包 
-dpkg -l | grep httpd 显示所有名称中包含 "httpd" 字样的deb包 
-dpkg -s package_name 获得已经安装在系统中一个特殊包的信息 
-dpkg -L package_name 显示系统中已经安装的一个deb包所提供的文件列表 
-dpkg --contents package.deb 显示尚未安装的一个包所提供的文件列表 
+dpkg -i package.deb 安装/更新一个 deb 包
+dpkg -r package_name 从系统删除一个 deb 包
+dpkg -l 显示系统中所有已经安装的 deb 包
+dpkg -l | grep httpd 显示所有名称中包含 "httpd" 字样的deb包
+dpkg -s package_name 获得已经安装在系统中一个特殊包的信息
+dpkg -L package_name 显示系统中已经安装的一个deb包所提供的文件列表
+dpkg --contents package.deb 显示尚未安装的一个包所提供的文件列表
 dpkg -S /bin/ping 确认所给的文件由哪个deb包提供
-
-
 
 ##### APT 软件包管理器
 
 适用于 Debian 系列系统 (包括 Ubuntu 系统)
 
-apt-get install package_name 安装/更新一个 deb 包 
-apt-cdrom install package_name 从光盘安装/更新一个 deb 包 
-apt-get update 升级列表中的软件包 
-apt-get upgrade 升级所有已安装的软件 
-apt-get remove package_name 从系统删除一个deb包 
-apt-get check 确认依赖的软件仓库正确 
-apt-get clean 从下载的软件包中清理缓存 
+apt-get install package_name 安装/更新一个 deb 包
+apt-cdrom install package_name 从光盘安装/更新一个 deb 包
+apt-get update 升级列表中的软件包
+apt-get upgrade 升级所有已安装的软件
+apt-get remove package_name 从系统删除一个deb包
+apt-get check 确认依赖的软件仓库正确
+apt-get clean 从下载的软件包中清理缓存
 apt-cache search searched-package 返回包含所要搜索字符串的软件包名称
-
-
 
 #### Pacman 软件包管理器
 
@@ -433,10 +389,11 @@ apt-cache search searched-package 返回包含所要搜索字符串的软件包�
 |                                                |                                                              | --needed  | 不重新安装最新包                                             |
 |                                                |                                                              | yy        | 强制下载最新的软件列表清单，即使已经是最新                   |
 |                                                |                                                              | c         | 清理缓冲的旧软件包                                           |
-| -Q                                             | 查询本地库                                                   | s <regex> | 在本地仓库搜索对应的包                                       |
+| -Q                                             | 查询本地库                                                   | s <regex> | 在本地仓库搜索对应的包<br />'^pkg_name$'                     |
 |                                                |                                                              | i         | 打印软件包信息                                               |
 |                                                |                                                              | e         | 打印明确安装的软件包                                         |
 |                                                |                                                              | u         | **打印可用更新**                                             |
+|                                                |                                                              | o         | 查询该文件属于哪个包                                         |
 | -R                                             | 删除                                                         | s         | 删除不需要的依赖项                                           |
 |                                                |                                                              | n         | 移除配置文件                                                 |
 | -U                                             | `pacman -U 本地软件包路径.pkg.tar.xz` <br />`pacman -U http://www.example.com/repo/example.pkg.tar.xz` |           |                                                              |
@@ -451,8 +408,6 @@ apt-cache search searched-package 返回包含所要搜索字符串的软件包�
 | pacman-key --refresh-keys                      | 刷新密钥，需要设置代理，如不用镜像最好使用德国代理。定期执行 |
 | pacman-key -l                                  | 查看所有GPG密钥                                              |
 
-
-
 ##### 配置
 
 `/etc/pacman.d/mirrorlist`
@@ -460,7 +415,7 @@ apt-cache search searched-package 返回包含所要搜索字符串的软件包�
 [软件包列表](https://archlinux.org/mirrorlist/) Use mirror status:按status排序
 
 `/etc/pacman.conf`
-[arch wiki#pacman](https://wiki.archlinuxcn.org/wiki/Pacman#)	|	[man#pacman](https://man.archlinux.org/man/pacman.conf.5)	|	[man#pacman](https://pacman.archlinux.page/pacman.conf.5.html)
+[arch wiki#pacman](https://wiki.archlinuxcn.org/wiki/Pacman#) | [man#pacman](https://man.archlinux.org/man/pacman.conf.5) | [man#pacman](https://pacman.archlinux.page/pacman.conf.5.html)
 
 ```/etc/pacman.conf
 [options]  # 通用选项
@@ -486,14 +441,10 @@ Include = /etc/pacman.d/mirrorlist
 Server = http://repo.archlinuxcn.org/$arch
 ```
 
-
-
 ##### 中文社区仓库
 
-[archlinuxcn 中文社区仓库](https://www.archlinuxcn.org/archlinux-cn-repo-and-mirror/)(服务器在欧洲)	|	[github](https://github.com/archlinuxcn/repo)	|	[镜像 github](https://github.com/archlinuxcn/mirrorlist-repo)
+[archlinuxcn 中文社区仓库](https://www.archlinuxcn.org/archlinux-cn-repo-and-mirror/)(服务器在欧洲) | [github](https://github.com/archlinuxcn/repo) | [镜像 github](https://github.com/archlinuxcn/mirrorlist-repo)
 [软件仓库](http://repo.archlinuxcn.org)
-
-
 
 使用欧洲服务器仓库：
 
@@ -518,15 +469,9 @@ pacman -S archlinuxcn-mirrorlist-git
 Include = /etc/pacman.d/archlinuxcn-mirrorlist
 ```
 
-
-
-
-
 ##### Arch User Repository
 
-[wiki#Arch User Repository](https://wiki.archlinux.org/title/Arch_User_Repository)	|	[AUR首页(搜索软件包)(重要)](https://aur.archlinux.org/)
-
-
+[wiki#Arch User Repository](https://wiki.archlinux.org/title/Arch_User_Repository) | [AUR首页(搜索软件包)(重要)](https://aur.archlinux.org/)
 
 [wiki#makepkg](https://wiki.archlinux.org/title/Makepkg)：通过PKGBUILD(软件包生成shell脚本)，makepkg -s生成pkgname.pkg.tar.zst，再由pacman -U安装。官方定期会从中挑选软件包进入extra仓库
 makepkg配置: 如果有需要再去设置MAKEFLAGS等变量
@@ -539,23 +484,17 @@ LDFLAGS="... -Wl,--separate-debug-file"  # 使用mold有的项目不能编译取
 # LDFLAGS="... -fuse-ld=mold -Wl,--separate-debug-file"  # paru -S mold  # -Wl表示后面的选项是给链接器的  # --separate-debug-file表示生成独立的.debug调试信息文件
 ```
 
-
-
 手动下载/更新软件包：pacman不支持AUR，所以需要手动升级或使用pacman封装
-	1git pull <AUR_Git_URL> 或 下载快照
-	2解压
-	3检查PKGBUILD等文件
-	4makepkg -s
-	5pacman -U
-
-
+ 1git pull <AUR_Git_URL> 或 下载快照
+ 2解压
+ 3检查PKGBUILD等文件
+ 4makepkg -s
+ 5pacman -U
 
 pacman封装：不能root安装软件包
 [wiki#AUR helpers](https://wiki.archlinux.org/title/AUR_helpers)
-[github#yay](https://github.com/Jguer/yay)	|	[aur#yay](https://aur.archlinux.org/packages/yay)
+[github#yay](https://github.com/Jguer/yay) | [aur#yay](https://aur.archlinux.org/packages/yay)
 [github#paru(chroot隔离)(推荐)](https://github.com/morganamilo/paru)
-
-
 
 | paru(new operations)  | 释义                       | 选项 | 释义           |
 | --------------------- | -------------------------- | ---- | -------------- |
@@ -563,8 +502,6 @@ pacman封装：不能root安装软件包
 | -Sss                  | 相比-Ss 多显示URL、AUR URL |      |                |
 |                       |                            |      |                |
 | **pacman operations** | 扩展pacman支持AUR          |      |                |
-
-
 
 ### Linux高级使用
 
@@ -578,8 +515,6 @@ pacman封装：不能root安装软件包
 | kill  (进程编号:pid)    | 杀死进程-自杀.                                               |                                                              |
 | kill -9  (进程编号:pid) | 杀死进程-谋杀.                                               |                                                              |
 | top                     | 查看当前动态进程(监控)q退出.                                 |                                                              |
-
-
 
 #### iptables 防火墙
 
@@ -613,8 +548,6 @@ pacman封装：不能root安装软件包
 
 ​        修改   /etc/sysconfig/iptables 文件: 修改防火墙规则.
 
-
-
 #### 其他功能
 
 | 命令     | 释义         | 选项              |
@@ -624,8 +557,6 @@ pacman封装：不能root安装软件包
 | halt     | 关闭系统     |                   |
 | reboot   | 重启         |                   |
 | exit     | 退出         |                   |
-
-
 
 #### 网络
 
@@ -637,10 +568,6 @@ pacman封装：不能root安装软件包
 | arp                               | 显示和修改动态IP地址转换表(ARP缓存表) **数据链路层**         | -a 显示当前ARP缓存表项<br />-s 添加IP地址-Mac地址记录(entry) |
 | tracepath [options] <destination> | 路径探测跟踪                                                 |                                                              |
 | curl [options...] <url>           | client URL，发送 http 请求<br />访问 cip.cc 可用于测试是否使用代理<br/> | -X Get 指定HTTP请求方法<br />-A 指定User-Agent<br />-b 指定Cookie<br />-d 指定Post请求正文<br />-F 上传二进制文件<br />-k 跳过 SSL 检测<br />-o 将响应保存为文件<br />-x 指定代理 |
-
-
-
-
 
 # 我的2
 
@@ -659,7 +586,7 @@ pacman封装：不能root安装软件包
         <td><center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_13_12_43.PNG" style="zoom:50%;" /></center></td>
     </tr>
     <tr>
-    	<td><center><strong>用的是VMnet0，和主机网卡有关</strong></center></td>
+     <td><center><strong>用的是VMnet0，和主机网卡有关</strong></center></td>
         <td><center>我的配置</center></td>
     </tr>
 </table>
@@ -669,35 +596,29 @@ IP与主机在同一个网段内
 子网掩码和网关和DNS与主机相同
 不过你需要多于一个的IP地址(电脑由WIFI连接)，并且需要手工(虚拟机的dhcp服务器无效)为虚拟系统配置IP地址、子网掩码，而且还要和宿主机器处于同一网段，这样虚拟系统才能和宿主机器进行通信
 
-
-
 #### NAT(网络地址转换模式)
 
 <table>
     <tr>
-    	<td><center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_13_12_44.png" style="zoom:67%;" /></center></td>
+     <td><center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_13_12_44.png" style="zoom:67%;" /></center></td>
         <td><center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_13_12_44.PNG" style="zoom:50%;" /></center></td>
     </tr>
     <tr>
-    	<td><center><strong>用的是VMnet8(以太网适配器 VMware Network Adapter VMnet8)</strong></center></td>
+     <td><center><strong>用的是VMnet8(以太网适配器 VMware Network Adapter VMnet8)</strong></center></td>
         <td><center>我的配置</center></td>
     </tr>
 </table>
 
-
-
-#### Host-only(主机模式) 
+#### Host-only(主机模式)
 
 <table>
     <tr>
-    	<td><center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_13_12_45.png" style="zoom:67%;" /></center></td>
+     <td><center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_13_12_45.png" style="zoom:67%;" /></center></td>
     </tr>
     <tr>
-    	<td><center><strong>用的是VMnet1</strong></center></td>
+     <td><center><strong>用的是VMnet1</strong></center></td>
     </tr>
 </table>
-
-
 
 ### vmware-tools问题
 
@@ -715,15 +636,11 @@ systemctl status open-vm-tools.service
 
 关闭锁屏、空白屏幕、蓝牙
 
-
-
 ## WSL
 
-[文档](https://learn.microsoft.com/zh-cn/windows/wsl/)	|	[**最佳实践**](https://dowww.spencerwoo.com/1-preparations/1-0-intro.html)
+[文档](https://learn.microsoft.com/zh-cn/windows/wsl/) | [**最佳实践**](https://dowww.spencerwoo.com/1-preparations/1-0-intro.html)
 
-TODO: 有空继续看 目前看到这里 [Dev on WSL](https://dowww.spencerwoo.com/3-vscode/3-4-c_cpp.html#%E5%AE%89%E8%A3%85-c-c-%E6%8F%92%E4%BB%B6) 
-
-
+TODO: 有空继续看 目前看到这里 [Dev on WSL](https://dowww.spencerwoo.com/3-vscode/3-4-c_cpp.html#%E5%AE%89%E8%A3%85-c-c-%E6%8F%92%E4%BB%B6)
 
 ### 配置
 
@@ -732,16 +649,12 @@ TODO: 有空继续看 目前看到这里 [Dev on WSL](https://dowww.spencerwoo.c
 全局配置：`%UserProfile%/.wslconfig`(不用)
 单发行配置：`/etc/wsl.conf`
 
-
-
 存储位置：`E:\Applications\Scoop\persist\archwsl\data\ext4.vhdx`，240525目前占用5.5G  20250215:11G
 
 ```bash
 # 优化 WSL 2 虚拟磁盘占用空间
 Optimize-VHD -Path E:/Applications/Scoop/persist/archwsl/data/ext4.vhdx -Mode Full
 ```
-
-
 
 #### .wslconfig
 
@@ -763,8 +676,6 @@ defaultVhdSize=1099511627776  # 虚拟硬盘VHD大小, 1TB
 [experimental]
 bestEffortDnsParsing=true  # 需要dnsTunneling=true
 ```
-
-
 
 #### wsl.conf
 
@@ -796,8 +707,6 @@ systemd=true
 # command="echo 'hello wsl'"  # win11
 ```
 
-
-
 ### 网络互访
 
 WSL IP：**127.0.0.1**、`cat /etc/resolv.conf`内的固定IP、wsl-hostname.local
@@ -815,8 +724,6 @@ default via 172.26.128.1 dev eth0  // 表示默认路由是宿主机Windows主�
 172.26.128.0/20 dev eth0 proto kernel scope link src 172.26.135.176  // 是WSL的IP地址172.26.135.176
 ```
 
-
-
 ### 文件互访
 
 磁盘：/dev/sda
@@ -831,19 +738,13 @@ cat pacman.conf | clip.exe  # 复制WSL内容到Win，好用
 wsl ls 
 ```
 
-
-
 ### 远程开发
 
 [文档](https://www.jetbrains.com/help/idea/2023.2/remote.html)
 
-
-
 ## 性能优化
 
 [archlinux wiki#性能优化](https://wiki.archlinuxcn.org/wiki/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96)
-
-
 
 ## 软件
 
@@ -864,7 +765,108 @@ wsl ls
 | neovim    |                                                              |
 | inetutils | 含telnet用于测试tcp                                          |
 
+### systemd
 
+systemd：是现代Linux中的init system、进程监督(服务管理)工具(PID 1 用户空间的第一个进程)
+
+[archwiki#systemd](https://wiki.archlinuxcn.org/wiki/Systemd)
+
+```bash
+systemctl list-unit-files --help
+
+# unit类型
+unit
+automount
+path
+socket
+timer
+```
+
+#### cron
+
+cron：定时任务工具，有daemon，cronie内含crond、anacron
+
+[archwiki#cron](https://wiki.archlinux.org/title/Cron)
+
+```bash
+pacman -S cronie
+
+crontab -l  # list
+crontab <file>  # new
+crontab -r  # remove
+crontab -d  # edit
+```
+
+```/etc/crontab
+# /etc/crontab
+
+# [s] minute h d month w cmd [y]
+*/10 * * *  root  sleep 1;/usr/sbin/anacron
+
+
+# 通配符
+# 由于月星期可能0或1开始，推荐使用JUL、MON英文替代
+# 日：L表示月最后一天
+# 星：W表示工作日
+
+# * 每一
+# , 并
+# - []
+# 步长/ 除  # */2等价于0/2  # 遇到不能被整除的无法实现每隔x时长执行一次
+```
+
+anacron：争对非持续运行系统(会记录任务的最后执行时间)，无daemon
+
+#### systemd.timer
+
+```bash
+systemctl list-timers --all
+systemctl daemon-reload
+systemctl enable demo.timer
+```
+
+全局（所有用户适用）：`/etc/systemd/system/` ~~`/usr/lib/systemd/system/`~~
+用户级别：`~/.config/systemd/user/`
+
+```/etc/systemd/system/demo.timer
+# /etc/systemd/system/demo.timer
+# doc: https://man.archlinux.org/man/systemd.timer.5
+[Unit]
+Description=Timer to run demo.service every week.
+
+[Timer]
+# timer doc: https://man.archlinux.org/man/systemd.timer.5
+# time doc: https://man.archlinux.org/man/systemd.time.7
+OnCalendar=Mon,Tue *-*-01..04 12:00:00  #   # 星期 年-月-日 时:分:秒  # 支持通配符, * ..([])
+OnCalendar=weekly  # 多次执行
+Persistent=true  # 系统宕机重启后，补上未执行任务
+
+AccuracySec=1us
+RandomizedDelaySec=12h
+
+[Install]
+WantedBy=timers.target
+```
+
+```/etc/systemd/system/demo.service
+# /etc/systemd/system/demo.service  # service文件定义任务
+# archwiki#编写单元文件: https://wiki.archlinuxcn.org/wiki/Systemd#%E7%BC%96%E5%86%99%E5%8D%95%E5%85%83%E6%96%87%E4%BB%B6
+[Unit]
+Description=Run Python script demo.py every week
+Documentation=https://xxxx
+OnFailure=xxxx.service
+
+[Service]
+ExecStart=/usr/bin/python3 /path/to/demo.py
+Environment=XXX=YYY
+
+Type=oneshot
+WorkingDirectory=/path/to/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
 
 ### pdsh
 
@@ -877,15 +879,11 @@ pdsh -R ssh -w host_name1,host_name2,host_name3 uptime
 pdsh -R ssh -w host[1] uptime
 ```
 
-
-
 ### nvim
 
 ```bash
 export EDITOR=nvim
 ```
-
-
 
 ### sudo
 
@@ -928,15 +926,11 @@ root ALL=(ALL:ALL) ALL  # moren
 @includedir /etc/sudoers.d
 ```
 
-
-
 ### OpenSSH
 
 OpenSSH 软件是SSH协议的实现，用于提供加密的通信会话
 
 [arch wiki#openssh](https://wiki.archlinuxcn.org/wiki/OpenSSH)
-
-
 
 #### 服务端
 
@@ -954,17 +948,11 @@ OpenSSH 软件是SSH协议的实现，用于提供加密的通信会话
 ssh-keygen -A
 ```
 
-
-
-
-
 ### 网络管理器
 
 [网络管理器](https://wiki.archlinuxcn.org/wiki/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%99%A8)
 
 NetworkManager：支持 GUI
-
-
 
 #### systemd-networkd
 
@@ -972,9 +960,13 @@ NetworkManager：支持 GUI
 systemctl enable systemd-resolved
 ```
 
-
-
 ### 文件系统
+
+>设备：
+>
+>字符设备：字节流，如键盘鼠标、串口
+>
+>块设备：数据块，如硬盘、USB存储
 
 |                      | ext4                                            | vfat                                             | XFS                  | Btrfs(推荐)                                                  | openZFS                                |
 | -------------------- | ----------------------------------------------- | ------------------------------------------------ | -------------------- | ------------------------------------------------------------ | -------------------------------------- |
@@ -985,11 +977,9 @@ systemctl enable systemd-resolved
 | 加密分区             |                                                 |                                                  |                      | 不支持                                                       |                                        |
 | 主要应用场景         | 大多数Linux发行版的默认、资源占用低             | U盘，FAT32最大4GB                                | 文件服务器、io性能优 | 高级功能丰富                                                 | 高级功能丰富、吃内存                   |
 
-
-
 #### btrfs
 
-[官方文档](https://btrfs.readthedocs.io/en/latest/)	|	[arch wiki#Btrfs](https://wiki.archlinuxcn.org/wiki/Btrfs)
+[官方文档](https://btrfs.readthedocs.io/en/latest/) | [arch wiki#Btrfs](https://wiki.archlinuxcn.org/wiki/Btrfs)
 [btrfs挂载选项](https://man.archlinux.org/man/btrfs.5#MOUNT_OPTIONS)
 GRUB是支持btrfs的，其他引导加载程序不清楚
 
@@ -1012,8 +1002,6 @@ pacman -S btrfs-progs  # btrfs工具软件包
 |                   | btrfs filesystem resize [+\|-\| ]size /                      | 将文件系统扩展到特定大小，已有数据大小<size<=该设备可用空间  |
 |                   | 自动快照                                                     | 去使用Snapper等快照管理器                                    |
 
-
-
 ```bash
 btrfs subvolume create /mnt/@snapshots
 btrfs subvolume delete /.snapshots  # 删除子卷/.snapshots
@@ -1024,8 +1012,6 @@ btrfs subvolume list /dev/vda2  # 列出/dev/vda2分区上的所有子卷
 opts=noatime,compress=zstd,space_cache=v2,x-mount.mkdir
 mount -o $opts,subvol=@snapshots /dev/vda2 /mnt/.snapshots
 ```
-
-
 
 ### 快照管理器
 
@@ -1040,7 +1026,7 @@ snapper：快照管理工具
 snap-pac：pacman扩展，在pacman更新时自动创建、删除快照。配置/etc/snap-pac.conf
 grub-btrfs：在引导加载程序GRUB中添加Btrfs快照启动项，实现快照启动功能(引导进入快照)
 
-[arch wiki#snapper](https://wiki.archlinux.org/title/Snapper)	|	[snapper-configs官方文档](http://snapper.io/manpages/snapper-configs.html)
+[arch wiki#snapper](https://wiki.archlinux.org/title/Snapper) | [snapper-configs官方文档](http://snapper.io/manpages/snapper-configs.html)
 
 配置：
 `/etc/snapper/configs/xxx`
@@ -1074,37 +1060,33 @@ systemctl enable --now grub-btrfs.timer  # grub-btrfs提供的，用于生成快
 grub-mkconfig -o /boot/grub/grub.cfg  # 更新GRUB配置，会写入快照启动项，实现快照启动功能
 ```
 
-
-
 ### swap的分区和缓存
 
 [arch wiki#swap](https://wiki.archlinuxcn.org/wiki/Swap)
 
 交换空间：
 当RAM(物理内存)耗尽或休眠 (hibernate)或者睡眠(sleep)就会使用swap区域
-total memory = physical + zram + disk swap 
+total memory = physical + zram + disk swap
 
 * 二级swap：开swap会影响硬盘寿命、基于磁盘
-  	/swap分区：
-  	swapfile：调整大小比 partition 方便
-  	解决内存小的问题
+   /swap分区：
+   swapfile：调整大小比 partition 方便
+   解决内存小的问题
 * 一级swap：基于内存
-  	zswap：压缩内存，必须要有物理交换设备swap作为后备存储，FIFO。 zswap 会在 zram 之前被用作 swap 缓存
-  	zRAM(推荐)：压缩内存，如果内存足够大可以完全使用zRAM避免使用基于磁盘的二级swap
-  	解决swap慢的问题
+   zswap：压缩内存，必须要有物理交换设备swap作为后备存储，FIFO。 zswap 会在 zram 之前被用作 swap 缓存
+   zRAM(推荐)：压缩内存，如果内存足够大可以完全使用zRAM避免使用基于磁盘的二级swap
+   解决swap慢的问题
 
 > zswap 和 zram 两者的目的相同但实现方法不同：
 > zswap依靠一块压缩的**内存缓存**来工作，不需要（也不允许）过多的用户空间配置；
 > 而zram内核模块可用于在内存中创建一个**压缩的块设备**。
 > zswap需与swap设备配合工作，而zram则不需要。
 
-
-
 #### zram
 
 是一个块设备驱动程序，以内核模块的形式加载，该模块创建基于RAM的块设备
 `ls /lib/modules/$(uname -r)/kernel/drivers/block/  # 查看内核是否含有zRAM模块`
-[arch wiki#zram](https://wiki.archlinuxcn.org/wiki/Zram)	|	[内核源码#zRAM](https://github.com/torvalds/linux/blob/master/drivers/block/zram/Kconfig)	|	[内核文档#zram](https://www.kernel.org/doc/Documentation/admin-guide/blockdev/zram.rst)	|	[man#modprobe](https://man7.org/linux/man-pages/man5/modprobe.d.5.html)	|	[zRAM调优](https://www.cnblogs.com/linhaostudy/p/18324329)
+[arch wiki#zram](https://wiki.archlinuxcn.org/wiki/Zram) | [内核源码#zRAM](https://github.com/torvalds/linux/blob/master/drivers/block/zram/Kconfig) | [内核文档#zram](https://www.kernel.org/doc/Documentation/admin-guide/blockdev/zram.rst) | [man#modprobe](https://man7.org/linux/man-pages/man5/modprobe.d.5.html) | [zRAM调优](https://www.cnblogs.com/linhaostudy/p/18324329)
 
 配置
 
@@ -1114,8 +1096,6 @@ $ echo zram >> /etc/modules-load.d/zram.conf  # 自动加载内核模块  # 取�
 # vim /etc/modprobe.d/zram.conf  # 配置modprobe自动加载zram的参数
 $ reboot
 ```
-
-
 
 ##### zram-generator
 
@@ -1152,8 +1132,6 @@ Filename                                Type            Size            Used    
 /dev/zram0                              partition       457212          0               100  # 优先级高
 ```
 
-
-
 ##### zramd
 
 配置：`/etc/default/zramd`
@@ -1166,7 +1144,340 @@ systemctl enable --now zramd.service
 
 
 
+## Linux Kernel6.16
 
+宏内核
+
+[Linux kernel map](https://makelinux.github.io/kernel/map/)
+
+
+
+系统编程圣经: 
+
+Advanced Programming in the UNIX Environment(UNIX环境高级编程)(APUE)
+
+The Linux Programming Interface(Linux/UNIX系统编程手册)(TLPI): APUE的超集
+
+
+
+OS可以看Barebone System
+
+
+
+```bash
+git log --oneline --no-merges v5.10..v5.11 -- io_uring/*.h
+git log --oneline --no-merges v5.10..v5.11 | grep -i "io_uring"
+```
+
+
+
+[vger.kernel.org](https://subspace.kernel.org/vger.kernel.org.html)
+
+```mail
+# plain text email
+io-uring+help@vger.kernel.org
+
+io-uring+subscribe@vger.kernel.org
+io-uring+subscribe-digest@vger.kernel.org
+io-uring+unsubscribe@vger.kernel.org
+
+io-uring+faq@vger.kernel.org  // frequently asked questions(faq)
+```
+
+
+
+## 内核模块
+
+[archlinux#Kernel module](https://wiki.archlinux.org/title/Kernel_module)
+
+模块所在目录：  
+`/lib/modules/$(uname -r)/`  
+`/usr/lib/modules/$(uname -r)/`  
+
+```bash
+`modprobe <module name>` 手动加载内核模块
+`echo <module name> >> /etc/modules-load.d/<module name>.conf` 自动加载内核模块
+
+`modprobe -c` 打印模块配置
+`modprobe -c | grep <module_name>` 
+`modprobe -c | less` 
+`modprobe --show-depends module_name` 打印模块依赖项及其本身
+
+`modinfo tcp_bbr` 显示模块信息
+`lsmod` 显示当前加载的内核模块
+```
+
+### BBR
+
+> 参考 Network.md#TCP#BBRv3 笔记
+
+```bash
+echo "tcp_bbr" >> /etc/modules-load.d/tcp_bbr.conf
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.d/bbr.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.d/bbr.conf
+```
+
+### tls
+
+alias: tcp-ulp-tls(Upper Layer Protocol)、ktls
+
+```bash
+
+```
+
+## 系统调用
+
+### std.os.fcntl
+
+fd status flag: 只能在文件打开后修改  
+
+fd flag：
+O_RDONLY：只读模式打开文件  
+O_WRONLY：只写模式打开文件  
+O_RDWR：读写模式打开文件  
+O_CREAT：如果文件不存在，则创建文件  
+O_TRUNC：截断文件  
+O_APPEND：追加到文件末尾  
+O_NONBLOCK：非阻塞I/O  
+O_SYNC：同步写入  
+
+```zig
+const flags = try std.os.fcntl(stdout.handle, std.os.F.GETFL, 0);  
+if (flags & std.os.O.APPEND != 0) {  // flags包含std.os.O.APPEND
+    const new_flags = flags & ~@as(usize, std.os.O.APPEND);
+    _ = try std.os.fcntl(stdout.handle, std.os.F.SETFL, new_flags);
+}
+```
+
+### I/O复用并发模型
+
+* BIO: read()/write()  
+
+* NIO(): select()/poll()/epoll()  
+只支持 network sockets 和 pipes  
+
+* 传统AIO: io_submit()/io_getevents()  
+只支持direct IO(零拷贝 使用O_DIRECT打开文件)  
+不支持缓冲IO(写入page cache不保证写入磁盘)  
+
+* 新AIO：io_uring
+
+I/O复用是实现AIO的，而非并行I/O  
+
+* 1单线程Accept  
+非并发
+
+* 2单线程Accept + 多线程读写任务
+客户端数量:服务端线程数=1:1  
+
+* 3单线程多路I/O复用  
+非并发
+
+* 4单线程多路I/O复用 + 多线程读写任务(worker poll)  
+最高的读写并行通道为1(事件检测、任务分发是串行)
+传统的工作线程模型  
+SpringBoot  
+
+* 5单线程多路I/O复用 + 多线程多路I/O复用
+最高的读写并行通道为N(CPU核数)(事件检测、任务分发可并发 同一个通道的读写是串行)  
+常用  
+
+* 5.5单线程多路I/O复用 + 多进程多路I/O复用  
+将accept()在子进程中执行(避免IPC)
+多进程更安全稳定  
+
+* 6单线程多路I/O复用 + 多线程多路I/O复用 + 多线程  
+客户端数量:服务端线程数=1:1  
+多线程可利用多核CPU，这是协程所做不到的
+
+13非并发 但3能异步  
+2每个连接创建独立线程，客户端多了后占资源太多  
+4固定数量的工作线程，因为条件不阻塞accept接受请求，epoll异步使得多余任务可异步等待执行，才可以固定工作线程数量  
+24事件检测、任务分发是串行(最高的读写并行通道为1)  
+5事件检测在子线程中执行，一个子线程中监听多个connFD  
+6客户端数量:服务端线程数=1:1  
+
+
+
+### I/O
+
+IO
+
+* 同步
+  * 传统方式：一个线程只能处理一个IO(等待特定IO请求)
+  * I/O多路复用(空间复用 批量通知 等待多个IO请求 硬件中断 **轻!**)
+    本质是事件批量通知
+
+* 异步
+
+| IO接口                                                       | 数据结构                                            | 一个进程所能打开的最大连接数                                 | 消息传递方式                       | fd列表的遍历速度                                             | tag                                |                                                              |
+| ------------------------------------------------------------ | --------------------------------------------------- | ------------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------ |
+| read()/write()                                               |                                                     |                                                              |                                    |                                                              | BIO                                |                                                              |
+| select(nfds, readfds, writefds, exceptfds, timeout)          | fd_set{long int fds_bits[16]} 位图(16*64=1024)      | 单个进程所能打开的最大连接数由 FD_SETSIZE 宏定义<br />**连接数有限 小** |                                    | FD_ISSET(fd, *fdsetp) 每次都需要遍历fdsetp<br />O(all_fs)    | IO多路复用<br />同步               |                                                              |
+| poll(pollfd *fds, nfds_t nfds, int timeout)                  | pollfd{int fd, short int events, short int revents} | 但**连接数无限制**                                           |                                    | 需要手动遍历`for (nfds_t i = 0; i < pfds.size(); ++i) { if pfds[i].}`<br />O(all_fd) | IO多路复用<br />同步               | **本质上与select没有区别**，仅突破fd_num限制                 |
+| epoll_create1(flags) 返回的fd用于找到内核对象file再找到eventloop(创建epoll实例)<br />epoll_ctl(fd, op, 目标fd, *event) 添加EPOLL_CTL_ADD/修改EPOLL_CTL_MOD/删除EPOLL_CTL_DEL监控的文件描述符<br />epoll_wait(epfd, epoll_event, maxevents, timeout) | epoll_event{uint32_t events, epoll_data_t data}     |                                                              | 内核态将数据拷贝到空户空间的events | 直接返回就绪列表epoll_event[ret_nfds]<br />O(ready_fd)       | IO多路复用<br />同步               | 返回ready_fd<br />在epoll_ctl()会检查file_can_poll()目标fd是否支持poll操作(file_op->poll=true)，**块设备没有就绪状态概念不支持poll**<br />维护一个红黑树和就绪列表 |
+| io_setup() io_submit() io_getevents()                        |                                                     |                                                              |                                    |                                                              | 传统AIO                            |                                                              |
+| io_uring                                                     |                                                     |                                                              |                                    |                                                              | 异步IO(由内核态拷贝数据到用户空间) |                                                              |
+
+> 虽然有栈协程比无栈协程更重，但是有栈能并发调用，而无栈协程复用空间，无法并发，所以在多连接需要高并发的领域有栈协程更好(快)
+> 而在多连接不需要高并发的领域 epoll 更好(轻)
+
+> 网络：
+> 	file_op->poll() 
+> 		1注册回调poll_wait(**是为之后的操作准备的，不影响本次处理**, 内核epoll_wait()会等待之前注册的回调被触发)
+> 		2非阻塞立即返回文件是否就绪(只支持socket、pipe(FIFO))
+> 		用于事件驱动的IO多路复用，**中断驱动**
+> 	DPDK使用轮询
+>
+> 块设备：
+> 	iopoll() 是 NVMe SSD的硬件**轮询**特性
+
+
+
+* NIO(): select()/poll()/epoll()  
+  只支持 network sockets 和 pipes  
+
+* 传统AIO: io_submit()/io_getevents()  
+  只支持direct IO(零拷贝 使用O_DIRECT打开文件)  
+  不支持缓冲IO(写入page cache不保证写入磁盘)  
+
+* 新AIO：io_uring
+
+#### IO多路复用
+
+看hello_epoll.cpp、hello_poll.cpp、hello_select.cpp
+
+
+
+#### io_uring(universal ring)
+
+> IO类型：
+>
+> * Direct I/O(基于文件 O_DIRECT 绕过page cache 需要大小对齐)：BIO效果最差
+>   数据库系统通常自己管理缓存，使用Direct I/O
+> * buffered I/O：POSIX效果最差(hot cache)
+> * socket I/O
+>
+> 
+>
+> Linux I/O
+>
+> * BIO：read()/write()
+>   如果数据在page cache是不会阻塞的
+> * NIO：select()/poll()/epoll()
+>   只支持 network sockets 和 pipes  
+>   * POSIX AIO(线程池): aio_read/aio_write()
+>     伪异步
+>   * Linux AIO：
+>     两个接口: 将IO请求提交到内核、从内核接收完成事件
+>     接口不容易扩展只支持Direct I/O
+>     非确定性行为(可能阻塞)
+>   * io_uring(很全面)
+>     共享buffer**减少系统调用开销**
+>     批处理、易扩展能重写大多数系统调用
+>     峰值170w IOPS(4KB Block)  
+
+
+
+核心：
+
+每个 io_uring 实例都有两个用户空间和内核空间共享的 ring buffer 环形缓冲区
+SQ(submission queue提交队列)、CQ(completion queue完成队列)，E(entries)  
+该队列选择基于数组，因为连续可以**内存映射**到用户空间
+
+> io_uring makes processing async I/O go brrrr by keeping syscalls to a minimum. This is done through batching reads/writes through ring buffers that are setup between the user space and the kernel space.  
+> io_uring 通过将系统调用保持在最低限度，使异步 I/O 处理变得非常快。这是通过在用户空间和内核空间之间设置的环形缓冲区批量执行读写操作来实现的。
+
+
+
+>C runtime:
+>
+>* [glibc](https://sourceware.org/glibc/libc.html)(GNU C Library 是**系统基础库，是用户空间与kernel的桥梁**(`extend ret xx_syscall(a, b)`对系统调用封装)提供了 C runtime底层实现(stdio stdlib string sys bits asm)、[POSIX接口](https://pubs.opengroup.org/onlinepubs)(unistd UNIX Standard)、GNU扩展(需要 #define _GNU_SOURCE)(syscall))
+>* musl libc
+>* MSVCRT(Microsoft Visual CRT)
+
+
+
+资料：
+
+* [man 7 io_uring](https://man.archlinux.org/man/io_uring.7)
+  [源码](https://elixir.bootlin.com/linux/v6.15.3/source/io_uring/io_uring.c)
+  [Efficient IO with io_uring(重要)](https://kernel.dk/io_uring.pdf)
+
+> 通信基础：
+> POSIX aio(): 不支持iopoll
+> io_uring: 通过使用共享的环形缓冲区，我们可以消除应用与内核间共享锁，转而巧妙利用内存排序和屏障来处理
+
+* 202506glibc还未提供io_uring的封装 [sourceware](https://sourceware.org/bugzilla/buglist.cgi?quicksearch=io_uring)
+* [man3#liburing](https://man.archlinux.org/listing/extra/liburing/)(作者是Linux Kernel io_uring的作者Jens Axboe)	|	[git.kernel](https://git.kernel.dk/cgit/liburing/) [github](https://github.com/axboe/liburing)
+  liburing仅是对系统调用的封装
+  TODO: 有空可以看下项目下的example，进阶一点看eBPF(Extended Berkeley Packet Filter)跟踪io_uring进行性能分析监控
+* [zig#IoUring](https://ziglang.org/documentation/master/std/#std.os.linux.IoUring)
+
+
+
+##### 手动薄封装syscall_io_uring
+
+薄封装需要手动管理SQE、CQE(内存排序/屏障)
+还可以用事件循环封装(开一个后台线程处理CQE)
+
+```bash
+# https://github.com/microsoft/WSL2-Linux-Kernel
+git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
+cd WSL2-Linux-Kernel
+sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev cpio qemu-utils  # ubuntu
+pacman -S pahole cpio qemu-img  # archlinux
+pacman -S base-devel flex bison pahole libssl libelf cpio qemu-img extra/bc  # archlinux
+
+export CC="gcc -std=gnu11"  # wsl Makefile中KBUILD_CFLAGS += -std=gnu11
+export HOSTCC="gcc -std=gnu11"
+make menuconfig KCONFIG_CONFIG=Microsoft/config-wsl  # 可视化修改 ./Microsoft/config-wsl
+make KCONFIG_CONFIG=Microsoft/config-wsl HOSTCFLAGS="-std=gnu11" KCFLAGS="-std=gnu11" -j$(nproc)
+make INSTALL_MOD_PATH="$PWD/modules" modules_install
+...  # 略  # 推荐去Microsoft Store更新WSL
+```
+
+```c
+// hello_syscall.c
+...
+```
+
+
+
+##### liburing-2.11
+
+编译: 
+
+```bash
+# BUILD liburing.so liburing-ffi.so liburing.a liburing-ffi.a
+
+./configure --help
+Usage: configure [options]
+Options: [defaults in brackets after descriptions]
+  --help                   print this message
+  --prefix=PATH            install in PATH [/usr]
+  --includedir=PATH        install headers in PATH [/usr/include]
+  --libdir=PATH            install runtime libraries in PATH [/usr/lib]
+  --libdevdir=PATH         install development libraries in PATH [/usr/lib]
+  --mandir=PATH            install man pages in PATH [/usr/man]
+  --datadir=PATH           install shared data in PATH [/usr/share]
+  --cc=CMD                 use CMD as the C compiler
+  --cxx=CMD                use CMD as the C++ compiler
+  --use-libc               use libc for liburing (useful for hardening)
+  --enable-sanitizer       compile liburing with the address and undefined behaviour sanitizers. (useful for debugging)
+
+# Prepare build config (optional).
+cd liburing
+./configure --prefix="$PWD/install" --cc=clang --cxx=clang++
+# Build liburing.
+make -j$(nproc)
+# Build liburing.pc
+make liburing.pc  # 生成 pkg-config 元数据文件(./liburing.pc)
+# Install liburing (headers, shared/static libs, and manpage).
+sudo make install
+```
+
+使用: 看hello_liburing.cpp
 
 
 
@@ -1183,8 +1494,8 @@ systemctl enable --now zramd.service
 | /boot                                                        | 存放系统引导时使用的各种文件.                                |
 | /boot/grub/grub.cfg                                          | 配置grub开机引导                                             |
 | /dev                                                         | 存放设备文件.                                                |
-| **/etc（etcetera附加物表示配置）**                           | 存放软件的全局配置文件<br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile` |
-| /etc/bash.bashrc                                             | 系统级bashrc                                                 |
+| **/etc（etcetera附加物表示配置）**                           | 存放软件的全局配置文件                                       |
+| /etc/bash.bashrc                                             | 系统级bashrc<br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile`<br />export PATH="/root/goroot/bin:$PATH"  # 前面的优先级高 |
 | /etc/fstab                                                   | 配置开机自动挂载配                                           |
 | **/etc/group**                                               | 查看所有组，配置 组名:密码占位符(x或*):组ID(GID):组成员列表（逗号分隔） |
 | /etc/hosts                                                   | DNS解析，配置映射关系hostname:IP                             |
@@ -1207,14 +1518,14 @@ systemctl enable --now zramd.service
 | /opt                                                         | 额外安装的可选的应用程序安装位置.<br />/opt 目录是存放某些大型软件或者某些特殊软件的目录，比如谷歌浏览器(Google Chrome)默认就是安装在/opt中。<br />jdk、tomcat |
 | **/opt/modules/software**                                    | 软件的安装目录                                               |
 | /opt/modules/source                                          | 软件的安装包的目录                                           |
-| /proc                                                        | 虚拟文件系统.当前内存中的映射文件.启动时,产生,关机时消失.    |
+| /proc                                                        | 虚拟进程文件系统，当前内存中的映射文件.启动时,产生,关机时消失. |
 | /proc/swaps                                                  | 虚拟交换空间(zram、swapfile)                                 |
 | /proc/$pid/environ                                           | 存储进程环境变量。环境变量是一组键值对，用于存储进程运行时所需的配置信息、系统路径、用户设置等。 |
 | /root                                                        | 超级管理员根目录.                                            |
-|                                                              |                                                              |
 | ~                                                            | 当前用户的主目录 /username，~目录下有一些隐藏 .用户配置文件  |
-| ~/.bashrc                                                    | 每次打开shell触发<br />bash用户,配置文件<br />执行命令 source ~/.zshrc 来生效修改的配置，而不需要重新登录<br /><br />CMD：链接器配置文件，是存放链接器的配置信息的，我们简称为命令文件,该文件的作用是指明如何链接程序的。<br />.xxrc：rc 是run command 表示与运行终端有关的配置<br /><br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile` |
-| ~/.bash_profile                                              | 登陆时触发<br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile` |
+| ~/.config                                                    | 用户级别的应用程序或工具的配置                               |
+| ~/.bashrc                                                    | 每次打开shell触发<br />bash用户,配置文件<br />执行命令 source ~/.zshrc 来生效修改的配置，而不需要重新登录<br /><br />CMD：链接器配置文件，是存放链接器的配置信息的，我们简称为命令文件,该文件的作用是指明如何链接程序的。<br />.xxrc：rc 是run command 表示与运行终端有关的配置<br /><br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile`<br /><br />export PATH="/root/goroot/bin:$PATH"  # 前面的优先级高 |
+| ~/.bash_profile                                              | 登陆时触发<br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile`<br />export PATH="/root/goroot/bin:$PATH"  # 前面的优先级高 |
 | ~/maven_resp                                                 | maven的本地仓库（默认是在根目录的.m2，不是太建议）           |
 | ~/software下                                                 | 软件的安装包                                                 |
 | ~/app                                                        | 软件的安装目录                                               |
@@ -1224,22 +1535,42 @@ systemctl enable --now zramd.service
 | /sbin                                                        | super binary，存储 root 用户才可以执行的高级二进制可执行命令文件 |
 | /sys                                                         | 动态生成的伪文件系统 (pseudo filesystem)，允许动态查看和修改内核模块信息 |
 | **/usr**                                                     | 系统级的目录，可以理解为`C:/Windows/`<br />存放命令、帮助文件、安装的Linux发行版官方提供的软件包等 |
+| /usr/lib                                                     | /lib 存放系统启动和维护系统基本功能必需的库文件<br />/usr/lib 存放非启动必需但系统默认安装的库文件<br />/usr/local/lib 存放本地编译安装的非系统自带库文件 |
 | **/usr/local**<br /><br />我在/usr/local/modules/java 下安装了JDK | **用户级的程序目录**，可以理解为`C:/Progrem Files/`。<br />存放用户通过源码包自编译安装的软件，即不是通过“新立得”或apt-get安装的软件。<br /><br />Oracle的不能用root安装才安装到这个目录 |
 | /usr/share                                                   | 存放系统公用程序和共享数据和帮助文档                         |
 | /var                                                         | 特别是/var/log 子目录. 各大程序执行日志存储目录.             |
 |                                                              |                                                              |
 
-
-
 ### sys
 
-`/sys/firmware/efi/fw_platform_size`
+`cat /sys/firmware/efi/fw_platform_size`
 
 ```fw_platform_size
 64  # 引导模式：64：x64 UEFI、32：IA32 UEFI、文件不存在：BIOS
 ```
 
+`cat /sys/block/sdc/queue/io_poll`
 
+```
+0  # 当前块设备未启用iopoll
+```
+
+`cat /sys/devices/system/cpu/vulnerabilities/meltdown`
+
+```
+Intel CPU硬件安全漏洞(推测执行、乱序执行): 
+Meltdown(CPU乱序执行，通过缓冲计时器攻击恢复数据)
+已修复
+```
+
+`cat /sys/devices/system/cpu/vulnerabilities/spectre_v1`
+
+`cat /sys/devices/system/cpu/vulnerabilities/spectre_v2`
+
+```
+Spectre_v1(幽灵 CPU推测执行，通过分支预测训练后绕过边界检查攻击同进程内存)
+未修复
+```
 
 ### etc
 
@@ -1251,9 +1582,7 @@ options edns0 trust-ad  # Extension DNS，启用Authenticated Data标记，能�
 search .  # 搜索域
 ```
 
-
-
-`/etc/fstab` 
+`/etc/fstab`
 [arch wiki#fatab](https://wiki.archlinuxcn.org/wiki/Fstab)
 
 ```/etc/fstab
@@ -1272,9 +1601,7 @@ search .  # 搜索域
 genfstab -U /mnt >> /mnt/etc/fstab  # genfstab检查所有挂载点，一般只在chroot环境使用
 ```
 
-
-
-`/etc/hosts` 
+`/etc/hosts`
 
 配置局域网DNS
 [man#hosts](https://man.archlinux.org/man/hosts.5)
@@ -1285,30 +1612,28 @@ genfstab -U /mnt >> /mnt/etc/fstab  # genfstab检查所有挂载点，一般只�
 
 
 # The following lines are desirable for IPv4 capable hosts
-127.0.0.1		localhost
+127.0.0.1  localhost
 
 # The following lines are desirable for IPv6 capable hosts
-::1				localhost
-127.0.0.1		arch.localdomain		arch  
+::1    localhost
+127.0.0.1  arch.localdomain  arch  
 # IP地址 域名 别名
 ```
-
-
 
 `/etc/systemd/network/xx.network` 配置 systemd-networkd，数组越大优先级越高
 
 可预测网络接口名：
-	enX: Ethernet 接口，X 是一个数字
-	wlanX: 无线网络接口，X 是一个数字
-	enpXsY: Ethernet 接口，基于 PCI 插槽位置命名 (p 表示 PCI, X 是总线 ID, s 是插槽 ID, Y 是功能 ID)
-	wlpXsY: 无线网络接口，基于 PCI 插槽位置命名
-	enWWXsY: Ethernet 接口，基于板载设备 MAC 地址命名
+ enX: Ethernet 接口，X 是一个数字
+ wlanX: 无线网络接口，X 是一个数字
+ enpXsY: Ethernet 接口，基于 PCI 插槽位置命名 (p 表示 PCI, X 是总线 ID, s 是插槽 ID, Y 是功能 ID)
+ wlpXsY: 无线网络接口，基于 PCI 插槽位置命名
+ enWWXsY: Ethernet 接口，基于板载设备 MAC 地址命名
 
 配置DNS:
-	不推荐手动配置`/etc/resolv.conf`
-	不推荐使用 systemd-resolved 的 `/etc/systemd/resolved.conf` 配置DNS
-	推荐使用 systemd-networkd 的 `/etc/systemd/network/*.network` 在[Network] DNS项配置DNS
-	推荐交给 systemd-networkd 的 DNS=DHCP
+ 不推荐手动配置`/etc/resolv.conf`
+ 不推荐使用 systemd-resolved 的 `/etc/systemd/resolved.conf` 配置DNS
+ 推荐使用 systemd-networkd 的 `/etc/systemd/network/*.network` 在[Network] DNS项配置DNS
+ 推荐交给 systemd-networkd 的 DNS=DHCP
 
 ```default.netwok
 # default.netwok
@@ -1351,8 +1676,6 @@ RouteMetric=600
 RouteMetric=600
 ```
 
-
-
 ## Shell
 
 ### shell和终端的区别
@@ -1363,8 +1686,6 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 
 终端界面：/dev/tty1，用于输入命令和查看输出
 
-
-
 ### 快捷键
 
 | 快捷键    | 释义                       |
@@ -1372,8 +1693,6 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | tab + tab | 看当前目录下模糊匹配文件名 |
 | ctrl u    | 删除当前字符之前的命令行   |
 | ctrl k    | 删除当前字符之后的命令行   |
-
-
 
 ### Shell命令按字典序（重点）
 
@@ -1387,16 +1706,18 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | arp                                                          | 显示和修改动态IP地址转换表(ARP缓存表) **数据链路层**         | -a 显示当前ARP缓存表项<br />-s 添加IP地址-Mac地址记录(entry) |
 | **awk** [options] ‘program’ file                             | 逐行处理，一次读取一行文本，按输入分隔符进行**切片**，切成多个组成部分。适合处理表格数据<br/>将切片直接保存在内建的变量中，`$1`，`$2`(`$0` 表示行的全部)<br/>支持对单个切片的判断，支持循环判断，默认分隔符为空格<br/><br/>`awk '{print $1, $4}' filename`  打印列1列4<br/>NR表示当前数据行数<br/>`awk '($1=="tcp" && $2==1) || NR==1 {print $0}' filename` 打印列1为tcp列2为1的行和第一行 | -F "," 指定 "," 为分隔符                                     |
-| cat                                                          | less更好用。打印全部文本                                     |                                                              |
+| cat                                                          | less更好用。cat f1 f2连接多个文件内容并打印                  |                                                              |
 | chgrp 组名 文件                                              | 改变文件的用户组用命令                                       |                                                              |
 | chown 拥有者名称 文件                                        | 更改文件拥有者和所属组<br />`chown $USER:$USER ~/.ssh/authorized_keys` | -R 递归                                                      |
 | chsh                                                         | 改变SHELL(bash、zsh)<br />cat /etc/shells 查看目前支持的shell<br />echo $SHELL 打印当前SHELL |                                                              |
 | clear                                                        | 清屏，向下一页                                               |                                                              |
 | curl [options...] <url>                                      | client URL，发送 http 请求<br />访问 cip.cc 可用于测试是否使用代理<br/> | -X Get 指定HTTP请求方法<br />-A 指定User-Agent<br />-b 指定Cookie<br />-d 指定Post请求正文<br />-F 上传二进制文件<br />-k 跳过 SSL 检测<br />-o 将响应保存为文件<br />-x 指定代理<br />-f 快速失败，根据HTTP响应状态码返回成功0失败非0 |
 | df                                                           | 打印**文件系统使用情况**(已用 可用 挂载点)<br />fdisk 打印**磁盘分区情况**或操作<br />lsblk 打印**块设备信息** | -h 人类可读                                                  |
+| dmesg                                                        | 显示kernel ring buffer(内核日志)(和 io_uring ring buffer不是同个东西)消息 | -HTK 人类可读 人类可读时间戳 内核消息                        |
 | echo $HADOOP_HOME                                            | 可以看一些软件的安装路径                                     |                                                              |
 | env                                                          | 查看环境变量<br />env \|grep -i poxy #查看系统代理配置情况   |                                                              |
 | fdisk                                                        | 打印磁盘分区情况或操作<br />df 打印文件系统使用情况(已用 可用 挂载点)<br />lsblk 打印块设备信息 | -l 打印磁盘分区情况                                          |
+| file <file>                                                  | 识别文件类型(看elf file的动态加载器是什么)                   |                                                              |
 | **find** [path] [options] expression                         | 在指定目录下递归查找文件路径<br />find / -name "head*"<br />-iname 对大小写不敏感 |                                                              |
 | firewall-cmd --list-ports                                    | 查看firewall已经开放的端口                                   |                                                              |
 | firewall-cmd --zone=public --*add*-*port=80/tcp* --permanent | 开启端口，–zone #作用域  添加端口，端口/通讯协议  永久生效，没有此参数重启后失效 |                                                              |
@@ -1404,7 +1725,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | free -h                                                      | 查看内存swap空间状态(swap=swapfile+zram)                     | h human-readable<br />m  mebitypes单位                       |
 | fsck /dev/sdax                                               | file system check 检查并修复文件系统错误 (建议在umount的设备上执行) | -f 强制                                                      |
 | genfstab                                                     | genfstab -U /mnt >> /mnt/etc/fstab                           | genfstab会将当前系统中已挂载的文件系统的挂载信息添加到 `/etc/fstab` 文件中<br />`/etc/fstab` 系统文件表用于系统启动时挂载指定的文件系统 |
-| **grep** [option] pattern [file]                             | 查找文件里符合条件的字符串的整行内容。Globally search a Regular Expression and Print<br />grep “txt” “head*”<br />不指定file，grep "txt" 会等待输入从键盘获取stdin<br />find path \| grep “exp” 正则查找文件<br />grep -o 只输出了匹配到的部分，而不是整行的内容。<br />grep -v 过滤掉相关字符串的内容。可以通过管道操作符组合使用 |                                                              |
+| **grep** [option] pattern [file]                             | 查找文件里符合条件的字符串的整行内容。Globally search a Regular Expression and Print<br /><br />`grep “txt” “head*” # 支持通配符` | -v 过滤掉相关字符串的内容。可以通过管道操作符组合使用 `grep -v 'grep'`<br /> -o 只输出了匹配到的部分，而不是整行的内容<br />-i 忽略大小写<br />-E 扩展正则表达式无需转义支持+? |
 | groupadd xxgroup                                             | 创建新的用户组                                               | -r 系统用户组                                                |
 | groups  user1  /  passwd  password2                          | 位于root状态下，查看user1用户的所属组                        |                                                              |
 | head                                                         | 打印前10行                                                   | -n N  # 打印前N行                                            |
@@ -1414,23 +1735,27 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | **info**                                                     | 显示帮助文档<br />q 退出                                     |                                                              |
 | install                                                      | 复制文件                                                     | -D 递归创建<br />-m 设置权限                                 |
 | ip                                                           | 显示配置网卡参数                                             | addr 查看网络层信息(动态IP(DHCP)、静态IP(子网掩码、网关))<br /><br />link 查看链路层信息(MAC)<br />`<接口编号>: <接口类型(lo本地回环接口|eth有限以太网接口)>:<接口状态(回环|广播,多播,up启用)> mtu最大传输单元 qdisc state mode group qlen`<br /><br />route 查看路由表信息 |
-| journalctl                                                   | 查询日志                                                     | x 添加消息解释<br />e 跳至结尾                               |
+| journalctl                                                   | 查询systemd日志                                              | x 添加消息解释<br />e 跳至结尾<br />-u <xx.service><br />-f 实时 |
 | jps                                                          | 由JDK提供，查看Java进程                                      | # MAC地址 广播地址                                           |
 | kill -9 Pid                                                  | 强制杀死进程                                                 |                                                              |
-| **less**                                                     | 查看文件，h显示帮助                                          |                                                              |
+| ldconfig                                                     | glibc包含的动态加载器(Dynamic Linker)(/lib64/ld-linux-x86-64.so.2)配置工具 | -p 打印缓存                                                  |
+| **less**                                                     | pager 分页器<br />查看文件，h显示帮助                        | `ls xxx | less`                                              |
+| ln                                                           | 创建硬链接                                                   | -s 创建软链接                                                |
 | ls -lath<br />**ll -ath**                                    | 展示当前目录下的文件与目录.并根据颜色区分类型.<br />–a显示隐藏文件<br />-i显示inode编号 <br /> -l 附加显示详细信息<br />-t 按时间排序<br />-r 反序<br />-h 文件大小单位变为kb<br />白(一般文件)、蓝(目录)、浅蓝(链接文件)、绿(可执行)、红(压缩)<br />黄背景(Set Group ID)、红背景(Set User ID)、绿背景(粘滞位) |                                                              |
 | lsblk                                                        | 打印**块设备信息**                                           | -f 多打印一列文件系统信息                                    |
-| man                                                          | 可以用info命令替代                                           |                                                              |
+| lsmod                                                        | 显示当前加载的内核模块                                       |                                                              |
+| man <section> <page>                                         | manual page, 可以用info命令替代<br />`pacman -S man-db man-pages-zh_cn`<br />`alias cman='LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 man'`<br />[Online_man_pages](https://wiki.archlinux.org/title/Man_page#Online_man_pages) \| [kernel#man page version](https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/refs/tags)<br />[archlinux#man page(推荐)](https://man.archlinux.org/) \| [archlinux#man page version](https://archlinux.org/packages/?name=man-pages)<br />man7.org(不推荐 更新慢) | 1shell命令 2内核提供的系统调用 3库函数 4特殊文件 5file format and config file 6游戏 7Miscellaneous宏(需要`#define MISC`) 8系统管理命令 9kernel routines |
 | mkdir myfloder                                               | 创建空目录.  <br />mkdir –p myfloder:  如果已经存在,也不报错提示. <br />mkdir无法创建多层目录,所以可以用 : mkdir –p a/b/c ) |                                                              |
 | modinfo <modulename\|fielname>                               | 显示内核模块信息                                             |                                                              |
-| modprobe                                                     | 用于加载内核模块                                             |                                                              |
+| modprobe                                                     | 用于加载内核模块                                             | `modprobe <module name>` 手动加载内核模块<br />`echo <module name> >> /etc/modules-load.d/<module name>.conf` 自动加载内核模块<br /><br />`modprobe -c` 打印模块配置 `modprobe -c |grep <module_name>``modprobe -c \|less`<br />`modprobe --show-depends module_name` 打印模块依赖项及其本身 |
 | mount <磁盘分区> <目录><br />mount <虚拟分区>                | 挂载分区<br />mount /.snapshots/  # 将名为.snapshots的分区挂载到.snapshots目录<br />挂载后可用`df -h`查看挂载情况 | -o 参数<br />-a 挂载`/etc/fstab`中匹配值的文件系统<br />-B --bind 挂载一个子树 |
 | ~~more~~                                                     | less命令更好用                                               |                                                              |
 | nc -l 9001                                                   | 开放9001TCP，等待客户端连接，可以传输字符串                  |                                                              |
 | **neofetch**                                                 | new fetch 显示系统信息和Logo                                 |                                                              |
 | ~~netstat -tulpn~~ 弃用                                      | 用ss命令更好用，查看占用的端口                               |                                                              |
+| pgrep                                                        | process global rep 就是对 ps \| grep \| awk 的封装 用于打印pid | -f full process name match<br />-a <br />-v 反向匹配         |
 | ping                                                         | ping 指定主机 **网络层ICMP**                                 |                                                              |
-| ps -ef \| grep “tomcat” \| grep -v “grep”                    | 查看当前时刻活动进程信息<br />root      21772  21674  0 15:59 pts/3    00:00:00 grep --color=auto tomcat<br />UID         PID   PPID  C STIME TTY  TIME CMD<br />PPID：父进程的<br />C：CPU使用的资源百分比<br />TTY：与进程关联的终端（tty）<br />TIME：使用掉的 CPU 时间<br />CMD：所下达的指令名称 | –e 所有进程<br />-f 完整格式<br />--forest 进程树            |
+| ps -ef \| grep “tomcat” \| grep -v “grep”                    | 查看当前时刻活动进程信息<br />root      21772  21674  0 15:59 pts/3    00:00:00 grep --color=auto tomcat<br />UID         PID   PPID  C STIME TTY  TIME CMD<br />PPID：父进程的<br />C：CPU使用的资源百分比<br />TTY：与进程关联的终端（tty）<br />TIME：使用掉的 CPU 时间<br />CMD：所下达的指令名称 | –e 所有进程<br />-f 完整格式<br />--forest 进程树<br />-o pid,command |
 | pstree [pid]                                                 | 显示进程树                                                   | -h 高亮当前进程及其父进程<br />-a 显示命令行参数<br />-l 不截断长行<br />-p 显示pid<br />-s 显示指定进程的父进程 |
 | rm                                                           | 删除xxyy文件                                                 | -r<br />-f force 忽略文件不存在时的删除失败提示              |
 | rpm -ivh xxx.rpm<br />rpm -qa \| grep xxxx                   | RedHat Package Manager<br />只能安装已经下载到本地机器上的 rpm 包，没有解决软件包依赖问题。<br />参数 i-install、v-verbose可视、u-Update、q-Query、p-Package、l-list、e删除、a-all、h-hash哈希后人可读、--nodeps忽略依赖关系<br /><br />yum remove 若你要移除的包被别的软件包需要的话，yum会把其他软件包一起移除<br />rpm -e 会告诉你该包被别的包需要，所以无法移除 |                                                              |
@@ -1445,18 +1770,20 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | **ssh 用户名@ip**                                            | ssh登录远程主机                                              | -T                                                           |
 | ssh-add <私钥文件>                                           | 向ssh-agent添加私钥身份identity<br />OpenSSH要求私钥文件不能被其他用户访问 | -L 打印所有公钥<br />-l 打印所有fingerprints <br />-D 删除所有<br />-d 删除该密钥<br />-v Verbose<br />-K 从FIDO验证器操作常驻密钥 |
 | sshd -t                                                      | 测试`~/.ssh`配置                                             |                                                              |
-| ssh-keygen                                                   | [arch wiki#SSH_keys](https://wiki.archlinux.org/title/SSH_keys)<br />`shh-keygen -A`<br />`ssh-keygen -t ed25519 -C "xxyy" `  <br/>Enter passphrase通信短语 (empty for no passphrase):<br />[github#关于SSH密钥的通信短语](https://docs.github.com/zh/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#about-passphrases-for-ssh-keys) | -A # 在Server端执行，在**`/etc/ssh`**目录下生成` ssh_host_<ed25519|dsa|ecdsa|rsa>_key`私钥 和` .pub` **服务端host临时公钥**  <br /># 用于启动sshd.service服务  <br /># 用于Client首次连接到Server, Client将Server公钥保存到`~/.ssh/known_hosts`<br /><br /># 在Client端执行，在**`~/.ssh`**目录下生成id_rsa私钥 和 .pub 公钥 <br />-t 算法<br />-b 密钥长度bits, 推荐4096<br />-C 注释信息<br />-f /etc/ssh/ssh_host_xxx_key |
+| ssh-keygen                                                   | [arch wiki#SSH_keys](https://wiki.archlinux.org/title/SSH_keys)<br />`shh-keygen -A`<br />`ssh-keygen -t ed25519 -C "xxyy"`  <br/>Enter passphrase通信短语 (empty for no passphrase):<br />[github#关于SSH密钥的通信短语](https://docs.github.com/zh/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#about-passphrases-for-ssh-keys) | -A # 在Server端执行，在**`/etc/ssh`**目录下生成` ssh_host_<ed25519|dsa|ecdsa|rsa>_key`私钥 和` .pub`**服务端host临时公钥**  <br /># 用于启动sshd.service服务  <br /># 用于Client首次连接到Server, Client将Server公钥保存到`~/.ssh/known_hosts`<br /><br /># 在Client端执行，在**`~/.ssh`**目录下生成id_rsa私钥 和 .pub 公钥 <br />-t 算法<br />-b 密钥长度bits, 推荐4096<br />-C 注释信息<br />-f /etc/ssh/ssh_host_xxx_key |
 | sshd                                                         |                                                              | -t 检查sshd配置文件                                          |
 | sudo -i                                                      | 切换到root用户                                               |                                                              |
 | su xxyy                                                      | 换到普通用户                                                 |                                                              |
-| systemctl [OPTIONS...] COMMAND ...                           | 查询或发送控制命令到系统管理器<br />UNIT服务单元：network,mysql,firewalld,mongod,mysqld<br />q 退出<br />本质是启动 unit.service | status [PATTERN...\|PID...] 显示正在运行的该服务状态<br />start UNIT...<br />enable<br />stop UNIT...<br />disable UNIT... 开机不启动<br />reload UNIT... 重载配置文件<br />restart UNIT... 重启服务<br />**list-unit-files --type=service 列出所有服务单元文件**<br />daemon-reload 用于更新systemd配置、单元文件(.service .mount .device .socket) |
+| sysctl                                                       | 运行时检查和更改内核参数的工具                               | -a 显式所有变量 (/proc/sys/xxx)<br />--system 手动加载所有配置文件<br />-p/--load=<file.conf> 加载单个配置文件<br />-w k=v 临时写入变量值<br /><br />配置文件：`/etc/sysctl.d/99-sysctl.conf` `/usr/lib/sysctl.d/xxx`<br />net.ipv4.ip_local_port_range = 30000 65535 临时端口范围<br />net.core.default_qdisc = cake <br />net.ipv4.tcp_congestion_control = bbr<br />增加net.ipv4.tcp_max_tw_buckets可放DOS攻击 |
+| systemctl [OPTIONS...] COMMAND ...                           | 查询或发送控制命令到系统管理器<br />UNIT服务单元：network,mysql,firewalld,mongod,mysqld<br />q 退出<br />本质是启动 unit.service | status [PATTERN...\|PID...] 显示正在运行的该服务状态<br />start UNIT...<br />enable<br />stop UNIT...<br />disable UNIT... 开机不启动<br />reload UNIT... 重载配置文件<br />restart UNIT... 重启服务<br />**list-unit-files --type=service 列出所有服务单元文件**<br />**daemon-reload 用于重新加载缓存的systemd配置、unit文件** |
 | sz xxyy                                                      | 导出xxyy到本地快速访问download中                             |                                                              |
 | tail -n 20 filename                                          | 查看文件最后末尾20行                                         |                                                              |
-| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tf <file> | cut -d/ -f1 | uniq  # 查看顶层目录`        | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法 |
+| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tzf <file> | head -10`                                 | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法 |
 | telnet                                                       | 远程登入，可以测试端口的连通性 **应用层**                    |                                                              |
 | timedatectl                                                  | 查看系统时间                                                 |                                                              |
+| top                                                          | htop                                                         | -d <间隔second><br />-p <pid>                                |
 | tracepath [options] <destination>                            | 路径探测跟踪                                                 |                                                              |
-| ulimit -n                                                    | 打印最打文件描述符数量(Linux一切皆文件)                      |                                                              |
+| ulimit -n                                                    | 打印打开fd的最大值(即fd数量)                                 |                                                              |
 | **uname -a**                                                 | 打印所有系统信息，包括linux版本，主机名                      |                                                              |
 | useradd  xxuser                                              | 创建新的用户<br />sudo useradd -m -g users -s /bin/bash nemesis<br />sudo passwd nemesis | -r 系统用户<br />-m 创建该用户home目录<br />-G 所属的附属组(supplementary GROUPS)<br />-s 登录的shell<br />-g 所属的主要组 |
 | usermod -aG groupname username                               | 修改所属的附属group                                          | -a 添加<br />-r 删除<br />-G 附属组(supplementary GROUPS)    |
@@ -1475,8 +1802,6 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | &&                                                           | 表示前一条命令执行成功才执行后一条命令                       |                                                              |
 | $()                                                          | `$()` 捕获括号内的stdout<br />powershell：${}，例如${pwd}    |                                                              |
 
-
-
 # 安装系统
 
 ## 了解现况
@@ -1489,29 +1814,27 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 >
 > 不同版本的公共镜像默认支持的启动模式说明如下：
 >
-> - UEFI版本的公共镜像：默认支持UEFI启动模式。
+> * UEFI版本的公共镜像：默认支持UEFI启动模式。
 >
 >   例如Alibaba Cloud Linux 2.1903 64位UEFI版、Ubuntu 18.04 64位UEFI版、Debian 11.6 64位UEFI版等操作系统名称带UEFI的公共镜像的启动模式是UEFI。
 >
-> - Arm版本的公共镜像：默认支持UEFI启动模式。
+> * Arm版本的公共镜像：默认支持UEFI启动模式。
 >
 >   例如Ubuntu 20.04 64位Arm版、CentOS 8.4 64位Arm版等操作系统名称带Arm的公共镜像的启动模式是UEFI。
 >
-> - 其他公共镜像：默认支持BIOS（Legacy）启动模式、UEFI-Preferred启动模式。
+> * 其他公共镜像：默认支持BIOS（Legacy）启动模式、UEFI-Preferred启动模式。
 >
-> 
+>
 >
 > ## **启动模式简介**
 >
 > ECS的启动模式包括BIOS（Legacy）和UEFI两类。
 >
-> - BIOS（Legacy）模式：BIOS是系统启动过程中的基础软件层，负责初始化硬件并提供基本的硬件服务，以支持操作系统的启动。BIOS是一种传统的固件接口标准，其功能相对有限。
-> - UEFI模式：UEFI是BIOS的现代替代品，是一个更高级、模块化的固件接口标准，提供更强大、灵活和安全的启动环境。UEFI模式相对于BIOS（Legacy）模式有一些优势，具体说明如下。
+> * BIOS（Legacy）模式：BIOS是系统启动过程中的基础软件层，负责初始化硬件并提供基本的硬件服务，以支持操作系统的启动。BIOS是一种传统的固件接口标准，其功能相对有限。
+> * UEFI模式：UEFI是BIOS的现代替代品，是一个更高级、模块化的固件接口标准，提供更强大、灵活和安全的启动环境。UEFI模式相对于BIOS（Legacy）模式有一些优势，具体说明如下。
 >   优势：
 >   UEFI启动时只需要加载必要的驱动程序，而传统BIOS（Legacy）启动时需要扫描所有设备
 >   反正UEFI 启动速度、安全性、可扩展性都更好
-
-
 
 系统引导
 
@@ -1681,10 +2004,6 @@ $ uname -a
 Linux iZj6c6jjq4hjrfg9oja020Z 6.8.0-40-generic #40-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul  5 10:34:03 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
-
-
-
-
 ## 开始安装
 
 方案一：**使用ISO**(需要~~USB或光盘作为安装介质~~、或PXE、或initramfs内存文件系统)
@@ -1692,15 +2011,11 @@ Linux iZj6c6jjq4hjrfg9oja020Z 6.8.0-40-generic #40-Ubuntu SMP PREEMPT_DYNAMIC Fr
 方案三：**使用~~Bootstrap tarball~~**的arch-chroot进入chroot环境
 方案四：**~~搭建arch-install-scripts包可运行的环境~~**(chroot环境(改根目录))
 
-
-
 初始环境：
 debian：(阿里云上只有一个分区 /)、(bios)
 ubuntu：(/grub_bios /esp /)、(bios uefi)
 
 云服务器上无法使用 Live CD 或者其他物理启动介质
-
-
 
 ### 需要磁盘(不能格式化)
 
@@ -1855,8 +2170,6 @@ arch-chroot /mnt
 $ cat /etc/fstab  # 看下和之前有什么区别
 ```
 
-
-
 ##### 设置时区
 
 ```bash
@@ -1868,8 +2181,6 @@ $ timedatectl status  # 查看是否启动
 $ date
 ```
 
-
-
 ##### 区域和本地化设置
 
 ```bash
@@ -1879,8 +2190,6 @@ $ locale-gen  # 生成locales信息
 $ echo LANG=en_SG.UTF-8 >> /etc/locale.conf  # LANG变量
 $ echo KEYMAP="us" >> /etc/vconsole.conf  # 标准美式键盘（中国最常见的键盘布局）
 ```
-
-
 
 ##### 网络配置
 
@@ -2094,11 +2403,9 @@ reflector --verbose -l 35 -p https --sort rate --save /etc/pacman.d/mirrorlist  
 paman -Syyu
 ```
 
-
-
 ##### 配置openssh_sshd
 
-[arch wiki#OpenSSH](https://wiki.archlinux.org/title/OpenSSH)	|	[官方使用说明](https://www.openssh.com/manual.html)	|	[sshd-config](https://man.openbsd.org/sshd_config)
+[arch wiki#OpenSSH](https://wiki.archlinux.org/title/OpenSSH) | [官方使用说明](https://www.openssh.com/manual.html) | [sshd-config](https://man.openbsd.org/sshd_config)
 
 ```bash
 # nemesis配置openssh，自定义端口、强制公钥认证、root不能登录、客户端公钥authorized_keys
@@ -2137,8 +2444,6 @@ ssh -p 39224 nemesis@47.238.67.168
 
 tcpdump -i any -n src host 101.228.115.196 and port 22
 ```
-
-
 
 **sshd配置**
 
@@ -2274,6 +2579,7 @@ delete: []
 ```
 
 问题2
+
 ```bash
 systemctl restart sshd
 Job for sshd.service failed because the control process exited with error code.
@@ -2281,11 +2587,10 @@ See "systemctl status sshd.service" and "journalctl -xeu sshd.service" for detai
 ```
 
 原因：sshd配置错误
+
 ```bash
 sshd -t  # 检查错误
 ```
-
-
 
 **ssh配置**
 
@@ -2312,8 +2617,6 @@ Host unix/* vsock/* machine/*
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
 ```
-
-
 
 ###### 配置ssh-agent
 
@@ -2363,12 +2666,6 @@ echo '启动ssh-agent 并ssh-add添加私钥'
 ############################################################################################
 ```
 
-
-
-
-
-
-
 ##### 配置snapper
 
 ```bash
@@ -2403,8 +2700,6 @@ systemctl enable --now grub-btrfsd
 # grub-mkconfig -o /boot/grub/grub.cfg  # 刚开始不需要执行
 ```
 
-
-
 ##### 配置swapfile
 
 ```bash
@@ -2426,8 +2721,6 @@ $ mkswap -U clear /swap/swapfile  # 格式化
 $ swapon /swap/swapfile  # 启用交换文件
 $ echo "/swap/swapfile none swap defaults 0 0" >> /etc/fstab
 ```
-
-
 
 ##### 配置内核zRAM
 
@@ -2454,16 +2747,12 @@ Filename                                Type            Size            Used    
 /dev/zram0                              partition       457212          0               100  # 优先级高
 ```
 
-
-
 ##### 安装 neofetch
 
 ```bash
 pacman -S neofetch
 neofetch  # 打印系统信息
 ```
-
-
 
 ##### 收尾
 
@@ -2505,8 +2794,6 @@ umount -R /mnt  # 手动卸载被挂载的分区，用于查看是否有繁忙�
 reboot  # systemd会自动卸载被挂载的分区
 ```
 
-
-
 ##### 不打算做的
 
 ```
@@ -2516,11 +2803,9 @@ git neovim
 starship  # 感觉不需要git prompt 
 ```
 
-
-
 #### vps2arch脚本(推荐)
 
-vps2arch Bash脚本 
+vps2arch Bash脚本
 本质：使用`Bootstrap tarball chroot` 中的 `ld.so` 来启动 `chroot` 工具 + 配置ssh + 配置grub + root密码
 特性：只格式化根分区，不修改其他分区
 
@@ -2587,8 +2872,6 @@ systemd-timesyncd.service            enabled enabled
 7 unit files listed.
 ```
 
-
-
 ### 无需本地存储设备
 
 #### 2copytoram(OOM)(推荐)
@@ -2599,7 +2882,7 @@ initramfs：是RAM内存文件系统
 
 [iso结构](https://mirror.xtom.com.hk/archlinux/iso/latest/arch/)
 grub启动界面：[bilibili#腾讯云安装archlinux+btrfs](https://www.bilibili.com/video/BV1rq4y1L7cB/https://www.bilibili.com/video/BV1rq4y1L7cB/)
-grub配置：[若依Blog#grub2引导iso](https://blog.lilydjwg.me/2014/2/2/load-arch-linux-iso-with-grub2.42632.html)	|	[阿里云安装archlinux](https://brothereye.cn/blog/linux/ali-ecs2arch/)
+grub配置：[若依Blog#grub2引导iso](https://blog.lilydjwg.me/2014/2/2/load-arch-linux-iso-with-grub2.42632.html) | [阿里云安装archlinux](https://brothereye.cn/blog/linux/ali-ecs2arch/)
 
 ```bash
 $ cd /
@@ -2642,7 +2925,7 @@ boot  # 启动initramfs，开始系统的引导过程
 # 修改GRUB配置从ISO启动
 $ sudo vim /boot/grub/grub.cfg
 set timeout=60
-menuentry 'ArchISO' --class iso {	
+menuentry 'ArchISO' --class iso { 
   set imgdevpath=/dev/vda3  # NOTE
   set isofile=/archlinux-x86_64.iso  # NOTE
   loopback loop0 $isofile
@@ -2652,11 +2935,9 @@ menuentry 'ArchISO' --class iso {
 }
 ```
 
-
-
 #### Netboot
 
-[arch wiki#网络引导](https://wiki.archlinuxcn.org/wiki/%E7%BD%91%E7%BB%9C%E5%BC%95%E5%AF%BC)	|	[netbootxyz官网](https://netboot.xyz/)	|	[netbootxyz github](https://github.com/netbootxyz/netboot.xyz)	|	[archlinux#PXE](https://wiki.archlinuxcn.org/wiki/PXE)
+[arch wiki#网络引导](https://wiki.archlinuxcn.org/wiki/%E7%BD%91%E7%BB%9C%E5%BC%95%E5%AF%BC) | [netbootxyz官网](https://netboot.xyz/) | [netbootxyz github](https://github.com/netbootxyz/netboot.xyz) | [archlinux#PXE](https://wiki.archlinuxcn.org/wiki/PXE)
 
 netbootxyz 基于 PXE(Preboot Execution Environment 允许计算机通过网络引导操作系统)
 System Requirements: at least 4GB of RAM is recommended
@@ -2664,24 +2945,20 @@ System Requirements: at least 4GB of RAM is recommended
 > **方案三：netboot.xyz**
 >
 > 1. **引导到 netboot.xyz**：
->    - **通过网络引导**：使用 iPXE 或其他网络引导方式启动 netboot.xyz。
->    - **选择操作系统**：在 netboot.xyz 菜单中，选择 `Linux Network Installs`，然后选择 `Arch Linux`。
+>    * **通过网络引导**：使用 iPXE 或其他网络引导方式启动 netboot.xyz。
+>    * **选择操作系统**：在 netboot.xyz 菜单中，选择 `Linux Network Installs`，然后选择 `Arch Linux`。
 > 2. **安装 Arch Linux**：
->    - **加载安装程序**：netboot.xyz 会自动下载并加载 Arch Linux 安装程序。
->    - **按照官方安装步骤进行安装**：从分区、格式化、挂载到安装基本系统，按照官方指南进行操作。
+>    * **加载安装程序**：netboot.xyz 会自动下载并加载 Arch Linux 安装程序。
+>    * **按照官方安装步骤进行安装**：从分区、格式化、挂载到安装基本系统，按照官方指南进行操作。
 > 3. **配置并完成安装**：
->    - **配置系统**：设置主机名、网络、时区等。
->    - **安装引导加载程序**：根据系统环境，安装并配置引导加载程序。
->    - **设置 root 密码**：使用 `passwd` 设置 root 用户密码。
->    - **重启系统**：完成安装后，重启进入新的 Arch Linux 系统。
-
-
+>    * **配置系统**：设置主机名、网络、时区等。
+>    * **安装引导加载程序**：根据系统环境，安装并配置引导加载程序。
+>    * **设置 root 密码**：使用 `passwd` 设置 root 用户密码。
+>    * **重启系统**：完成安装后，重启进入新的 Arch Linux 系统。
 
 ## 其他方案
 
 方案一：[archstrap Bash脚本](https://github.com/wick3dr0se/archstrap)
-
-
 
 ## 分区
 
@@ -2708,43 +2985,14 @@ System Requirements: at least 4GB of RAM is recommended
 
 
 
-​      
-
 # TODO
 
-**supervisor 监督工具：**
+```bash
+make defconfig  # 生成.config(默认)
+make compile_commands.json
+```
 
-- **systemd (Linux):** 现代 Linux 系统中常用的初始化系统和服务管理器，也具有 supervision 功能。
-- **supervisord:** 一个功能强大的进程监控工具，支持多种配置方式和平台。
-- **pm2 (Node.js):** 专门用于 Node.js 应用程序的进程管理器。
-- **runit:** 一个轻量级的进程监督工具，易于使用和配置。
 
-​      
 
-​      
 
-​      
 
-​            
-
- 
-
- 
-
-​      
-
-​      
-
-​      
-
-​      
-
- 
-
- 
-
- 
-
-​      
-
- 	

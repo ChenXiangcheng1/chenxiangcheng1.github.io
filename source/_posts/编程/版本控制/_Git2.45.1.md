@@ -365,6 +365,29 @@ nc -vz 172.30.208.1 7890
 
 ## 命令
 
+| 查看命令                                                     | 释义                                | 参数                                                |                                                           |
+| ------------------------------------------------------------ | ----------------------------------- | --------------------------------------------------- | --------------------------------------------------------- |
+| git <command> -h (常用)<br />git help <command>              | 快速参考<br />打开本地git-doc(html) |                                                     |                                                           |
+| git log [<revision-range>]                                   | 查看提交记录的hash值                |                                                     |                                                           |
+|                                                              |                                     | A..Bmedium                                          | 等价于B ^A<br />差集，B-A                                 |
+|                                                              |                                     | A...B                                               | 对称差集                                                  |
+|                                                              |                                     | --pretty[=<format>]<br />--pretty=format:"%h %an %s | medium(默认)、oneline                                     |
+|                                                              |                                     | --oneline                                           | 等价于--pretty=oneline --abbrev-commit                    |
+|                                                              |                                     | --no-merges                                         | 等价于--max-parents=1，不显示合并提交(有多个夫提交的提交) |
+| git tag                                                      | 列出所有tag                         |                                                     |                                                           |
+|                                                              |                                     |                                                     |                                                           |
+|                                                              |                                     |                                                     |                                                           |
+|                                                              |                                     |                                                     |                                                           |
+| **git status**                                               | 查看工作树状态                      |                                                     |                                                           |
+| git ls-files                                                 | 查看暂存区中文件                    |                                                     |                                                           |
+| git config --list --show-origin<br />git config --global http.proxy 'socks5://host.docker.internal:7890'<br />git config --global https.proxy 'socks5://host.docker.internal:7890'<br />git config --global --unset http.proxy<br />git config --global --unset https.proxy | 查看所有配置                        |                                                     |                                                           |
+
+
+
+
+
+
+
 ```bash
 git status --short
 git clone --depth=1  # 只下载最新提交，适合获取代码简单查看不改 --shallow-submodules # 浅克隆子模块
@@ -1121,15 +1144,9 @@ git symbolic-ref HEAD
 
 ## 命令
 
-决定使用哪个命令：
-
-![](http://justinhileman.info/article/git-pretty/git-pretty.png)
-
-
-
 Git 常用命令速查表：
 
-![](https://yqfile.alicdn.com/img_6ff4f6285991c03f6436c41b896eff11.jpg)
+<img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/wz/img_6ff4f6285991c03f6436c41b896eff11.jpg" style="zoom: 45%;" />
 
 
 
@@ -1147,7 +1164,7 @@ Git 常用命令速查表：
 
 
 
-### 修订版本
+### revision修订版本
 
 | **revision 修订版本**  | 用于表示 Git 仓库的不同版本             |
 | ---------------------- | --------------------------------------- |

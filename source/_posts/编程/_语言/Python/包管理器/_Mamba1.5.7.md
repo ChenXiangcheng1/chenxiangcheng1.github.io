@@ -75,7 +75,10 @@ relocate prefix：
 ~~Anaconda则是一个打包的集合，里面预装好了conda、某个版本的python、众多packages、科学计算工具等等，就是把很多常用的不常用的库都给你装好了。~~
 ~~miniconda，默认channel为anaconda.org(官方驱动)~~
 **[Miniforge3](https://github.com/conda-forge/miniforge)(AUR)**，默认channel为conda-forge(社区驱动)，合并了mambaforge(mamba是conda的重新实现比conda快)
+	`ln -s /opt/miniforge/etc/profile.d/conda.sh /etc/profile.d/conda.sh`
+	推荐
 micromamba(archlinuxcn)
+	轻量独立的可执行文件，适合容器化、CICD部署
 
 | channel源\软件 | conda | mamba                                                    |
 | -------------- | ----- | -------------------------------------------------------- |

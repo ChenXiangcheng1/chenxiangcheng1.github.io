@@ -15,13 +15,9 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_12
 
 # Java的IO机制主要考点
 
-
-
 ## IO过程
 
 服务端：Accept 接收客户端请求、Read 准备数据、Write 拷贝数据
-
-
 
 ## 服务端BIO、NIO、AIO模型的区别(总结)
 
@@ -51,13 +47,9 @@ java.io
 优点：代码简单直观
 缺点：IO效率，扩展差
 
-
-
 <center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_10_12_38.png" alt="image-20230510123856719" style="zoom:80%;" /><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_11_18_12.png" alt="image-20230711181136117" style="zoom:95%;" /></center>
 
 <center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_01_20.webp" alt="img" style="zoom:70%;" /><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_01_21.webp" alt="img" style="zoom:95%;" /></center>
-
-
 
 ### ServerSocket 服务器套接字
 
@@ -71,21 +63,15 @@ java.io
 
 `bind(SocketAddress): void` 将ServerSocket绑定到特定地址（IP 地址和端口号）
 
-
-
 ### Socket 客户端套接字
 
 此类实现客户端套接字（也称为“套接字”）。套接字是两台机器之间通信的端点。
-
-
 
 **方法：**
 
 `getInputStream(): InputStream`  返回此套接字的输入流。
 
 `getOutputStream(): OutputStream`  返回此套接字的输出流。
-
-
 
 ### InetSocketAddress
 
@@ -95,25 +81,19 @@ java.io
 
 `InetSocketAddress(int)` 构造方法，int为端口号
 
-
-
 ### IO流
 
 ![v2-eb408ac849a679b09941be7ebd734768_r](https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_05_14_23_39.jpg)
 
-### 1Reader 读字符流 
+### 1Reader 读字符流
 
 Reader，从输入源中读取字符流数据，处理文本数据
-
-
 
 #### InputStreamReader 字符输入流
 
 **方法：**
 
 `InputStreamReader(InputStream)` 构造函数
-
-
 
 #### BufferedReader 缓冲字符输入流 (最佳实践)
 
@@ -123,19 +103,13 @@ Reader，从输入源中读取字符流数据，处理文本数据
 
 `readLine(): String` 读取一行文本
 
-
-
-### 2Writer 写字符流 
+### 2Writer 写字符流
 
 Writer，向输出目标中写入字符流数据，处理文本数据
-
-
 
 #### 方法
 
 `flush():void` 刷新流
-
-
 
 #### PrintWriter 字符输出流
 
@@ -145,19 +119,13 @@ Writer，向输出目标中写入字符流数据，处理文本数据
 
 `print(String): void` 打印字符串。如果参数为null，则打印字符串"null" 。
 
-
-
-### 3InputStream 输入字节流 
+### 3InputStream 输入字节流
 
 InputStream，从输入源读取字节流数据，处理二进制数据
 
-
-
-### 4OutputStream 输出字节流 
+### 4OutputStream 输出字节流
 
 OutputStream，向输出目标写入字节流数据，处理二进制数据
-
-
 
 ### 实现BIOEcho服务器(重点)
 
@@ -185,11 +153,9 @@ public class BIOPlainEchoServer {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-}	}	}	});	}
+} } } }); }
 
 ```
-
-
 
 #### 过程
 
@@ -215,8 +181,6 @@ public class BIOPlainEchoServer {
 
 * Write 是阻塞的，只有客户端把消息收了，Write才能返回，子线程才能继续读取下一个请求
 
-
-
 ## NIO
 
 **NIO是通过选择器和通道实现非阻塞I/O操作，使用事件驱动的方式进行处理。**
@@ -234,8 +198,6 @@ NonBlock-IO，引入了**多路复用机制**
 
 <center><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_01_30.webp" alt="123" style="zoom:50%;" /><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_07_11_21_18.png" alt="image-20230711211827871" style="zoom: 45%;" /><img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_01_34.webp" alt="img" style="zoom:70%;" /></center>
 
-
-
 ### 事件驱动
 
 事件驱动的目标是将程序的控制权交给事件循环
@@ -245,15 +207,11 @@ NonBlock-IO，引入了**多路复用机制**
 * 事件循环，不断地轮询事件源，将事件传递给正确的事件监听器进行处理
 * 回调函数，会被注册到响应的事件监听器，在特定事件发生时被调用，回调函数通常是异步执行的避免阻塞主线程
 
-
-
 ### 零拷贝
 
 Java 的内存分为堆内存+栈内存+字符串常量池等等，其中 GC 堆是占用内存空间最大的一块，也是 Java 对象存放的地方，一般我们的数据如果需要从 IO 读取到堆内存，中间需要经过 Socket 缓冲区，也就是说一个数据会被拷贝两次才能到达他的的终点，如果数据量大，就会造成不必要的资源浪费。
 
 NIO 使用零拷贝，当他需要接收数据的时候，他会在堆内存之外开辟一块内存，数据就直接从 IO 读到了那块内存中去。
-
-
 
 ### Channels
 
@@ -267,8 +225,6 @@ Stream是单向的
 **AbstractInterruptibleChannel-SelectableChannel的方法**
 
 `close(): void` 关闭该通道
-
-
 
 #### FileChannel
 
@@ -284,13 +240,9 @@ Stream是单向的
 
 [^零拷贝]: 零拷贝
 
-
-
 #### DatagramChannel
 
 网络IO UDP
-
-
 
 #### SocketChannel
 
@@ -298,7 +250,7 @@ Stream是单向的
 
 **方法：**
 
-`configureBlocking(boolean): SelectableChannel ` 调整该通道的阻塞模式，true为阻塞状态，false为非阻塞状态。
+`configureBlocking(boolean): SelectableChannel` 调整该通道的阻塞模式，true为阻塞状态，false为非阻塞状态。
 
 `register(Selector, int, Object): SelectionKey` 向给定的 Selector 注册此 Channel 会产生一个 SelectionKey 并返回。
 int 是枚举类型，表示 Selector 的兴趣 (关注的点)。
@@ -312,13 +264,9 @@ Channel 在阻塞模式下向 Selector 注册会抛出异常，只有非阻塞�
 | SelectionKey.OP_READ                   | 读                                   |
 | SelectionKey.OP_WRITE                  | 写                                   |
 
-
-
 `read(ByteBuffer): int` 从 channel 里读取数据存入到 ByteBuffer 里面
 
 `write(ByteBuffer): int` 将 ByteBuffer 里的数据写入到channel里
-
-
 
 #### ServerSocketChannel
 
@@ -328,9 +276,9 @@ Channel 在阻塞模式下向 Selector 注册会抛出异常，只有非阻塞�
 
 `open(): ServerSocketChannel` 静态方法，打开新的一个 Socket 的 Channel 并返回，该通道的 Socket 未绑定
 
-`socket(): ServerSocket ` 返回与该 Channel 关联的 ServerSocket
+`socket(): ServerSocket` 返回与该 Channel 关联的 ServerSocket
 
-`configureBlocking(boolean): SelectableChannel ` 调整该通道的阻塞模式，true为阻塞状态，false为非阻塞状态。
+`configureBlocking(boolean): SelectableChannel` 调整该通道的阻塞模式，true为阻塞状态，false为非阻塞状态。
 
 `register(Selector, int): SelectionKey` 向给定的 Selector 注册此 Channel 会产生一个 SelectionKey 并返回。
 int 是枚举类型，表示 Selector 的兴趣 (关注的点)。
@@ -343,11 +291,7 @@ Channel 在阻塞模式下向 Selector 注册会抛出异常，只有非阻塞�
 | SelectionKey.OP_READ                   | 读                                   |
 | SelectionKey.OP_WRITE                  | 写                                   |
 
-
-
 `accept(): SocketChannel` 接受与该通道套接字的连接，返回客户端 SocketChannel。
-
-
 
 ### Buffers
 
@@ -359,9 +303,7 @@ Channel 在阻塞模式下向 Selector 注册会抛出异常，只有非阻塞�
 
 `flip(): ByteBuffer` 翻转该缓冲区。用于 flip() 后才能读取 ByteBuffer 缓冲区
 
-`compact(): ByteBuffer ` 将未读取的数据移动到缓冲区的起始位置，但不会清空已读取的数据。用于实现缓存的部分读取和写入
-
-
+`compact(): ByteBuffer` 将未读取的数据移动到缓冲区的起始位置，但不会清空已读取的数据。用于实现缓存的部分读取和写入
 
 **CharBuffer**
 
@@ -378,13 +320,9 @@ Channel 在阻塞模式下向 Selector 注册会抛出异常，只有非阻塞�
 **MappedByteBuffer**
 用于表示内存映射文件
 
-
-
 ### Selectors
 
 优点：使单线程可以处理多个网络 IO
-
-
 
 **源码：**
 
@@ -422,23 +360,7 @@ public static SelectorProvider create() {
 }
 ```
 
-NIO底层使用了操作系统中的 IO 多路复用的系统调用：select、poll、epoll 
-
-
-
-#### 底层操作系统的I/O多路复用机制 select、poll、epoll 的区别
-
-第一个维度：支持一个进程所能打开的最大连接数
-
-第二个维度：**FD(文件句柄、文件描述符)** 剧增后带来的 IO 效率问题
-
-第三个维度：消息传递方式
-
-|        | 一个进程所能打开的最大连接数                                 | 遍历连接的速度                                               | 消息传递方式                                     |
-| ------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------ |
-| select | 单个进程所能打开的最大连接数由 FD_SETSIZE 宏定义，其大小是32个整数的大小（在32位的机器上，大小是32\*32，64位机器上FD SETSIZE为32\*64)，我们可以对其进行修改，然后重新编译内核，但是性能无法保证，需要做进一步测试 。基于数组存储，连接数有限。**有限 小** | 因为每次调用时都会对连接进行线性遍历，所以随着FD的增加会造成遍历速度的"线性下降"的性能问题 | 内核需要将消息传递到用户空间，需要内核的拷贝动作 |
-| poll   | 本质上与select没有区别，但是它没有最大连接数的限制，原因是它是基于链表来存储的。**无限** | 同上                                                         | 同上                                             |
-| epoll  | 虽然连接数有上限，但是很大，1G 内存的机器上可以打开 10 万左右的连接。**有限 大** | 由于 epoll 是根据每个 fd 上的 callback 函数来实现的，只有活跃的 socket 才会主动调用 callback 所以在活跃 socket 较少的情况下，使用 epoll 不会有"线性下降"的性能问题，但是所有 socket 都很活跃的情况下，可能会有性能问题 | 通过内核和用户空间共享一块内存来实现，性能较高   |
+NIO底层使用了操作系统中的 IO 多路复用的系统调用：select、poll、epoll
 
 
 
@@ -453,8 +375,6 @@ NIO底层使用了操作系统中的 IO 多路复用的系统调用：select、p
 `select(): int` 选择一组已经就绪的 select-key，返回已经就绪的 select-key 的数量。若没有就绪的 Channel 与该 Selector 建立连接则一直阻塞。
 
 `selectedKeys(): Set<SelectionKey>` 返回此 Selector 选定的所有 selected-key 实例集合。
-
-
 
 #### SelectionKey
 
@@ -477,8 +397,6 @@ Writable状态，表示 Channel 空，可写入数据
 `isReadable()` 返回该 SelectionKey 是否是准备好读取的状态
 
 `isWritable()` 返回该 SelectionKey 是否是准备好写入的状态
-
-
 
 ### 实现NIOEcho服务器(重点)
 
@@ -549,16 +467,12 @@ public class NIOPlainEchoServer {
                         key.channel().close();
                     } catch (IOException cex) {
                         // ignore on close
-}	}	}	}	}	}
+} } } } } }
 ```
-
-
 
 #### 过程
 
 NIO 中，当一个 Socket 建立好之后，Thread 并不会阻塞去接受(Accept)这个 Socket，而是将这个请求交给 Selector，Selector 会不断的去遍历所有的 Socket，一旦有一个 Socket 建立完成，他会通知 Thread，然后 Thread 处理完数据再返回给客户端——这个过程是不阻塞的，这样就能让一个Thread处理更多的请求了。单线程能处理更多的连接。
-
-
 
 ## AIO
 
@@ -580,26 +494,20 @@ read，write 都是异步方法，异步的完成后会主动调用回调函数
 OS内核维护全局的**打开文件表**
 
 进程维护**FD**(File Descriptor即文件描述符)
-		FD是一个非负整数索引值。是打开文件的元数据(文件属性状态)到文件本身的映射。
+  FD是一个非负整数索引值。是打开文件的元数据(文件属性状态)到文件本身的映射。
 
 **IO多路复用函数**：使用linux的**epoll**、select系统调用，监听多个FD的可读可写情况，实现异步处理多个连接请求。
 select，水平触发(处于某状态时通知)，轮询方式O(n)
 epoll，支持边缘触发(变化时通知)，Linux事件驱动机制O(1)
-
-
 
 ### 异步的 AIO 如何进一步加工处理结果?
 
 * 基于回调：实现 CompletionHandler 接口，调用时触发回调函数
 * 返回 Future：通过 isDone() 查看是否准备好，通过 get() 等待返回数据
 
-
-
 APIs
 AsynchronousServerSocketChannel
 AsynchronousSocketChannel
-
-
 
 ### 实现AIOEcho服务器(重点)
 
@@ -698,29 +606,21 @@ public class AIOPlainEchoServer {
 
 ```
 
-
-
 ## Netty 网络NIO框架
 
 Netty 是基于 Java NIO 的网络通讯框架。可以定制编码解码协议以实现服务器。并发高、传输快、封装好
-
-
 
 ### Channel
 
 Channel 表示数据传输通道，每一个请求对应一个 Channel
 
-
-
 <img src="https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting2/img/2023_09_25_01_46.webp" alt="img" style="zoom:67%;" />
 
-ChannelPipeline - 用于保存处理过程需要用到的 ChannelHandler 和 ChannelHandlerContext 
+ChannelPipeline - 用于保存处理过程需要用到的 ChannelHandler 和 ChannelHandlerContext
 
 ChannelHandler - 核心处理业务就在这里，用于处理业务请求
 
 ChannelHandlerContext - 用于传输业务数据
-
-
 
 ### ByteBuf
 
@@ -739,18 +639,15 @@ ByteBuf 的三种使用模式：
 
 2. Direct Buffer 直接缓冲区
 
-   直接缓冲区是ByteBuf的另外一种常用模式，他的内存分配都不发生在堆，jdk1.4引入的nio的ByteBuffer类允许jvm通过本地方法调用分配内存，这样做有两个好处 
+   直接缓冲区是ByteBuf的另外一种常用模式，他的内存分配都不发生在堆，jdk1.4引入的nio的ByteBuffer类允许jvm通过本地方法调用分配内存，这样做有两个好处
 
-   - 通过免去中间交换的内存拷贝, 提升IO处理速度; 直接缓冲区的内容可以驻留在垃圾回收扫描的堆区以外。
-   - DirectBuffer 在 -XX:MaxDirectMemorySize=xxM大小限制下, 使用 Heap 之外的内存, GC对此”无能为力”,也就意味着规避了在高负载下频繁的GC过程对应用线程的中断影响.
+   * 通过免去中间交换的内存拷贝, 提升IO处理速度; 直接缓冲区的内容可以驻留在垃圾回收扫描的堆区以外。
+   * DirectBuffer 在 -XX:MaxDirectMemorySize=xxM大小限制下, 使用 Heap 之外的内存, GC对此”无能为力”,也就意味着规避了在高负载下频繁的GC过程对应用线程的中断影响.
 
 3. Composite Buffer 复合缓冲区
    复合缓冲区相当于多个不同ByteBuf的视图，这是netty提供的，jdk不提供这样的功能。
-
-
 
 ### Codec 编码/解码器
 
 Netty中的编码/解码器，通过他你能完成字节与pojo、pojo与pojo的相互转换，从而达到自定义协议的目的。
 在Netty里面最有名的就是HttpRequestDecoder和HttpResponseEncoder了。
-

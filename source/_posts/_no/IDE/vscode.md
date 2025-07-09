@@ -491,8 +491,6 @@ echo | clang -dM -E -x c++ -  # 打印c++的预定义宏
 echo | clang -dM -E -x c++ - | grep "GNU"
 ```
 
-
-
 Feature Test Macros
 是用于控制库函数的可见性的宏，需要被定义在包含任何头文件之前
 
@@ -509,8 +507,6 @@ Feature Test Macros
 
 _XOPEN_SOURCE  // 用于定义SUS的不同版本
 ```
-
-
 
 ###### clangd插件配置
 
@@ -836,6 +832,82 @@ vscode-python类型检查默认就使用pyright
 据说pylance比mypy快
 
 ### Golang
+
+### markdown
+
+````md
+# 1
+
+## 2
+
+### 3
+
+#### 4
+
+##### 5
+
+###### 6
+
+ctrl shift o  搜索当前文件中的header
+ctrl t 搜索当前工作区中的header
+shift alt rightarrow 智能选择
+f2 更新所有指向该元素的链接/header
+双击
+视觉分割推荐使用 ---代替空行, 空行的最佳实践是br
+
+123(行尾空格换行 br分段)  
+123(行尾没空格同行)
+123
+
+**123**
+
+`123`
+
+```python
+123
+```
+
+$$
+\displaystyle
+\frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigl)}
+= 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\cdots}}
+\tag{使用KaTeX}
+$$
+
+Math block:
+
+$$
+\displaystyle
+\left( \sum_{k=1}^n a_k b_k \right)^2
+\leq
+\Bigl( \sum_{k=1}^n a_k^2 \Bigr)
+( \sum_{k=1}^n b_k^2 )
+$$
+
+----------
+
+![alt](https://)
+
+$x^2$
+
+*123*
+
+[text](https://)
+
+[text](##)
+
+1. first
+2. second
+3. third
+
+> 123
+
+~~123~~
+
+- first
+- second
+- third
+````
 
 ## 开发容器
 

@@ -1142,34 +1142,24 @@ Filename                                Type            Size            Used    
 systemctl enable --now zramd.service
 ```
 
-
-
 ## Linux Kernel6.16
 
 宏内核
 
 [Linux kernel map](https://makelinux.github.io/kernel/map/)
 
-
-
-系统编程圣经: 
+系统编程圣经:
 
 Advanced Programming in the UNIX Environment(UNIX环境高级编程)(APUE)
 
 The Linux Programming Interface(Linux/UNIX系统编程手册)(TLPI): APUE的超集
 
-
-
 OS可以看Barebone System
-
-
 
 ```bash
 git log --oneline --no-merges v5.10..v5.11 -- io_uring/*.h
 git log --oneline --no-merges v5.10..v5.11 | grep -i "io_uring"
 ```
-
-
 
 [vger.kernel.org](https://subspace.kernel.org/vger.kernel.org.html)
 
@@ -1183,8 +1173,6 @@ io-uring+unsubscribe@vger.kernel.org
 
 io-uring+faq@vger.kernel.org  // frequently asked questions(faq)
 ```
-
-
 
 ## 内核模块
 
@@ -1297,8 +1285,6 @@ SpringBoot
 5事件检测在子线程中执行，一个子线程中监听多个connFD  
 6客户端数量:服务端线程数=1:1  
 
-
-
 ### I/O
 
 IO
@@ -1323,16 +1309,14 @@ IO
 > 而在多连接不需要高并发的领域 epoll 更好(轻)
 
 > 网络：
-> 	file_op->poll() 
-> 		1注册回调poll_wait(**是为之后的操作准备的，不影响本次处理**, 内核epoll_wait()会等待之前注册的回调被触发)
-> 		2非阻塞立即返回文件是否就绪(只支持socket、pipe(FIFO))
-> 		用于事件驱动的IO多路复用，**中断驱动**
-> 	DPDK使用轮询
+>  file_op->poll()
+>   1注册回调poll_wait(**是为之后的操作准备的，不影响本次处理**, 内核epoll_wait()会等待之前注册的回调被触发)
+>   2非阻塞立即返回文件是否就绪(只支持socket、pipe(FIFO))
+>   用于事件驱动的IO多路复用，**中断驱动**
+>  DPDK使用轮询
 >
 > 块设备：
-> 	iopoll() 是 NVMe SSD的硬件**轮询**特性
-
-
+>  iopoll() 是 NVMe SSD的硬件**轮询**特性
 
 * NIO(): select()/poll()/epoll()  
   只支持 network sockets 和 pipes  
@@ -1347,8 +1331,6 @@ IO
 
 看hello_epoll.cpp、hello_poll.cpp、hello_select.cpp
 
-
-
 #### io_uring(universal ring)
 
 > IO类型：
@@ -1358,7 +1340,7 @@ IO
 > * buffered I/O：POSIX效果最差(hot cache)
 > * socket I/O
 >
-> 
+>
 >
 > Linux I/O
 >
@@ -1377,8 +1359,6 @@ IO
 >     批处理、易扩展能重写大多数系统调用
 >     峰值170w IOPS(4KB Block)  
 
-
-
 核心：
 
 每个 io_uring 实例都有两个用户空间和内核空间共享的 ring buffer 环形缓冲区
@@ -1388,15 +1368,11 @@ SQ(submission queue提交队列)、CQ(completion queue完成队列)，E(entries)
 > io_uring makes processing async I/O go brrrr by keeping syscalls to a minimum. This is done through batching reads/writes through ring buffers that are setup between the user space and the kernel space.  
 > io_uring 通过将系统调用保持在最低限度，使异步 I/O 处理变得非常快。这是通过在用户空间和内核空间之间设置的环形缓冲区批量执行读写操作来实现的。
 
-
-
 >C runtime:
 >
 >* [glibc](https://sourceware.org/glibc/libc.html)(GNU C Library 是**系统基础库，是用户空间与kernel的桥梁**(`extend ret xx_syscall(a, b)`对系统调用封装)提供了 C runtime底层实现(stdio stdlib string sys bits asm)、[POSIX接口](https://pubs.opengroup.org/onlinepubs)(unistd UNIX Standard)、GNU扩展(需要 #define _GNU_SOURCE)(syscall))
 >* musl libc
 >* MSVCRT(Microsoft Visual CRT)
-
-
 
 资料：
 
@@ -1409,12 +1385,10 @@ SQ(submission queue提交队列)、CQ(completion queue完成队列)，E(entries)
 > io_uring: 通过使用共享的环形缓冲区，我们可以消除应用与内核间共享锁，转而巧妙利用内存排序和屏障来处理
 
 * 202506glibc还未提供io_uring的封装 [sourceware](https://sourceware.org/bugzilla/buglist.cgi?quicksearch=io_uring)
-* [man3#liburing](https://man.archlinux.org/listing/extra/liburing/)(作者是Linux Kernel io_uring的作者Jens Axboe)	|	[git.kernel](https://git.kernel.dk/cgit/liburing/) [github](https://github.com/axboe/liburing)
+* [man3#liburing](https://man.archlinux.org/listing/extra/liburing/)(作者是Linux Kernel io_uring的作者Jens Axboe) | [git.kernel](https://git.kernel.dk/cgit/liburing/) [github](https://github.com/axboe/liburing)
   liburing仅是对系统调用的封装
   TODO: 有空可以看下项目下的example，进阶一点看eBPF(Extended Berkeley Packet Filter)跟踪io_uring进行性能分析监控
 * [zig#IoUring](https://ziglang.org/documentation/master/std/#std.os.linux.IoUring)
-
-
 
 ##### 手动薄封装syscall_io_uring
 
@@ -1442,11 +1416,9 @@ make INSTALL_MOD_PATH="$PWD/modules" modules_install
 ...
 ```
 
-
-
 ##### liburing-2.11
 
-编译: 
+编译:
 
 ```bash
 # BUILD liburing.so liburing-ffi.so liburing.a liburing-ffi.a
@@ -1478,8 +1450,6 @@ sudo make install
 ```
 
 使用: 看hello_liburing.cpp
-
-
 
 ## 目录划分
 
@@ -1831,7 +1801,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 > ECS的启动模式包括BIOS（Legacy）和UEFI两类。
 >
 > * BIOS（Legacy）模式：BIOS是系统启动过程中的基础软件层，负责初始化硬件并提供基本的硬件服务，以支持操作系统的启动。BIOS是一种传统的固件接口标准，其功能相对有限。
-> * UEFI模式：UEFI是BIOS的现代替代品，是一个更高级、模块化的固件接口标准，提供更强大、灵活和安全的启动环境。UEFI模式相对于BIOS（Legacy）模式有一些优势，具体说明如下。
+> * UEFI(Unified Extensible Firmware Interface 统一可扩展固件接口)模式：UEFI是BIOS的现代替代品，是一个更高级、模块化的固件接口标准，提供更强大、灵活和安全的启动环境。UEFI模式相对于BIOS（Legacy）模式有一些优势，具体说明如下。
 >   优势：
 >   UEFI启动时只需要加载必要的驱动程序，而传统BIOS（Legacy）启动时需要扫描所有设备
 >   反正UEFI 启动速度、安全性、可扩展性都更好
@@ -2983,16 +2953,9 @@ System Requirements: at least 4GB of RAM is recommended
 
 格式化分区：mkfs.ext4、mkswap(交换分区)、mkfs.fat(EFI分区)
 
-
-
 # TODO
 
 ```bash
 make defconfig  # 生成.config(默认)
 make compile_commands.json
 ```
-
-
-
-
-

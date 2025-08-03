@@ -74,10 +74,9 @@ relocate prefix：
 ~~conda是一个包管理器，旨在构建和管理任何语言和任何类型的软件。~~
 ~~Anaconda则是一个打包的集合，里面预装好了conda、某个版本的python、众多packages、科学计算工具等等，就是把很多常用的不常用的库都给你装好了。~~
 ~~miniconda，默认channel为anaconda.org(官方驱动)~~
-**[Miniforge3](https://github.com/conda-forge/miniforge)(AUR)**，默认channel为conda-forge(社区驱动)，合并了mambaforge(mamba是conda的重新实现比conda快)
+**aur/[Miniforge3](https://github.com/conda-forge/miniforge)(最佳实践)**，默认channel为conda-forge(社区驱动)，合并了mambaforge(mamba是conda的重新实现比conda快)
 	`ln -s /opt/miniforge/etc/profile.d/conda.sh /etc/profile.d/conda.sh`
-	推荐
-micromamba(archlinuxcn)
+~~micromamba(archlinuxcn)~~
 	轻量独立的可执行文件，适合容器化、CICD部署
 
 | channel源\软件 | conda | mamba                                                    |
@@ -89,6 +88,16 @@ micromamba(archlinuxcn)
 
 
 [mamba官方文档](https://mamba.readthedocs.io/en/latest/advanced_usage/more_concepts.html) 	|	[github](https://github.com/mamba-org/mamba)	|	[conda-forge通道官方文档](https://conda-forge.org/docs/)
+
+
+
+## 问题
+
+micromamba问题：
+
+```bash
+/usr/include/c++/15.1.1/string_view:260: constexpr const std::basic_string_view<_CharT, _Traits>::value_type& std::basic_string_view<_CharT, _Traits>::operator[](size_type) const [with _CharT = char; _Traits = std::char_traits<char>; const_reference = const char&; size_type = long unsigned int]: Assertion '__pos < this->_M_len' failed.
+```
 
 
 
@@ -272,5 +281,27 @@ Subcommands:
                               This is equivalent to `repoquery search` command
 ```
 
+```bash
+micromamba shell --help
+micromamba shell hook --shell zsh  # 返回激活脚本
 
+
+eval "$(micromamba shell hook --shell zsh)"
+micromamba shell init --shell zsh --root-prefix=<>  
+# ~/.local/share/mamba
+# /opt/micromamba
+# /root/micromamba
+micromamba shell init --shell zsh -p $HOME/.micromamba
+```
+
+
+
+
+
+## miniconda3
+
+
+
+conda config --add channels conda-forge
+conda config --set channel_priority strict
 

@@ -9,6 +9,12 @@ zsh：是对bash的改进，支持高级自动补全、主题、插件
 
 
 
+```bash
+chsh -l  # 查看安装了哪些shell
+```
+
+
+
 ## cmd
 
 防火墙
@@ -237,7 +243,7 @@ a zsh prompt theme
 
 
 
-## starship(推荐)
+## starship
 
 一个**跨平台**(外部进程)的prompt
 虽然基准测试显示速度不如gitstatus，但是跨平台
@@ -303,7 +309,12 @@ starship preset no-nerd-font -o ~/.config/starship.toml
 
 # terminal
 
-[tabby](https://github.com/Eugeny/tabby)	|	[WindTerm](https://github.com/kingToolbox/WindTerm)	|	[warp(收费)](https://www.warp.dev/)
+[tabby](https://github.com/Eugeny/tabby)	|	[WindTerm](https://github.com/kingToolbox/WindTerm)	|	[warp(收费)](https://www.warp.dev/) 	|	termius
 
 
 
+# TODO
+
+最佳实践是系统不使用 chsh
+
+平时登录系统执行下 fish

@@ -67,26 +67,6 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_04_30
 
 策略是不同的可选优化
 
-## 系统调用
-
-### Fork()
-
-**写时复制策略** cow(Copy-on-Write)：如果有多个调用者同时要求相同资源（如内存或磁盘上的数据存储)，他们会共同获取相同的指针指向相同的资源，直到某个调用者试图修改资源的内容时，系统才会真正复制份专用副本给该调用者，而其他调用者所见到的最初的资源仍然保持不变，这个过程对其他的调用者是透明的。
-
-写时复制策略的优点：如果调用者没有修改该资源，就不会有副本被创建，因此多个调用者只是读取操作时可以共享同一份资源。
-
-写时复制策略的处理过程中：需要维持一个给读请求使用的指针，并在新数据写入完成后更新这个指针，以提升读写并发能力。因此，cow也间接提供了数据更新过程中的原子性。在保证数据的完整性同时，还保证了一定的读写效率。
-
-Linux的Fork系统调用：创建子进程，使用写时复制策略。内核只为子进程创建虚拟空间，父子两进程使用相同的物理空间。只有父子进程发生更改时才会为子进程分配独立的物理空间。
-
-### write() 的缓冲区
-
-write()：将数据从应用程序写入到FD文件描述符所表示的文件或设备
-
-为了提高文件写入效率，在现代操作系统中，当用户调用 write() 函数，将一些数据写入文件时，操作系统通常会将数据暂存到一个内存缓冲区里，当缓冲区的空间被填满或超过了指定阈值后，才真正将缓冲区的数据写入到磁盘里。
-
-这样的操作虽然提高了效率，但也为数据写入带来了安全问题：如果计算机停机，内存缓冲区中的数据会丢失。为此，系统提供了fsync()、fdatasync() 同步函数，可以强制操作系统立刻将缓冲区中的数据写入到硬盘里，从而确保写入数据的安全性
-
 ## Shell命令
 
 [Linux命令在线查询网站](https://www.linuxcool.com/)
@@ -361,16 +341,97 @@ dpkg -S /bin/ping 确认所给的文件由哪个deb包提供
 
 ##### APT 软件包管理器
 
-适用于 Debian 系列系统 (包括 Ubuntu 系统)
+Advanced Package Tool适用于 Debian 系列系统 (包括 Ubuntu 系统)
 
-apt-get install package_name 安装/更新一个 deb 包
-apt-cdrom install package_name 从光盘安装/更新一个 deb 包
-apt-get update 升级列表中的软件包
-apt-get upgrade 升级所有已安装的软件
-apt-get remove package_name 从系统删除一个deb包
+> apt不保证向后兼容
+> apt-get保证向后兼容
+
+```bash
+man apt 8
+apt install/reinstal
+apt remove/purge
+apt autoremote
+apt update
+apt upgrade
+apt dist-upgrade
+apt list --installed --upgradeable --all-versions
+apt show
+apt search
+apt edit-sources  # 编辑sources.list
+```
+
+```bash
+man apt-get 8
+apt-get download  # 下载二进制包文件到当前目录
+apt-get source  # 下载源码文件
+apt-get install/reinstall <pkg=version>
+apt-get remove  # 保留配置文件以防止意外删除
+apt-get purge  # 同时删除配置文件
+apt-get update  # 更新本地检索数据库
+apt-get upgrade  # 更新软件包
+apt-get dist-upgrade  # 不推荐，可能因冲突删除需要的包
+
 apt-get check 确认依赖的软件仓库正确
-apt-get clean 从下载的软件包中清理缓存
+```
+
+```bash
+apt-cache
+
 apt-cache search searched-package 返回包含所要搜索字符串的软件包名称
+```
+
+```bash
+apt-config
+```
+
+```bash
+apt-cdrom install package_name 从光盘安装/更新一个 deb 包
+```
+
+```bash
+apt-mark
+
+apt-mark showauto
+apt-mark showmanual
+```
+
+
+
+配置：
+
+```bash
+/etc/apt/apt.conf.d  # 不需要修改
+
+man sources.list 5
+/etc/apt/sources.list.d/
+
+# /etc/apt/sources.list
+# 类别 URIs 套件(Debian发行代号) 组件
+deb http://ftp.debian.org/debian bookworm main contrib
+deb http://ftp.debian.org/debian bookworm-updates main contrib
+# security updates  # 备注
+deb http://security.debian.org bookworm-security main contrib
+
+# /etc/apt/sources.list.d/ceph.list 
+deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise
+
+# /etc/apt/sources.list.d/pve-enterprise.list 
+deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
+```
+
+
+
+通过pve web界面换源：节点>更新>存储库(APT Repository)
+[中科大源#pve](https://mirrors.ustc.edu.cn/help/proxmox.html)
+
+
+
+| 类别                          | URIs | 套件(Debian发行代号)                    | 组件                                                         |
+| ----------------------------- | ---- | --------------------------------------- | ------------------------------------------------------------ |
+| deb 二进制包<br />source 源码 |      | bookworm<br />bookworm-updates 修复仓库 | main<br />contrib 社区贡献(半自由依赖闭源组件)<br />non-free |
+|                               |      |                                         |                                                              |
+
+
 
 #### Pacman 软件包管理器
 
@@ -434,8 +495,6 @@ CleanMethod = KeepCurrent  # KeepCurrent保留当前版本 KeepInstalled保留�
 Include = /etc/pacman.d/mirrorlist
 [extra]
 Include = /etc/pacman.d/mirrorlist
-[community]
-Include = /etc/pacman.d/mirrorlist
 
 [archlinuxcn]  # 添加archlinuxcn仓库
 Server = http://repo.archlinuxcn.org/$arch
@@ -454,7 +513,8 @@ pacman -S archlinuxcn-keyring  # 导入GPG key
 
 ```/etc/pacman.conf
 [archlinuxcn]
-https://www.archlinuxcn.org/archlinux-cn-repo-and-mirror/
+Server = https://mirrors.cernet.edu.cn/archlinuxcn/$arch
+Server = https://repo.archlinuxcn.org/$arch
 ```
 
 使用镜像：
@@ -767,20 +827,100 @@ wsl ls
 
 ### systemd
 
-systemd：是现代Linux中的init system、进程监督(服务管理)工具(PID 1 用户空间的第一个进程)
-
-[archwiki#systemd](https://wiki.archlinuxcn.org/wiki/Systemd)
+是基础组件的组合、是服务管理器/进程监督工具、是PID 1用户空间的第一个进程(现代Linux中的init system)
 
 ```bash
-systemctl list-unit-files --help
-
-# unit类型
-unit
-automount
-path
-socket
-timer
+man 5 systemd.init
+man 5 systemd.service
 ```
+
+TODO: [man 5 systemd.service](https://man.archlinux.org/man/systemd.service.5#EXAMPLES)、[man 5 systemd.unit](https://man.archlinux.org/man/systemd.unit.5)
+
+
+
+```bash
+systemctl  # 发送控制命令给系统管理器
+```
+
+| systemctl [OPTIONS...] COMMAND ...                           | 释义                                               | OPTIONS                                          | 释义           |
+| ------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------ | -------------- |
+|                                                              |                                                    | -H <username>@<hostname>                         | SSH远程控制    |
+|                                                              |                                                    | --system(默认)<br />--user                       | 作用域         |
+| **Unit Commands**                                            |                                                    |                                                  |                |
+| `systemctl list-units`                                       | 列出当前在内存中的单元                             | --failed                                         | 列出失败的单元 |
+| `systemctl status [PATTERN...|PID...]`                       | 显示系统运行状态                                   |                                                  |                |
+| `systemctl help [PATTERN...|PID...]`                         | 显示单元的手册页                                   |                                                  |                |
+| `systemctl start [UNIT...]`                                  |                                                    |                                                  |                |
+| `systemctl stop [UNIT...]`                                   |                                                    |                                                  |                |
+| `systemctl restart [UNIT...]`                                | (会中断服务)                                       |                                                  |                |
+| `systemctl reload [UNIT...]`                                 | (不中断服务)                                       |                                                  |                |
+|                                                              |                                                    |                                                  |                |
+| **Unit File Commands**                                       |                                                    |                                                  |                |
+| `systemctl list-unit-files`                                  | 列出已安装的单元文件，显示UNIT FILE、STATE、PRESET | --state=[masked\|failed]<br />--type=[service\|] |                |
+| `systemctl is-enabled [UNIT...]`                             | 检查单元文件是否自动启动(enabled)                  |                                                  |                |
+| `systemctl enable [UNIT...]`                                 | 自动启用单元文件                                   | --now                                            | 立即启用       |
+| `systemctl disable [UNIT...]`                                | 取消自动启动单元文件                               |                                                  |
+| `systemctl mask [UNIT...]` <br />`systemctl unmask [UNIT...]` | 屏蔽单元文件，使其无法启动(用于防止误启动)         |                                                  |                |
+|                                                              |                                                    |                                                  |                |
+| **Manager State Commands**                                   |                                                    |                                                  |                |
+| `systemctl daemon-reload`                                    | 重载systemd配置                                    |                                                  |                |
+
+
+
+#### 单元文件
+
+| systemd单元文件           | man 5 systemd.unit            |
+| ------------------------- | ----------------------------- |
+| <xxx>@.service            | 模板单元                      |
+| <xxx>@<yyy>.service       | 模板单元实例，yyy是实例标识符 |
+|                           |                               |
+| .service、.target(同步点) | 对应不同systemd组件           |
+| .timer                    | 可代替cron                    |
+
+```bash
+systemd-analyze verify FILE...
+```
+
+```.service
+# .service
+
+[Unit]
+# 处理依赖管理
+Requires=
+After=
+Wants=
+OnFailure=failure-notification@%n.service
+
+Environment=XXX=xxx
+ExecStart=xx  # /bin/bash -c 'cmd1 && cmd2'  # 执行命令或脚本
+
+[Service]
+# 服务类型
+Type=simple(默认 不阻塞 用于长任务)、oneshot(阻塞 用于短任务)
+Restart=always  # 自动重启
+RestartSec=30
+```
+
+```
+# /etc/systemd/system/failure-notification@.service
+
+[Unit]
+Description=Send a notification about a failed systemd unit
+
+[Service]
+Type=oneshot
+ExecStart=/path/to/failure-notification.sh %i  # 失败则执行某脚本  # %i替换为失败单元的名称
+# 以临时用户/组运行并启用其他安全措施
+DynamicUser=true
+```
+
+
+
+##### 附加配置片段
+
+`xxx.d/*.conf` 优先级比原来的单元文件高
+
+
 
 #### cron
 
@@ -816,6 +956,8 @@ crontab -d  # edit
 ```
 
 anacron：争对非持续运行系统(会记录任务的最后执行时间)，无daemon
+
+
 
 #### systemd.timer
 
@@ -867,6 +1009,8 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
+
+
 
 ### pdsh
 
@@ -948,17 +1092,186 @@ OpenSSH 软件是SSH协议的实现，用于提供加密的通信会话
 ssh-keygen -A
 ```
 
+
+
 ### 网络管理器
 
 [网络管理器](https://wiki.archlinuxcn.org/wiki/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%99%A8)
 
-NetworkManager：支持 GUI
+> 可预测网络接口名：
+>
+> enX: 主板集成网口，Ethernet 接口，X 是一个数字
+> enpXsY: 扩展网卡，Ethernet 接口有线适配器，基于 PCI 插槽位置命名 (p 表示 PCI, X 是总线 ID, s 是插槽 ID, Y 是功能 ID)
+> enWWXsY: Ethernet 接口，基于板载设备 MAC 地址命名
+>
+> wlanX: 无线网络接口，X 是一个数字
+> wlpXsY: 无线网络接口无线适配器，基于 PCI 插槽位置命名
+
+
+
+#### NetworkManager
+
+支持 GUI
+
+
 
 #### systemd-networkd
 
+是一个系统守护进程，用于管理网络配置
+
+
+
 ```bash
-systemctl enable systemd-resolved
+systemctl --type=service
+systemctl enable systemd-networkd.service  # 不同的网络管理器会冲突
+systemctl enable systemd-resolved  # DNS服务(systemd-networkd中DHCP、DNS会需要)
+
+systemd-networkd-wait-online.service  # 网络同步点，供<unit>.service的network-online.target使用
 ```
+
+```bash
+networkctl list
+```
+
+
+
+配置文件：
+
+[archlinux#network文件](https://wiki.archlinuxcn.org/wiki/Systemd-networkd#network_%E6%96%87%E4%BB%B6)
+
+`/etc/systemd/network/xx.network` 配置 systemd-networkd，数组越大优先级越高
+
+```default.netwok
+# default.netwok  # 静态
+[Match]
+Name=eth0
+
+[Network]
+Gateway=172.17.63.253
+Address=172.17.0.156/18
+```
+
+```20-wired.network
+# 20-wired.network  # 有线配置
+[Match]
+Name=enp1s0  # 注意网口名称匹配，可模糊匹配(en*),
+
+[Network]
+DHCP=yes
+ 
+[DHCPv4]
+RouteMetric=100  # Metric优先级(越小越优先)
+ 
+[IPv6AcceptRA]
+RouteMetric=100
+```
+
+```25-wireless.network
+# 25-wireless.network  # 无线配置
+[Match]
+Name=wlp2s0  # 注意网口名称匹配
+
+[Network]
+DHCP=yes
+ 
+[DHCPv4]
+RouteMetric=600
+ 
+[IPv6AcceptRA]
+RouteMetric=600
+```
+
+TODO: [提示与技巧](https://wiki.archlinuxcn.org/wiki/Systemd-networkd#%E6%8F%90%E7%A4%BA%E4%B8%8E%E6%8A%80%E5%B7%A7)
+
+
+
+#### 配置DNS
+
+| 路径                                                         | 释义                            |
+| ------------------------------------------------------------ | ------------------------------- |
+| `/etc/resolv.conf`                                           | 系统的DNS查询入口               |
+| `/run/systemd/resolve/resolv.conf`                           | systemd-resolved 的动态配置文件 |
+| `/etc/systemd/resolved.conf`、`etc/systemd/resolved.conf.d/` |                                 |
+
+
+
+systemd-resolved 是一个监听`127.0.0.53`的DNS解析器
+
+不推荐手动配置`/etc/resolv.conf`
+不推荐使用 systemd-resolved 的 `/etc/systemd/resolved.conf` 配置DNS
+
+```etc/systemd/resolved.conf.d/dns_servers.conf
+# etc/systemd/resolved.conf.d/dns_servers.conf
+[Resolve]
+DNS=192.168.35.1 fd7b:d0bd:7a6e::1
+Domains=~.
+```
+
+推荐使用 systemd-networkd 的 `/etc/systemd/network/*.network` 在[Network] DNS项配置DNS
+推荐交给 systemd-networkd 的 DNS=DHCP
+
+```bash
+ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+```
+
+```bash
+resolvectl status
+```
+
+
+
+#### WIFI
+
+```bash
+# DNS管理器
+systemd-resolved
+
+# 网络管理器
+NetworkManager  # nmcli  # nmtui
+systemd-network  # 推荐
+```
+
+```bash
+nmcli device wifi list  # 查看可用网络
+nmcli device wifi connect "你的SSID" password "你的密码" # WPA2 网络
+nmcli connection modify "SSID" connection.autoconnect yes
+```
+
+```bash
+systemctl --type=service
+sudo systemctl enable --now systemd-resolved.service
+sudo systemctl enable --now systemd-networkd.service
+```
+
+
+
+```bash
+# 后端
+wpa_supplicant 
+iwd  # 推荐
+```
+
+```bash
+# iwd
+iwd  # 守护程序
+sudo systemctl enable --now iwd
+
+iwctl  # 客户端  # ctrl+d
+device <device> show
+adapter  # 物理无线网卡
+station <name> connect <SSID>  # 网口
+station <device> disconnect
+station <device> show
+known-networks list
+known-networks <SSID> forget  # SSID(Service Set Identifier)
+vim /var/lib/iwdq
+
+iwmon  # 监控
+```
+
+TODO: [iwd](https://wiki.archlinuxcn.org/wiki/Iwd)
+
+
 
 ### 文件系统
 
@@ -968,14 +1281,16 @@ systemctl enable systemd-resolved
 >
 >块设备：数据块，如硬盘、USB存储
 
-|                      | ext4                                            | vfat                                             | XFS                  | Btrfs(推荐)                                                  | openZFS                                |
-| -------------------- | ----------------------------------------------- | ------------------------------------------------ | -------------------- | ------------------------------------------------------------ | -------------------------------------- |
-| **磁盘空间分配机制** | 日志文件系统Journaling<br />类似关系型数据库log | 文件分配表FAT(File Allocation Table)<br />索引表 | 日志Journaling       | CoW<br />Copy on Write 修改不就地覆盖数据而是写入新位置，之后更新文件指向新位置 (复制 更新 替换指针) (对数据库 日志文件可关闭)<br />目的：提高数据的一致性和可靠性 | CoW、存储池(整合了逻辑卷管理+文件系统) |
-| 透明压缩             | 不支持                                          | 不支持                                           | 不支持               | 支持多种                                                     | 支持多种                               |
-| 快照                 | 不支持                                          | 不支持                                           | 不支持               | 支持                                                         | 支持                                   |
-| 碎片整理             | 需要定期                                        | 需要定期                                         | 需要定期             | 不需要，COW替换比原地修改减少了磁盘碎片                      | 不需要                                 |
-| 加密分区             |                                                 |                                                  |                      | 不支持                                                       |                                        |
-| 主要应用场景         | 大多数Linux发行版的默认、资源占用低             | U盘，FAT32最大4GB                                | 文件服务器、io性能优 | 高级功能丰富                                                 | 高级功能丰富、吃内存                   |
+|                      | ext4                                            | vfat                                             | XFS                  | Btrfs(推荐)                                                  | openZFS                                     |
+| -------------------- | ----------------------------------------------- | ------------------------------------------------ | -------------------- | ------------------------------------------------------------ | ------------------------------------------- |
+| **磁盘空间分配机制** | 日志文件系统Journaling<br />类似关系型数据库log | 文件分配表FAT(File Allocation Table)<br />索引表 | 日志Journaling       | CoW<br />**Copy on Write** 修改不就地覆盖数据而是写入新位置，之后更新文件指向新位置 (复制 更新 替换指针) (对数据库 日志文件可关闭) (算btrfs的核心特性)<br />目的：提高数据的一致性和可靠性 | CoW、存储池(整合了逻辑卷管理+文件系统)      |
+| 透明压缩             | 不支持                                          | 不支持                                           | 不支持               | 支持多种                                                     | 支持多种                                    |
+| 快照                 | 不支持                                          | 不支持                                           | 不支持               | 支持                                                         | 支持                                        |
+| 碎片整理             | 需要定期                                        | 需要定期                                         | 需要定期             | 不需要，COW替换比原地修改减少了磁盘碎片                      | 不需要                                      |
+| 加密分区             |                                                 |                                                  |                      | 不支持                                                       |                                             |
+| 缓存                 |                                                 |                                                  |                      |                                                              | ARC(Adaptive Replacement Cache 一级缓存)    |
+| 主要应用场景         | 大多数Linux发行版的默认、资源占用低             | U盘，FAT32最大4GB                                | 文件服务器、io性能优 | 高级功能丰富                                                 | 高级功能丰富、**巨吃内存**(1GB+4GB每TB RAW) |
+| RAID                 |                                                 |                                                  |                      |                                                              | 软件RAID                                    |
 
 #### btrfs
 
@@ -987,20 +1302,23 @@ GRUB是支持btrfs的，其他引导加载程序不清楚
 pacman -S btrfs-progs  # btrfs工具软件包
 ```
 
-|                   | 命令                                                         | 释义                                                         |
-| ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 创建文件系统      | mkfs.btrfs -L arch /dev/vda2                                 | 在/dev/vda2分区上**创建文件系统**，标签为arch                |
-| 配置文件系统-压缩 | mount -o compress=zstd[:level] /dev/sd*XX* /mnt/yyy          | 分区挂载后就**启动压缩**<br />现存文件启动压缩 `btrfs filesystem defragment -c <zstd|lzo|zlib>[:level]` |
-| 配置文件系统-子卷 | btrfs subvolume create /mnt/@root                            | 创建子卷<br />可以为不同子卷设置不同的snapper快照配置、不同的btrfs挂载选项<br />我的 @ @root @home @var @snapshots @opt |
-|                   | btrfs subvolume list -p path                                 | 列出path路径下的子卷                                         |
-|                   | btrfs subvolume delete /path/to/subvolume                    | 删除子卷                                                     |
-|                   | mount -o subvol=@root /dev/vda2 /mnt/root                    | 挂载子卷，[btrfs挂载选项](https://man.archlinux.org/man/btrfs.5#MOUNT_OPTIONS)<br />opts=noatime,compress=zstd,x-mount.mkdir<br />noatime：禁止访问时间戳atime，减少触发CoW提升性能<br />nodatacow：新文件不启用CoW |
-|                   | lsattr /mnt/.snapshots                                       | 查看是否包含C字符，是否启动了CoW特性                         |
-|                   | chattr +C /mnt/var/tmp 对单文件使用<br />挂载参数nodatacow对子卷使用 | 新文件不启用CoW，在追求性能的场景使用                        |
-| 使用              | btrfs filesystem df /                                        | 检查已分配空间的使用情况                                     |
-|                   | btrfs filesystem defragment -r /                             | 手动整理根目录碎片                                           |
-|                   | btrfs filesystem resize [+\|-\| ]size /                      | 将文件系统扩展到特定大小，已有数据大小<size<=该设备可用空间  |
-|                   | 自动快照                                                     | 去使用Snapper等快照管理器                                    |
+|                   | 命令                                                         | 释义                                                         | 选项       | 释义                             |
+| ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------- | -------------------------------- |
+| 创建文件系统      | mkfs.btrfs <dev>                                             | 在dev(/dev/vda2)分区上**创建文件系统**                       | -L --label | 设置文件系统标签                 |
+|                   |                                                              |                                                              | -d         | 数据配置文件raid0, raid1, single |
+|                   |                                                              |                                                              | -m         | 元数据配置文件                   |
+| 配置文件系统-压缩 | mount -o compress=zstd[:level] /dev/sd*XX* /mnt/yyy          | 分区挂载后就**启动压缩**<br />现存文件启动压缩 `btrfs filesystem defragment -c <zstd|lzo|zlib>[:level]` |            |                                  |
+| 配置文件系统-子卷 | btrfs subvolume create /mnt/@root                            | 创建子卷<br />可以为不同子卷设置不同的snapper快照配置、不同的btrfs挂载选项<br />我的 @ @root @home @var @snapshots @opt |            |                                  |
+|                   | btrfs subvolume list -p path                                 | 列出path路径下的子卷                                         |            |                                  |
+|                   | btrfs subvolume delete /path/to/subvolume                    | 删除子卷                                                     |            |                                  |
+|                   | mount -o subvol=@root /dev/vda2 /mnt/root                    | 挂载子卷，[btrfs挂载选项](https://man.archlinux.org/man/btrfs.5#MOUNT_OPTIONS)<br />opts=noatime,compress=zstd,x-mount.mkdir<br />noatime：禁止访问时间戳atime，减少触发CoW提升性能<br />nodatacow：新文件不启用CoW |            |                                  |
+|                   | lsattr /mnt/.snapshots<br />lsattr -d /var/log               | 查看是否包含C字符，是否启动了CoW特性                         |            |                                  |
+|                   | chattr +C /mnt/var/tmp 对单文件使用()<br />挂载参数nodatacow对子卷使用 | 新文件不启用CoW，对需要追求性能的目录使用                    |            |                                  |
+| 使用              | btrfs filesystem df /                                        | 检查已分配空间的使用情况                                     |            |                                  |
+|                   | btrfs filesystem defragment -r /                             | 手动整理根目录碎片                                           |            |                                  |
+|                   | btrfs filesystem resize [+\|-\| ]size /                      | 将文件系统扩展到特定大小，已有数据大小<size<=该设备可用空间  |            |                                  |
+|                   | 自动快照                                                     | 去使用Snapper等快照管理器                                    |            |                                  |
+|                   | btrfs fi usage /<PATH>                                       | 查看btrfs分区使用情况                                        |            |                                  |
 
 ```bash
 btrfs subvolume create /mnt/@snapshots
@@ -1012,6 +1330,16 @@ btrfs subvolume list /dev/vda2  # 列出/dev/vda2分区上的所有子卷
 opts=noatime,compress=zstd,space_cache=v2,x-mount.mkdir
 mount -o $opts,subvol=@snapshots /dev/vda2 /mnt/.snapshots
 ```
+
+
+
+#### zfs
+
+```bash
+zpool add rpool /dev/sdb
+```
+
+
 
 ### 快照管理器
 
@@ -1142,6 +1470,21 @@ Filename                                Type            Size            Used    
 systemctl enable --now zramd.service
 ```
 
+
+
+### fastfetch
+
+[github#fastfetch](https://github.com/fastfetch-cli/fastfetch)
+
+```bash
+fastfetch --help
+fastfetch
+```
+
+
+
+
+
 ## Linux Kernel6.16
 
 宏内核
@@ -1214,6 +1557,24 @@ alias: tcp-ulp-tls(Upper Layer Protocol)、ktls
 ```
 
 ## 系统调用
+
+> ### Fork()
+>
+> **写时复制策略** cow(Copy-on-Write)：如果有多个调用者同时要求相同资源（如内存或磁盘上的数据存储)，他们会共同获取相同的指针指向相同的资源，直到某个调用者试图修改资源的内容时，系统才会真正复制份专用副本给该调用者，而其他调用者所见到的最初的资源仍然保持不变，这个过程对其他的调用者是透明的。
+>
+> 写时复制策略的优点：如果调用者没有修改该资源，就不会有副本被创建，因此多个调用者只是读取操作时可以共享同一份资源。
+>
+> 写时复制策略的处理过程中：需要维持一个给读请求使用的指针，并在新数据写入完成后更新这个指针，以提升读写并发能力。因此，cow也间接提供了数据更新过程中的原子性。在保证数据的完整性同时，还保证了一定的读写效率。
+>
+> Linux的Fork系统调用：创建子进程，使用写时复制策略。内核只为子进程创建虚拟空间，父子两进程使用相同的物理空间。只有父子进程发生更改时才会为子进程分配独立的物理空间。
+>
+> ### write() 的缓冲区
+>
+> write()：将数据从应用程序写入到FD文件描述符所表示的文件或设备
+>
+> 为了提高文件写入效率，在现代操作系统中，当用户调用 write() 函数，将一些数据写入文件时，操作系统通常会将数据暂存到一个内存缓冲区里，当缓冲区的空间被填满或超过了指定阈值后，才真正将缓冲区的数据写入到磁盘里。
+>
+> 这样的操作虽然提高了效率，但也为数据写入带来了安全问题：如果计算机停机，内存缓冲区中的数据会丢失。为此，系统提供了fsync()、fdatasync() 同步函数，可以强制操作系统立刻将缓冲区中的数据写入到硬盘里，从而确保写入数据的安全性
 
 ### std.os.fcntl
 
@@ -1590,61 +1951,7 @@ genfstab -U /mnt >> /mnt/etc/fstab  # genfstab检查所有挂载点，一般只�
 # IP地址 域名 别名
 ```
 
-`/etc/systemd/network/xx.network` 配置 systemd-networkd，数组越大优先级越高
 
-可预测网络接口名：
- enX: Ethernet 接口，X 是一个数字
- wlanX: 无线网络接口，X 是一个数字
- enpXsY: Ethernet 接口，基于 PCI 插槽位置命名 (p 表示 PCI, X 是总线 ID, s 是插槽 ID, Y 是功能 ID)
- wlpXsY: 无线网络接口，基于 PCI 插槽位置命名
- enWWXsY: Ethernet 接口，基于板载设备 MAC 地址命名
-
-配置DNS:
- 不推荐手动配置`/etc/resolv.conf`
- 不推荐使用 systemd-resolved 的 `/etc/systemd/resolved.conf` 配置DNS
- 推荐使用 systemd-networkd 的 `/etc/systemd/network/*.network` 在[Network] DNS项配置DNS
- 推荐交给 systemd-networkd 的 DNS=DHCP
-
-```default.netwok
-# default.netwok
-# 静态
-[Match]
-Name=eth0
-
-[Network]
-Gateway=172.17.63.253
-Address=172.17.0.156/18
-```
-
-```20-wired.network
-# 20-wired.network  # 有线配置
-[Match]
-Name=enp1s0  # 注意网口名称匹配，可模糊匹配(en*),
-
-[Network]
-DHCP=yes
- 
-[DHCPv4]
-RouteMetric=100  # Metric优先级(越小越优先)
- 
-[IPv6AcceptRA]
-RouteMetric=100
-```
-
-```25-wireless.network
-# 25-wireless.network  # 无线配置
-[Match]
-Name=wlp2s0  # 注意网口名称匹配
-
-[Network]
-DHCP=yes
- 
-[DHCPv4]
-RouteMetric=600
- 
-[IPv6AcceptRA]
-RouteMetric=600
-```
 
 ## Shell
 
@@ -1679,11 +1986,12 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | cat                                                          | less更好用。cat f1 f2连接多个文件内容并打印                  |                                                              |
 | chgrp 组名 文件                                              | 改变文件的用户组用命令                                       |                                                              |
 | chown 拥有者名称 文件                                        | 更改文件拥有者和所属组<br />`chown $USER:$USER ~/.ssh/authorized_keys` | -R 递归                                                      |
-| chsh                                                         | 改变SHELL(bash、zsh)<br />cat /etc/shells 查看目前支持的shell<br />echo $SHELL 打印当前SHELL |                                                              |
+| chsh                                                         | 改变SHELL(bash、zsh)<br />cat /etc/shells 查看目前支持的shell<br />echo $SHELL 打印当前SHELL | -l 打印shell列表，查看安装了哪些shells<br />-s <shell_path> 修改当前账户的默认shell |
 | clear                                                        | 清屏，向下一页                                               |                                                              |
 | curl [options...] <url>                                      | client URL，发送 http 请求<br />访问 cip.cc 可用于测试是否使用代理<br/> | -X Get 指定HTTP请求方法<br />-A 指定User-Agent<br />-b 指定Cookie<br />-d 指定Post请求正文<br />-F 上传二进制文件<br />-k 跳过 SSL 检测<br />-o 将响应保存为文件<br />-x 指定代理<br />-f 快速失败，根据HTTP响应状态码返回成功0失败非0 |
+| dd                                                           | dd if=<file> of=<file> bs=<块大小> count=<块数量><br />可用于备份、创建空文件(/dev/zero) |                                                              |
 | df                                                           | 打印**文件系统使用情况**(已用 可用 挂载点)<br />fdisk 打印**磁盘分区情况**或操作<br />lsblk 打印**块设备信息** | -h 人类可读                                                  |
-| dmesg                                                        | 显示kernel ring buffer(内核日志)(和 io_uring ring buffer不是同个东西)消息 | -HTK 人类可读 人类可读时间戳 内核消息                        |
+| dmesg<br />dmesg \| grep 'iommu'                             | 显示kernel ring buffer(内核日志)(和 io_uring ring buffer不是同个东西)消息 | -HTK 人类可读 人类可读时间戳 内核消息                        |
 | echo $HADOOP_HOME                                            | 可以看一些软件的安装路径                                     |                                                              |
 | env                                                          | 查看环境变量<br />env \|grep -i poxy #查看系统代理配置情况   |                                                              |
 | fdisk                                                        | 打印磁盘分区情况或操作<br />df 打印文件系统使用情况(已用 可用 挂载点)<br />lsblk 打印块设备信息 | -l 打印磁盘分区情况                                          |
@@ -1712,7 +2020,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | **less**                                                     | pager 分页器<br />查看文件，h显示帮助                        | `ls xxx | less`                                              |
 | ln                                                           | 创建硬链接                                                   | -s 创建软链接                                                |
 | ls -lath<br />**ll -ath**                                    | 展示当前目录下的文件与目录.并根据颜色区分类型.<br />–a显示隐藏文件<br />-i显示inode编号 <br /> -l 附加显示详细信息<br />-t 按时间排序<br />-r 反序<br />-h 文件大小单位变为kb<br />白(一般文件)、蓝(目录)、浅蓝(链接文件)、绿(可执行)、红(压缩)<br />黄背景(Set Group ID)、红背景(Set User ID)、绿背景(粘滞位) |                                                              |
-| lsblk                                                        | 打印**块设备信息**                                           | -f 多打印一列文件系统信息                                    |
+| **lsblk**                                                    | 打印**块设备信息**<br />如果MOUNTPOINTS为空则可以直接拔出U盘 | -f 多打印一列文件系统信息                                    |
 | lsmod                                                        | 显示当前加载的内核模块                                       |                                                              |
 | man <section> <page>                                         | manual page, 可以用info命令替代<br />`pacman -S man-db man-pages-zh_cn`<br />`alias cman='LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 man'`<br />[Online_man_pages](https://wiki.archlinux.org/title/Man_page#Online_man_pages) \| [kernel#man page version](https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/refs/tags)<br />[archlinux#man page(推荐)](https://man.archlinux.org/) \| [archlinux#man page version](https://archlinux.org/packages/?name=man-pages)<br />man7.org(不推荐 更新慢) | 1shell命令 2内核提供的系统调用 3库函数 4特殊文件 5file format and config file 6游戏 7Miscellaneous宏(需要`#define MISC`) 8系统管理命令 9kernel routines |
 | mkdir myfloder                                               | 创建空目录.  <br />mkdir –p myfloder:  如果已经存在,也不报错提示. <br />mkdir无法创建多层目录,所以可以用 : mkdir –p a/b/c ) |                                                              |
@@ -1734,7 +2042,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | **sed** [option] 'sed command' filename                      | stream editor流式编辑器，适合对文本的行内容进行处理，替换、删除、移动、搜索数据<br />`sed 's/^Str\.&/\;/g' filename`：在终端将Str.替换成;   s表示处理字符串 g表示全文替换否则只替换行首次匹配<br />`sed -i '/^ *$/d' filename`：在文件中删除空行，d表示删除行<br />`sed -i '/xxx/d' filename`：删除xxx所在行<br />`sed -i "s/ALLOW_USERS= \".*\" /ALLOW_USERS= \"$(whoami)\" /" /etc/snapper/configs/root`<br />s/ 替换字符<br />/d 删除 | -i 在文件中修改                                              |
 | sh -c [string]                                               | 执行脚本                                                     |                                                              |
 | shutdown [option] [time] [message]                           |                                                              |                                                              |
-| shutdown -h now                                              | 马上关机                                                     |                                                              |
+| shutdown <time><br />shutdown -h now                         | 马上关机                                                     |                                                              |
 | **source <file>** (等价于. <file>)                           | 在当前shell环境，执行脚本文件中的命令                        |                                                              |
 | **ss**                                                       | 显示sockets                                                  | t 显示TCP sockets<br />u 实现 udp<br />n 显示端口，不解析为服务名称<br />l 显示正在监听的 |
 | **ssh 用户名@ip**                                            | ssh登录远程主机                                              | -T                                                           |
@@ -1749,6 +2057,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | sz xxyy                                                      | 导出xxyy到本地快速访问download中                             |                                                              |
 | tail -n 20 filename                                          | 查看文件最后末尾20行                                         |                                                              |
 | tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tzf <file> | head -10`                                 | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法 |
+| tee                                                          | 将stdin写入文件，常配合\|管道使用                            | -a 追加                                                      |
 | telnet                                                       | 远程登入，可以测试端口的连通性 **应用层**                    |                                                              |
 | timedatectl                                                  | 查看系统时间                                                 |                                                              |
 | top                                                          | htop                                                         | -d <间隔second><br />-p <pid>                                |
@@ -1766,8 +2075,8 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | yum [list remove install]                                    | Yellow dog Updater, Modified<br />属于 Redhat 系列 (如，CentOS) 包管理工具；Debin系列 (如，Ubuntu) 使用 apt-get<br />基于RPM包管理工具，能从指定的服务器离线下载 rpm 包并且自动安装，会自动处理依赖问题，还能更新系统。 |                                                              |
 | zramctl                                                      | 查看zram设备状态                                             |                                                              |
 | **\|**                                                       | 管道操作符，将左指令的stdout作为右指令的stdin<br />需要注意：**右边命令必须能接受标准输入流**，否则传递过程中的数据会被抛弃、不处理左边命令的错误<br />常用接收stdin的命令: sed, awk, grep查, cut, head查, top资源, less, more, wc统计, join, sort, split |                                                              |
-| >                                                            | `agent_run_state=$(ssh-add -l >/dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout` <br />文件描述符 1:stdout 2:stderr<br />`echo $?` 获取前一个命令的退出状态码 |                                                              |
-| >>                                                           | 输出重定向<br />cat ~./ssh/id_rsa.pub  >>  ~/.ssh/authorized_keys  把公钥追加到authorized_keys中 |                                                              |
+| >                                                            | 覆盖<br />`agent_run_state=$(ssh-add -l >/dev/null 2>&1; echo $?)  # stdout重定向到/dev/null、stderr重定向到stdout` <br />文件描述符 1:stdout 2:stderr<br />`echo $?` 获取前一个命令的退出状态码 |                                                              |
+| >>                                                           | 追加<br />输出重定向<br />cat ~./ssh/id_rsa.pub  >>  ~/.ssh/authorized_keys  把公钥追加到authorized_keys中<br />tee配置\|管道也很好用 |                                                              |
 | &                                                            | 表示在后台执行                                               |                                                              |
 | &&                                                           | 表示前一条命令执行成功才执行后一条命令                       |                                                              |
 | $()                                                          | `$()` 捕获括号内的stdout<br />powershell：${}，例如${pwd}    |                                                              |
@@ -1991,7 +2300,7 @@ ubuntu：(/grub_bios /esp /)、(bios uefi)
 
 #### 1bootstrap tarball(无法格式化)
 
-使用 bootstrap tarball 在Btrfs分区上安装Arch Linux
+使用 bootstrap tarball 在archiso上分区并格式化，进入chroot安装Arch Linux
 
 > 具体思路要么是直接在宿主系统上运行 pacman，要么是在宿主系统里运行一个 Arch 系统，这个嵌套系统位于 chroot 中。
 
@@ -2026,7 +2335,7 @@ $ tar xf archlinux-bootstrap-x86_64.tar.zst --numeric-owner  # 解压出 pkglist
 # zstd -d archlinux-bootstrap-x86_64.tar.zst
 # tar -xzvf archlinux-bootstrap-x86_64.tar --numeric-owner  # --numeric-owner 解压出文件的uid gid
 
-# 使用bootstrap镜像中的arch-chroot进入临时环境
+# 使用bootstrap镜像中的arch-chroot进入临时环境,exit可返回archiso
 $ vim /tmp/root.x86_64/etc/pacman.d/mirrorlist  # pacman软件仓库服务器列表  # 把HK、CN的放前面 https://archlinux.org/mirrorlist/
 $ bash --version  # 要求支持 >4.0
 $ unshare --help | grep -E "fork|pid"  # 要求支持--fork --pid
@@ -2044,10 +2353,16 @@ Linux iZj6c6jjq4hjrfg9oja020Z 6.8.0-40-generic #40-Ubuntu SMP PREEMPT_DYNAMIC Fr
 $ head -n 15 /etc/pacman.d/mirrorlist  # 看下配置好了没有
 $ pacman-key --init
 $ pacman-key --populate
+$ pacman -Syy
 $ pacman -Syyu
 $ pacman -S base
 $ pacman -S base-devel  # Basic tools to build Arch Linux packages
 $ pacman -S parted  # A program for creating, destroying, resizing, checking and copying partitions 分区工具
+
+systemctl stop reflector.service
+systemctl status reflector.service
+vim /etc/pacman.d/mirrorlist  # Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+pacman -Syy
 ```
 
 Btrfs
@@ -2092,35 +2407,45 @@ Number  Start   End     Size    File system  Name                  Flags
  3      222MB   32.2GB  32.0GB               Arch btrfs partition
 $ (parted) quit
 # 使用GPT_BIOS启动，之后需要安装GRUB grub-install --target=i386-pc /dev/vda
-# 使用GPT_UEFI启动，之后需要挂载EFI系统分区 mount --mkdir /dev/efi_system_partition /mnt/boot
+# 使用GPT_UEFI启动，之后需要挂载EFI系统分区 mount --mkdir /dev/<efi_system_partition> /mnt/boot  # 我好像是挂载到了/boot/efi
 
 # 创建文件系统格式化分区  # https://wiki.archlinuxcn.org/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%88%86%E5%8C%BA
-pacman -S btrfs-progs
+pacman -Qs btrfs-progs
 lsblk
 fdisk -l
 mkfs.btrfs -L arch /dev/vda3  # -L 指定卷标
-pacman -S dosfstools
+pacman -Qs dosfstools
 mkfs.fat -F 32 /dev/vda2  # -F指定Fat32  # 格式化ESP  
 
 # 挂载分区子卷
-mount /dev/vda2 /mnt
+mount /dev/vda3 /mnt
+btrfs subvolume create /mnt/@  # rootfs
 btrfs subvolume create /mnt/@root  # @顶层子卷  # 系统根目录
 btrfs subvolume create /mnt/@home
-btrfs subvolume create /mnt/@var  # 可变数据(日志、缓存)
-btrfs subvolume create /mnt/@snapshots  # snapper快照子卷
 btrfs subvolume create /mnt/@opt
+btrfs subvolume create /mnt/@var  # 可变数据(日志、缓存)
+btrfs subvolume create /mnt/@swap  # 该子卷用于存放swapfile
+btrfs subvolume create /mnt/@snapshots  # 部分快照软件(snapper)会用到该目录，如果不使用snapper可不设置
+btrfs subvolume list /mnt
 umount /mnt
+
 opts=noatime,compress=zstd,space_cache=v2,x-mount.mkdir  # 变量opts
-mount -o $opts,subvol=@ /dev/vda2 /mnt
-mount -o $opts,subvol=@root /dev/vda2 /mnt/root
-mount -o $opts,subvol=@home /dev/vda2 /mnt/home
-mount -o $opts,subvol=@opt /dev/vda2 /mnt/opt
-mount -o $opts,subvol=@var /dev/vda2 /mnt/var
-mount -o $opts,subvol=@snapshots /dev/vda2 /mnt/.snapshots
+mount -o $opts,subvol=@ /dev/vda3 /mnt
+mount -o $opts,subvol=@root /dev/vda3 /mnt/root
+mount -o $opts,subvol=@home /dev/vda3 /mnt/home
+mount -o $opts,subvol=@opt /dev/vda3 /mnt/opt
+mount -o $opts,subvol=@var-tmp /dev/vda3 /mnt/var/tmp
+mount -o $opts,subvol=@var-cache /dev/vda3 /mnt/var/cache
+# mount -o $opts,subvol=@var /dev/vda3 /mnt/var  # 不推荐整个创建@var
+# mount -o $opts,subvol=@snapshots /dev/vda3 /mnt/.snapshots  # 不需要在这挂载，在创建snapper之后再挂载
+mount --mkdir -o subvol=@swap /dev/vda3 /mnt/swap  # 如果不需要swapfile可不用  # btrfs filesystem mkswapfile
+lsblk
 lsattr /mnt/.snapshots  # 查看是否包含C字符，是否启动了CoW特性
 
+
 # 安装基础系统和所需的软件
-pacstrap -K /mnt base linux linux-firmware grub openssh sudo git neofetch neovim fish  # -K 初始化pacman keyring  # 是安装软件包到/mnt 新系统
+pacstrap -K /mnt base linux linux-firmware base-devel grub openssh sudo git vim neovim fish fastfetch  # -K 初始化pacman keyring  # 是安装软件包到/mnt 新系统
+# base-devel 推荐安装，AUR、以后编译东西也会需要
 # -c 从主机系统中包缓存而不是临时系统(挂载点)
 # base：Minimal package set to define a basic Arch Linux installation
 # https://wiki.archlinux.org/title/Kernel
@@ -2134,20 +2459,65 @@ pacstrap -K /mnt base linux linux-firmware grub openssh sudo git neofetch neovim
 主要在新安装的ArchLinux内执行
 
 ```bash
-genfstab -U /mnt >> /mnt/etc/fstab
-cat /mnt/etc/fstab
+genfstab -U /mnt
+genfstab -U /mnt > /mnt/etc/fstab
+cat /mnt/etc/fstab  # 应该有7个
 arch-chroot /mnt
-$ cat /etc/fstab  # 看下和之前有什么区别
+lsblk
+cat /etc/fstab
 ```
+
+挂载选项说明
+
+noatime：禁用访问时间更新，减少磁盘写入
+relatime：相对访问时间更新，减少磁盘写入
+discard=async(默认启用)：启用SSD的TRIM指令(释放未使用空间)
+
+space_cache=v2：推荐，指定btrfs缓存机制
+
+```/etc/fstab
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+# /dev/vda3 LABEL=arch
+UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /               btrfs           rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@       0 0
+
+# /dev/vda3 LABEL=arch
+UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /root           btrfs           rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@root   0 0
+
+# /dev/vda3 LABEL=arch
+UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /home           btrfs           rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@home   0 0
+
+# /dev/vda3 LABEL=arch
+UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /opt            btrfs           rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@opt    0 0
+
+# /dev/vda3 LABEL=arch
+UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /var            btrfs           rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@var    0 0
+
+# /dev/vda3 LABEL=arch
+UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /.snapshots     btrfs           rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@snapshots      0 0
+
+# /dev/vda2
+UUID=8290-9077          /boot/efi       vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0 2
+
+# /dev/vda3 LABEL=arch
+UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /swap           btrfs           rw,relatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@swap  0 0
+
+/swap/swapfile none swap defaults 0 0
+```
+
+
 
 ##### 设置时区
 
 ```bash
 # 3.3设置时区
-$ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  # 链接
+$ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  # 链接  # 该非文本文件乱码正常
 $ hwclock --systohc  # 生成/etc/adjtime 校准
 $ timedatectl set-ntp true  # 启动Network Time Protocol客户端设置时间同步，过一会儿生效
 $ timedatectl status  # 查看是否启动
+$ timedatectl set-timezone Asia/Shanghai
 $ date
 ```
 
@@ -2166,13 +2536,18 @@ $ echo KEYMAP="us" >> /etc/vconsole.conf  # 标准美式键盘（中国最常见
 ```bash
 # 3.5网络配置 https://wiki.archlinuxcn.org/wiki/Systemd-networkd
 $ echo <Alpha(yourhostname)> >> /etc/hostname  
-$ vim /etc/hosts
+$ vim /etc/hosts  # 127.0.0.1	node01.archlinux.local	node01 
 
 $ ip addr  # 查看网络接口名称、静态IP还是DHCP
 $ ls /etc/systemd/network
 $ vim /etc/systemd/network/default.network
 # vim /etc/systemd/network/20-wired.network
 # vim /etc/systemd/network/25-wireless.network
+# 20-wired.network  # 有线配置
+# [Match]
+# Name=enp1s0  # 注意网口名称匹配，可模糊匹配(en*),
+# [Network]
+# DHCP=yes
 
 # 配置DNS
 $ systemctl status systemd-resolved
@@ -2195,11 +2570,12 @@ $ passwd
 # 添加用户、设置密码、配置sudo权限、配置附属组
 $ cat /etc/group
 $ cat /etc/passwd
-$ useradd -m -G wheel -s /bin/bash nemesis
+$ useradd -m -G wheel -s /bin/bash nemesis  # wheel组可执行su root
+$ vim /etc/sudoers  # 取消注释%wheel ALL=(ALL:ALL) ALL
 $ passwd nemesis
 $ cat /etc/subuid
-$ cat /etc/ # 将用户nemesis添加到附属组users
-$ getent group users  # 从/etc/group查询
+$ usermod -aG users nemesis  # 将用户nemesis添加到附属组users
+$ getent group users  # 从/etc/group查询users组有哪些用户
 $ id nemesis  # 查用户的uid、gid、groups
 ```
 
@@ -2221,10 +2597,15 @@ grub-mkconfig -o /boot/grub/grub.cfg  # 根据/etc/default/grub、/etc/grub.d/�
 ```bash
 pacman -S grub efibootmgr
 # 挂载ESP分区到/boot/efi
+mount /dev/vda2 /boot/efi
+blkid /dev/vda2  # 查看UUID
+vim /etc/fstab  # UUID=XXXX-XXXX /boot/efi vfat defaults,noatime 0 2
 grub-install --help
-grub-install --target=x86_64-efi --efi-directory=/boot/efi  --bootloader-id=GRUB  # UEFIx86_664  # 安装/boot/grub/x86_64-efi、安装grub到/esp/EFI/<bootloader-id>/grubx64.efi
-#  --efi-directory <ESP挂载路径> --bootloader-id <名称，会安装/boot/efi/EFI/<bootloader-id>/grubx64.efi> --removable 设备可移动，将grub安装到/esp/EFI/BOOT/BOOTX64.EFI
-$ install -Dm700 /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/BOOT/BOOTX64.EFI  # 复制文件  # 如果你更新了UEFI，启动项可能会在更新后丢失。因此可以创建一个“removable”启动项作为后备。
+grub-install --target=x86_64-efi --efi-directory=/boot/efi  --bootloader-id=GRUB  # UEFIx86_664  # 安装/boot/grub/x86_64-efi、安装grub到<efi-directory>/EFI/<bootloader-id>/grubx64.efi
+#  --efi-directory <ESP挂载路径> 
+# --bootloader-id <名称，会安装<efi-directory>/EFI/<bootloader-id>/grubx64.efi
+# --removable 设备可移动，将grub安装到/esp/EFI/BOOT/BOOTX64.EFI
+$ install -Dm700 <efi-directory>/EFI/GRUB/grubx64.efi /boot/efi/EFI/BOOT/BOOTX64.EFI  # 复制文件  # 如果你更新了UEFI，启动项可能会在更新后丢失。因此可以创建一个“removable”启动项作为后备。
 
 # 生成主配置文件/boot/grub/grub.cfg
 vim /etc/default/grub  # 取消注释GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"  # 取消quiet 显示详细启动信息  # loglevel=3只输出比err严重的信息，熟悉后可改为5
@@ -2355,11 +2736,11 @@ Server = https://mirrors.cernet.edu.cn/archlinuxcn/$arch  # 重定向最近的�
 pacman -Syu  # download database file
 pacman -S archlinuxcn-keyring  # 导入 GPG key
 pacman -S archlinuxcn-mirrorlist-git  # 获得/etc/pacman.d/archlinuxcn-mirrorlist镜像列表
-vim /etc/pacman.d/archlinuxcn-mirrorlist
+sudo vim /etc/pacman.d/archlinuxcn-mirrorlist  # 记得打开注释
 
 vim /etc/pacman.conf
-[archlinuxcn]
-Include = /etc/pacman.d/archlinuxcn-mirrorlist
+# [archlinuxcn]
+# Include = /etc/pacman.d/archlinuxcn-mirrorlist
 ```
 
 配置reflector
@@ -2369,7 +2750,8 @@ Include = /etc/pacman.d/archlinuxcn-mirrorlist
 pacman -S reflector  # 会覆盖/etc/pacman.d/mirrorlist
 reflector --help
 # 手动更新 
-reflector --verbose -l 35 -p https --sort rate --save /etc/pacman.d/mirrorlist  # 列出35个、使用https、按下载速率排序、保存到/etc/pacman.d/mirrorlist
+sudo reflector --verbose -l 35 -p https --sort rate --save /etc/pacman.d/mirrorlist  # 列出35个、使用https、按下载速率排序、保存到/etc/pacman.d/mirrorlist
+sudo reflector --threads 20 --country 'China,Hong Kong' --age 6 -l 35 -p https --sort rate --save /etc/pacman.d/mirrorlist 
 paman -Syyu
 ```
 
@@ -2382,25 +2764,26 @@ paman -Syyu
 ls -lath /etc/ssh
 ssh-keygen -A
 cat /etc/services  # https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers  # 找个没被使用的端口作为ssh端口
-vim /etc/ssh/sshd_config.d/80-custom.conf
+vim /etc/ssh/sshd_config.d/10-custom.conf  # 80-custom.conf
 ```
 
 ```bash
 # 将id_rsa.pub公钥复制到Server端 `~/.ssh/authorized_keys
 # 客户端执行:
 ssh-keygen -t ed25519 -b 4096 -C "arch.alpha_work" -f ~/.ssh/id_ed25519_archalpha
-ssh-add ~/.ssh/id_rsa_archalpha
+ssh-keygen -t ed25519 -b 4096 -C "node01.archlinux.local" -f ~/.ssh/identity_ed25519_pve_archlinux
+ssh-add ~/.ssh/id_rsa_archalpha  # 添加私钥
 ssh-add -L
 
 # 服务端执行:
+su nemesis
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 ls -athl  # 校验权限正确
-vim ~/.ssh/authorized_keys  # id_ed25519_archalpha.pub
+vim ~/.ssh/authorized_keys  # id_ed25519_archalpha.pub  # 添加公钥
 chmod 600 ~/.ssh/authorized_keys
 chown $USER:$USER ~/.ssh/authorized_keys
 ls -athl  # 校验权限、所属用户组正确
-sshd -t
 ```
 
 ```bash
@@ -2411,6 +2794,7 @@ systemctl status sshd
 # 客户端执行:
 ssh -p 39xxx username@server_ip
 ssh -p 39224 nemesis@47.238.67.168
+ssh -p 39224 nemesis@192.168.1.151
 
 tcpdump -i any -n src host 101.228.115.196 and port 22
 ```
@@ -2532,7 +2916,7 @@ PrintMotd no
 问题1：
 
 ```bash
-ssh -T nemesis@aa.bbb.cc.ddd
+ssh -T -p 22 nemesis@aa.bbb.cc.ddd
 ssh -p 22 nemesis@aa.bbb.cc.ddd
 Connection closed by 47.238.67.168 port 22
 ```
@@ -2636,24 +3020,90 @@ echo '启动ssh-agent 并ssh-add添加私钥'
 ############################################################################################
 ```
 
+##### 配置swapfile
+
+[archlinux#btrfs#swapfile](https://wiki.archlinux.org/title/Btrfs#Swap_file)
+
+```bash
+# btrfs配置swapfile
+btrfs subvolume create /swap  # 创建子卷存储swapfile(不推荐)  # /swap则是创建低层卷/无需fstab挂载
+# 推荐到live环境 mount /dev/vda3 /mnt后在顶层子卷@下方创建@swap在挂载  
+btrfs filesystem mkswapfile --size 4g --uuid clear /swap/swapfile  # 创建交换文件
+swapon /swap/swapfile  
+vim /etc/fstab  # /swap/swapfile none swap defaults 0 0
+swapon --show
+
+btrfs subvolume list /
+ID 256 gen 166 top level 5 path @
+ID 257 gen 167 top level 5 path @root
+ID 258 gen 153 top level 5 path @home
+ID 259 gen 150 top level 5 path @var
+ID 260 gen 10 top level 5 path @snapshots
+ID 261 gen 11 top level 5 path @opt
+ID 262 gen 17 top level 259 path @var/lib/portables
+ID 263 gen 17 top level 259 path @var/lib/machines
+ID 268 gen 165 top level 5 path @swap  # level 5表示顶层，level 259表示卷里嵌套的子卷
+```
+
+```bash
+# 配置swapfile
+$ fallocate --help
+$ fallocate -l 8G /swap/swapfile  # 给文件预分配空间  # 也可用dd(不推荐)
+# dd if=/dev/zero of=/swap/swapfile bs=1M count=512 status=progress  # 创建空文件swapfile
+$ chmod 0600 /swap/swapfile
+$ ls -athl
+$ mkswap -U clear /swap/swapfile  # 格式化
+$ swapon /swap/swapfile  # 启用交换文件
+$ echo "/swap/swapfile none swap defaults 0 0" >> /etc/fstab
+```
+
+##### 安装 neofetch
+
+系统信息工具
+
+```bash
+pacman -S fastfetch # neofetch
+neofetch  # 打印系统信息
+```
+
+##### 返回Live环境
+
+```bash
+exit  # 返回live环境
+```
+
 ##### 配置snapper
+
+不能在chroot环境执行，需要在live环境执行
+
+可针对具体的子卷创建快照，而pve等平台是为整体创建快照
 
 ```bash
 # 配置snapper(删除/.snapshots/子卷、修改/etc/fstab自动挂载 mount -a重新挂载、修改配置、安装snap-pac grub-btrfs)
-ll -a /  # 查看是否存在.snapshots
+
+# 删除现有挂载点
+sudo umount /.snapshots
+sudo rm -rf /.snapshots
+
 sudo pacman -S snapper snap-pac grub-btrfs
-snapper list-configs  # 查看snapper配置文件所在
-df -h  # 查看@snapshots挂载情况
-# umount /.snapshots  # 不需要
-# rm -r /.snapshots  # 不需要，应该让.snapshots挂载到@snapshots
-snapper -c root create-config /  # 如果.snapshots每被挂载，在创建配置的同时会创建/.snapshots/子卷
-df -h  # 查看.snapshots挂载情况
-btrfs subvolume list /
-btrfs subvolume delete /.snapshots/
+snapper -c root create-config /
+# 1. 创建snapper配置文件/etc/snapper/configs/<root>
+# 2. 在</>/.snapshots处创建一个子卷(可删除)
+
+# 删除snapper创建的子卷
+btrfs subvolume delete /.snapshots
+
+# 创建挂载点，挂载@snapshots
+mkdir /.snapshots
+blkid /dev/vda3
 vim /etc/fstab
 # /dev/vda2  /.snapshots    btrfs  subvol=@snapshots,noatime,compress=zstd,space_cache=v2,x-mount.mkdir 0 0
 # 分区 子卷的挂载点 文件系统 subvol=@子卷,参数 dump命令参数 fsck命令参数
-mount -a 
+# /dev/vda3 LABEL=arch
+UUID=<vda3_uuid>	/.snapshots     btrfs	rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@snapshots                                  0 0
+mount -o subvol=/@snapshots /dev/vda3 /.snapshots
+
+
 vim /etc/snapper/configs/root
 # TIMELINE_MIN_AGE="1800"  # 30min
 # TIMELINE_LIMIT_HOURLY="6"
@@ -2670,41 +3120,40 @@ systemctl enable --now grub-btrfsd
 # grub-mkconfig -o /boot/grub/grub.cfg  # 刚开始不需要执行
 ```
 
-##### 配置swapfile
-
 ```bash
-# btrfs配置swapfile
-btrfs subvolume create /swap  # 创建子卷存储swapfile
-btrfs filesystem mkswapfile --size 4g --uuid clear /swap/swapfile  # 创建交换文件
-swapon /swap/swapfile  
-vim /etc/fstab
+snapper list-configs  # 查看snapper配置文件所在
+btrfs subvolume list /
+df -h  # 查看@snapshots挂载情况
 ```
 
+##### 重启
+
 ```bash
-# 配置swapfile
-$ fallocate --help
-$ fallocate -l 8G /swap/swapfile  # 给文件预分配空间  # 也可用dd(不推荐)
-# dd if=/dev/zero of=/swap/swapfile bs=1M count=512 status=progress  # 创建空文件swapfile
-$ chmod 0600 /swap/swapfile
-$ ls -athl
-$ mkswap -U clear /swap/swapfile  # 格式化
-$ swapon /swap/swapfile  # 启用交换文件
-$ echo "/swap/swapfile none swap defaults 0 0" >> /etc/fstab
+umount -R /mnt  # 仅swap分区busy
+reboot 
 ```
 
 ##### 配置内核zRAM
 
+不能在chroot环境执行，需要重启之后执行
+
+参考Linux.md#zram
+
 ```bash
 # 配置zRAM
-$ echo 0 > /sys/module/zswap/parameters/enabled
+$ echo 0 > /sys/module/zswap/parameters/enabled  # 禁用zswap
 $ echo zram >> /etc/modules-load.d/zram.conf
 $ pacman -S zram-generator
 $ vim /etc/systemd/zram-generator.conf  # 参考Linux.md#zram-generator
+# [zram0]
+# zram-size = min(ram / 2, 4096)
+# compression-algorithm = zstd
 $ reboot
-$ systemctl daemon-reload
+$ systemctl daemon-reload  # 重载systemd配置
 $ systemctl enable --now systemd-zram-setup@zram0.service
+$ systemctl status systemd-zram-setup@zram0.service
 
-$ modinfo zram
+$ modinfo zram  # 如果更新了内核不重启会not found正常
 $ lsmod | grep zram  # 看模块是否加载
 $ systemctl status systemd-zram-setup@zram0.service  # 看服务是否启动
 $ free -m  # 查看内存swap空间状态(swap=swapfile+zram)
@@ -2717,12 +3166,7 @@ Filename                                Type            Size            Used    
 /dev/zram0                              partition       457212          0               100  # 优先级高
 ```
 
-##### 安装 neofetch
 
-```bash
-pacman -S neofetch
-neofetch  # 打印系统信息
-```
 
 ##### 收尾
 
@@ -2732,7 +3176,7 @@ timedatectl  # 确保时间、时区、NTP服务正确
 ping archlinux.org
 cat /proc/swaps
 systemctl list-unit-files --type=service  
-systemctl list-unit-files --type=service --state enable  # 自启动服务：systemd-networkd、systemd-resolved、sshd  # snapper-timeline.timer、snapper-cleanup.timer
+systemctl list-unit-files --type=service --state enabled  # 自启动服务：systemd-networkd、systemd-resolved、sshd  # snapper-timeline.timer、snapper-cleanup.timer
 $ free -h  # 看内存占用
                total        used        free      shared  buff/cache   available
 Mem:           893Mi       269Mi       543Mi       2.1Mi       214Mi       624Mi
@@ -2758,11 +3202,22 @@ $ neofetch  # 看OS内存占用
  `++:.                           `-/+/
  .`                                 `/
 
-# 4重新启动计算机
-exit  # 退出chroot环境
-umount -R /mnt  # 手动卸载被挂载的分区，用于查看是否有繁忙分区
-reboot  # systemd会自动卸载被挂载的分区
+
+
+systemd会自动卸载被挂载的分区
 ```
+
+```bash
+# 如果使用btrfs，对高性能区域禁用CoW
+lsattr -d /var/log
+chattr +C /var/log
+lsattr -d /var/log
+
+chattr +C /var/cache
+chattr +C /tmp
+```
+
+
 
 ##### 不打算做的
 

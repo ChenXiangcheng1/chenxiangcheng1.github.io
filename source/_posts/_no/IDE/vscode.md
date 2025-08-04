@@ -517,7 +517,8 @@ _XOPEN_SOURCE  // 用于定义SUS的不同版本
 "clangd.path": "clangd",
 "clangd.arguments": [ // clangd --help
     // clangd compilation flags options
-    "--compile-commands-dir=${workspaceFolder}/build",  // 指定compile_commamds.json目录
+    // 指定compile_commamds.json目录  // settings.json(推荐)优先级比.clangd(不推荐 不对标准库文件libc++生效)高
+    "--compile-commands-dir=${workspaceFolder}/build",
     "--query-driver=/usr/bin/**/clang-*,/usr/bin/**/g++-*",
     // clangd feature options
     "--all-scopes-completion",

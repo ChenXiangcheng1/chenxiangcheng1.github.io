@@ -395,8 +395,6 @@ apt-mark showauto
 apt-mark showmanual
 ```
 
-
-
 配置：
 
 ```bash
@@ -419,19 +417,13 @@ deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise
 deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
 ```
 
-
-
 通过pve web界面换源：节点>更新>存储库(APT Repository)
 [中科大源#pve](https://mirrors.ustc.edu.cn/help/proxmox.html)
-
-
 
 | 类别                          | URIs | 套件(Debian发行代号)                    | 组件                                                         |
 | ----------------------------- | ---- | --------------------------------------- | ------------------------------------------------------------ |
 | deb 二进制包<br />source 源码 |      | bookworm<br />bookworm-updates 修复仓库 | main<br />contrib 社区贡献(半自由依赖闭源组件)<br />non-free |
 |                               |      |                                         |                                                              |
-
-
 
 #### Pacman 软件包管理器
 
@@ -836,8 +828,6 @@ man 5 systemd.service
 
 TODO: [man 5 systemd.service](https://man.archlinux.org/man/systemd.service.5#EXAMPLES)、[man 5 systemd.unit](https://man.archlinux.org/man/systemd.unit.5)
 
-
-
 ```bash
 systemctl  # 发送控制命令给系统管理器
 ```
@@ -864,8 +854,6 @@ systemctl  # 发送控制命令给系统管理器
 |                                                              |                                                    |                                                  |                |
 | **Manager State Commands**                                   |                                                    |                                                  |                |
 | `systemctl daemon-reload`                                    | 重载systemd配置                                    |                                                  |                |
-
-
 
 #### 单元文件
 
@@ -914,13 +902,9 @@ ExecStart=/path/to/failure-notification.sh %i  # 失败则执行某脚本  # %i�
 DynamicUser=true
 ```
 
-
-
 ##### 附加配置片段
 
 `xxx.d/*.conf` 优先级比原来的单元文件高
-
-
 
 #### cron
 
@@ -956,8 +940,6 @@ crontab -d  # edit
 ```
 
 anacron：争对非持续运行系统(会记录任务的最后执行时间)，无daemon
-
-
 
 #### systemd.timer
 
@@ -1009,8 +991,6 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
-
-
 
 ### pdsh
 
@@ -1092,8 +1072,6 @@ OpenSSH 软件是SSH协议的实现，用于提供加密的通信会话
 ssh-keygen -A
 ```
 
-
-
 ### 网络管理器
 
 [网络管理器](https://wiki.archlinuxcn.org/wiki/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%99%A8)
@@ -1107,19 +1085,13 @@ ssh-keygen -A
 > wlanX: 无线网络接口，X 是一个数字
 > wlpXsY: 无线网络接口无线适配器，基于 PCI 插槽位置命名
 
-
-
 #### NetworkManager
 
 支持 GUI
 
-
-
 #### systemd-networkd
 
 是一个系统守护进程，用于管理网络配置
-
-
 
 ```bash
 systemctl --type=service
@@ -1132,8 +1104,6 @@ systemd-networkd-wait-online.service  # 网络同步点，供<unit>.service的ne
 ```bash
 networkctl list
 ```
-
-
 
 配置文件：
 
@@ -1183,8 +1153,6 @@ RouteMetric=600
 
 TODO: [提示与技巧](https://wiki.archlinuxcn.org/wiki/Systemd-networkd#%E6%8F%90%E7%A4%BA%E4%B8%8E%E6%8A%80%E5%B7%A7)
 
-
-
 #### 配置DNS
 
 | 路径                                                         | 释义                            |
@@ -1192,8 +1160,6 @@ TODO: [提示与技巧](https://wiki.archlinuxcn.org/wiki/Systemd-networkd#%E6%8
 | `/etc/resolv.conf`                                           | 系统的DNS查询入口               |
 | `/run/systemd/resolve/resolv.conf`                           | systemd-resolved 的动态配置文件 |
 | `/etc/systemd/resolved.conf`、`etc/systemd/resolved.conf.d/` |                                 |
-
-
 
 systemd-resolved 是一个监听`127.0.0.53`的DNS解析器
 
@@ -1218,8 +1184,6 @@ ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 resolvectl status
 ```
 
-
-
 #### WIFI
 
 ```bash
@@ -1242,8 +1206,6 @@ systemctl --type=service
 sudo systemctl enable --now systemd-resolved.service
 sudo systemctl enable --now systemd-networkd.service
 ```
-
-
 
 ```bash
 # 后端
@@ -1270,8 +1232,6 @@ iwmon  # 监控
 ```
 
 TODO: [iwd](https://wiki.archlinuxcn.org/wiki/Iwd)
-
-
 
 ### 文件系统
 
@@ -1331,15 +1291,11 @@ opts=noatime,compress=zstd,space_cache=v2,x-mount.mkdir
 mount -o $opts,subvol=@snapshots /dev/vda2 /mnt/.snapshots
 ```
 
-
-
 #### zfs
 
 ```bash
 zpool add rpool /dev/sdb
 ```
-
-
 
 ### 快照管理器
 
@@ -1470,8 +1426,6 @@ Filename                                Type            Size            Used    
 systemctl enable --now zramd.service
 ```
 
-
-
 ### fastfetch
 
 [github#fastfetch](https://github.com/fastfetch-cli/fastfetch)
@@ -1480,10 +1434,6 @@ systemctl enable --now zramd.service
 fastfetch --help
 fastfetch
 ```
-
-
-
-
 
 ## Linux Kernel6.16
 
@@ -1598,55 +1548,9 @@ if (flags & std.os.O.APPEND != 0) {  // flags包含std.os.O.APPEND
 }
 ```
 
-### I/O复用并发模型
+### I/O (核心)
 
-* BIO: read()/write()  
-
-* NIO(): select()/poll()/epoll()  
-只支持 network sockets 和 pipes  
-
-* 传统AIO: io_submit()/io_getevents()  
-只支持direct IO(零拷贝 使用O_DIRECT打开文件)  
-不支持缓冲IO(写入page cache不保证写入磁盘)  
-
-* 新AIO：io_uring
-
-I/O复用是实现AIO的，而非并行I/O  
-
-* 1单线程Accept  
-非并发
-
-* 2单线程Accept + 多线程读写任务
-客户端数量:服务端线程数=1:1  
-
-* 3单线程多路I/O复用  
-非并发
-
-* 4单线程多路I/O复用 + 多线程读写任务(worker poll)  
-最高的读写并行通道为1(事件检测、任务分发是串行)
-传统的工作线程模型  
-SpringBoot  
-
-* 5单线程多路I/O复用 + 多线程多路I/O复用
-最高的读写并行通道为N(CPU核数)(事件检测、任务分发可并发 同一个通道的读写是串行)  
-常用  
-
-* 5.5单线程多路I/O复用 + 多进程多路I/O复用  
-将accept()在子进程中执行(避免IPC)
-多进程更安全稳定  
-
-* 6单线程多路I/O复用 + 多线程多路I/O复用 + 多线程  
-客户端数量:服务端线程数=1:1  
-多线程可利用多核CPU，这是协程所做不到的
-
-13非并发 但3能异步  
-2每个连接创建独立线程，客户端多了后占资源太多  
-4固定数量的工作线程，因为条件不阻塞accept接受请求，epoll异步使得多余任务可异步等待执行，才可以固定工作线程数量  
-24事件检测、任务分发是串行(最高的读写并行通道为1)  
-5事件检测在子线程中执行，一个子线程中监听多个connFD  
-6客户端数量:服务端线程数=1:1  
-
-### I/O
+[深入理解Linux中网络I/O复用并发模型](https://www.bilibili.com/video/BV1jK4y1N7ST/)
 
 IO
 
@@ -1656,42 +1560,191 @@ IO
     本质是事件批量通知
 
 * 异步
+  * 多线程
+  * 协程
+
+* direct IO(零拷贝 使用O_DIRECT打开文件)  
+
+* 缓冲IO(写入page cache不保证写入磁盘)  
 
 | IO接口                                                       | 数据结构                                            | 一个进程所能打开的最大连接数                                 | 消息传递方式                       | fd列表的遍历速度                                             | tag                                |                                                              |
 | ------------------------------------------------------------ | --------------------------------------------------- | ------------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------ |
 | read()/write()                                               |                                                     |                                                              |                                    |                                                              | BIO                                |                                                              |
 | select(nfds, readfds, writefds, exceptfds, timeout)          | fd_set{long int fds_bits[16]} 位图(16*64=1024)      | 单个进程所能打开的最大连接数由 FD_SETSIZE 宏定义<br />**连接数有限 小** |                                    | FD_ISSET(fd, *fdsetp) 每次都需要遍历fdsetp<br />O(all_fs)    | IO多路复用<br />同步               |                                                              |
 | poll(pollfd *fds, nfds_t nfds, int timeout)                  | pollfd{int fd, short int events, short int revents} | 但**连接数无限制**                                           |                                    | 需要手动遍历`for (nfds_t i = 0; i < pfds.size(); ++i) { if pfds[i].}`<br />O(all_fd) | IO多路复用<br />同步               | **本质上与select没有区别**，仅突破fd_num限制                 |
-| epoll_create1(flags) 返回的fd用于找到内核对象file再找到eventloop(创建epoll实例)<br />epoll_ctl(fd, op, 目标fd, *event) 添加EPOLL_CTL_ADD/修改EPOLL_CTL_MOD/删除EPOLL_CTL_DEL监控的文件描述符<br />epoll_wait(epfd, epoll_event, maxevents, timeout) | epoll_event{uint32_t events, epoll_data_t data}     |                                                              | 内核态将数据拷贝到空户空间的events | 直接返回就绪列表epoll_event[ret_nfds]<br />O(ready_fd)       | IO多路复用<br />同步               | 返回ready_fd<br />在epoll_ctl()会检查file_can_poll()目标fd是否支持poll操作(file_op->poll=true)，**块设备没有就绪状态概念不支持poll**<br />维护一个红黑树和就绪列表 |
+| epoll_create1(flags) 返回的fd用于找到内核对象file再找到eventloop(创建epoll实例)<br />epoll_ctl(fd, op, 目标fd, *event) 向eventloop添加EPOLL_CTL_ADD/修改EPOLL_CTL_MOD/删除EPOLL_CTL_DEL监控的文件描述符<br />epoll_wait(epfd, epoll_event, maxevents, timeout) | epoll_event{uint32_t events, epoll_data_t data}     |                                                              | 内核态将数据拷贝到空户空间的events | 直接返回就绪列表epoll_event[ret_nfds]<br />O(ready_fd)       | IO多路复用<br />同步               | 返回ready_fd<br />在epoll_ctl()会检查file_can_poll()目标fd是否支持poll操作(file_op->poll=true)，**块设备没有就绪状态概念不支持poll**<br />维护一个红黑树和就绪列表，构成事件驱动 |
 | io_setup() io_submit() io_getevents()                        |                                                     |                                                              |                                    |                                                              | 传统AIO                            |                                                              |
 | io_uring                                                     |                                                     |                                                              |                                    |                                                              | 异步IO(由内核态拷贝数据到用户空间) |                                                              |
 
 > 虽然有栈协程比无栈协程更重，但是有栈能并发调用，而无栈协程复用空间，无法并发，所以在多连接需要高并发的领域有栈协程更好(快)
-> 而在多连接不需要高并发的领域 epoll 更好(轻)
+> 而在多连接不需要高并发的领域 epoll 更好，但**epoll只支持socket、pipe(FIFO)**(轻)
+> 最佳实践：多路复用IO检测+当有数据可读时创建线程处理(传统的工作线程模型 SpringBoot)
+> NIO天花板 epoll
+
+> 多路复用是为了解决 C10K 问题(乃至更高规模的问题)
+> **多路复用要面对的场景，是需要等待就绪状态的(不确定的事件驱动)**，
+> io_uring，直接调用(任务驱动)
 
 > 网络：
->  file_op->poll()
->   1注册回调poll_wait(**是为之后的操作准备的，不影响本次处理**, 内核epoll_wait()会等待之前注册的回调被触发)
->   2非阻塞立即返回文件是否就绪(只支持socket、pipe(FIFO))
->   用于事件驱动的IO多路复用，**中断驱动**
->  DPDK使用轮询
+> file_op->poll()
+> 1注册回调poll_wait(**是为之后的操作准备的，不影响本次处理**, 内核epoll_wait()会等待之前注册的回调被触发)
+> 2非阻塞立即返回文件是否就绪(只支持socket、pipe(FIFO))
+> 用于事件驱动的IO多路复用，**中断驱动**
+> DPDK使用轮询
 >
 > 块设备：
->  iopoll() 是 NVMe SSD的硬件**轮询**特性
+> iopoll() 是 NVMe SSD的硬件**轮询**特性
 
-* NIO(): select()/poll()/epoll()  
-  只支持 network sockets 和 pipes  
+* 5单线程多路I/O复用 + 多线程多路I/O复用
+  最高的读写并行通道为N(CPU核数)(事件检测、任务分发可并发 同一个通道的读写是串行)  
 
-* 传统AIO: io_submit()/io_getevents()  
-  只支持direct IO(零拷贝 使用O_DIRECT打开文件)  
-  不支持缓冲IO(写入page cache不保证写入磁盘)  
+* 5.5单线程多路I/O复用 + 多进程多路I/O复用  
+  将accept()在子进程中执行(避免IPC)
+  多进程更安全稳定  
 
-* 新AIO：io_uring
+* 6单线程多路I/O复用 + 多线程多路I/O复用 + 多线程  
+  客户端数量:服务端线程数=1:1  
+  多线程可利用多核CPU，这是协程所做不到的
+
+> I/O复用是实现AIO的，而非并行I/O  
+>
+> * 1单线程Accept  
+>   非并发
+>
+> * 2单线程Accept + 多线程读写任务
+>   客户端数量:服务端线程数=1:1  
+>
+> * 3单线程多路I/O复用  
+>   非并发
+>
+> * 4单线程多路I/O复用 + 多线程读写任务(worker poll)  
+>   最高的读写并行通道为1(事件检测、任务分发是串行)
+>   传统的工作线程模型  
+>   SpringBoot  
+>
+> * 5单线程多路I/O复用 + 多线程多路I/O复用
+>   最高的读写并行通道为N(CPU核数)(事件检测、任务分发可并发 同一个通道的读写是串行)  
+>   常用  
+>
+> * 5.5单线程多路I/O复用 + 多进程多路I/O复用  
+>   将accept()在子进程中执行(避免IPC)
+>   多进程更安全稳定  
+>
+> * 6单线程多路I/O复用 + 多线程多路I/O复用 + 多线程  
+>   客户端数量:服务端线程数=1:1  
+>   多线程可利用多核CPU，这是协程所做不到的
+>
+> 13非并发 但3能异步  
+> 2每个连接创建独立线程，客户端多了后占资源太多  
+> 4固定数量的工作线程，因为条件不阻塞accept接受请求，epoll异步使得多余任务可异步等待执行，才可以固定工作线程数量  
+> 24事件检测、任务分发是串行(最高的读写并行通道为1)  
+> 5事件检测在子线程中执行，一个子线程中监听多个connFD  
+> 6客户端数量:服务端线程数=1:1  
 
 #### IO多路复用
 
 看hello_epoll.cpp、hello_poll.cpp、hello_select.cpp
 
+```c++
+static int ep_alloc(struct eventpoll **pep)  # 创建eventpoll
+
+数据结构：
+eventpoll{
+ rb_root_cache rbr,  # rb_root 红黑树
+ list_head rdllist,  # ready list 双向链表
+ epitem *ovflist, 
+ file *file  # 反向引用
+}
+
+file{
+ inode *f_inode;
+ file_operations *f_op;
+ void *private_data;  # 私有数据  # 指向eventloop
+ unsigned int f_flags;
+}
+
+epitem{  # 单个节点表示IO事件请求
+ rb_node rbn,  # 红黑树
+ list_head rdllink,  # 就绪链表
+ sockfd,
+ epoll_event event,  // interested events
+}
+
+struct ep_pqueue {  // 包装轮询队列poll queue
+ poll_table pt;
+ struct epitem *epi;
+};
+
+typedef struct poll_table_struct {
+ poll_queue_proc _qproc;  // 回调函数callback proceduce
+ __poll_t _key;
+} poll_table;
+
+struct epoll_event {
+ __poll_t events;
+ __u64 data;
+} EPOLL_PACKED;
+```
+
+```c++
+sys/epoll.h  # glibc 对系统调用的封装
+extern int epoll_create1 (int __flags) __THROW;
+
+kernel linux/fs/eventpoll.c  # 定义了epoll相关系统调用
+SYSCALL_DEFINE1(epoll_create1, int, flags)
+{
+ return do_epoll_create(flags);
+}
+```
+
+```c++
+sys/epoll.h
+extern int epoll_ctl (int __epfd, int __op, int __fd, struct epoll_event *__event) __THROW;
+
+kernel linux/fs/eventpoll.c
+SYSCALL_DEFINE4(epoll_ctl, int, epfd, int, op, int, fd, struct epoll_event __user *, event)
+{
+ return do_epoll_ctl(epfd, op, fd, &epds, false);
+}
+
+static int ep_insert(struct eventpoll *ep, const struct epoll_event *event,
+       struct file *tfile, int fd, int full_check)
+{
+ ...
+ init_poll_funcptr(&epq.pt, ep_ptable_queue_proc);  // 初始化poll_table设置回调  // ep_ptable_queue_proc(){init_waitqueue_func_entry(&pwq->wait, ep_poll_callback);}  // ep_poll_callback() 事件回调 加入就绪列表 唤醒用户线程
+ revents = ep_item_poll(epi, &epq.pt, 1);  // poll hook  // vfs_poll(){file->f_op->poll(file, pt);}  // 调用文件的poll()
+ ...
+}
+```
+
+```c++
+sys/epoll.h
+extern int epoll_wait (int __epfd, struct epoll_event *__events, int __maxevents, int __timeout)
+
+kernel linux/fs/eventpoll.c
+SYSCALL_DEFINE4(epoll_wait, int, epfd, struct epoll_event __user *, events, int, maxevents, int, timeout)
+{
+ struct timespec64 to;
+ return do_epoll_wait(epfd, events, maxevents,
+        ep_timeout_to_timespec(&to, timeout));
+}
+
+/*
+检索就绪事件并传递到调用者提供的事件缓冲区
+*/
+static int do_epoll_wait(struct eventpoll *ep, struct epoll_event __user *events, int maxevents, struct timespec64 *timeout) {
+ return ep_poll(ep, events, maxevents, to);
+}
+
+static int ep_poll(struct eventpoll *ep, struct epoll_event __user *events,
+     int maxevents, struct timespec64 *timeout)
+{
+ while (1) {
+ }
+}
+```
+
+>>>>>>>
 #### io_uring(universal ring)
 
 > IO类型：
@@ -1867,7 +1920,7 @@ sudo make install
 | /sys                                                         | 动态生成的伪文件系统 (pseudo filesystem)，允许动态查看和修改内核模块信息 |
 | **/usr**                                                     | 系统级的目录，可以理解为`C:/Windows/`<br />存放命令、帮助文件、安装的Linux发行版官方提供的软件包等 |
 | /usr/lib                                                     | /lib 存放系统启动和维护系统基本功能必需的库文件<br />/usr/lib 存放非启动必需但系统默认安装的库文件<br />/usr/local/lib 存放本地编译安装的非系统自带库文件 |
-| **/usr/local**<br /><br />我在/usr/local/modules/java 下安装了JDK | **用户级的程序目录**，可以理解为`C:/Progrem Files/`。<br />存放用户通过源码包自编译安装的软件，即不是通过“新立得”或apt-get安装的软件。<br /><br />Oracle的不能用root安装才安装到这个目录 |
+| **/usr/local**<br /><br />我在/usr/local/modules/java 下安装了JDK | **用户级的程序目录**，可以理解为`C:/Progrem Files/`。<br />存放用户通过源码包自编译安装的软件，即不是通过“新立得”或apt-get安装的软件。<br /><br />Oracle的不能用root安装才安装到这个目录<br />项目依赖默认会安装到这里，但推荐install到项目路径下 |
 | /usr/share                                                   | 存放系统公用程序和共享数据和帮助文档                         |
 | /var                                                         | 特别是/var/log 子目录. 各大程序执行日志存储目录.             |
 |                                                              |                                                              |
@@ -1950,8 +2003,6 @@ genfstab -U /mnt >> /mnt/etc/fstab  # genfstab检查所有挂载点，一般只�
 127.0.0.1  arch.localdomain  arch  
 # IP地址 域名 别名
 ```
-
-
 
 ## Shell
 
@@ -2056,7 +2107,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | systemctl [OPTIONS...] COMMAND ...                           | 查询或发送控制命令到系统管理器<br />UNIT服务单元：network,mysql,firewalld,mongod,mysqld<br />q 退出<br />本质是启动 unit.service | status [PATTERN...\|PID...] 显示正在运行的该服务状态<br />start UNIT...<br />enable<br />stop UNIT...<br />disable UNIT... 开机不启动<br />reload UNIT... 重载配置文件<br />restart UNIT... 重启服务<br />**list-unit-files --type=service 列出所有服务单元文件**<br />**daemon-reload 用于重新加载缓存的systemd配置、unit文件** |
 | sz xxyy                                                      | 导出xxyy到本地快速访问download中                             |                                                              |
 | tail -n 20 filename                                          | 查看文件最后末尾20行                                         |                                                              |
-| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tzf <file> | head -10`                                 | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法 |
+| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tzf <file> | head -10`                                 | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法(能自动检测)  |
 | tee                                                          | 将stdin写入文件，常配合\|管道使用                            | -a 追加                                                      |
 | telnet                                                       | 远程登入，可以测试端口的连通性 **应用层**                    |                                                              |
 | timedatectl                                                  | 查看系统时间                                                 |                                                              |
@@ -2507,8 +2558,6 @@ UUID=fd0ce03a-4a65-46a4-b420-b412fdd737bf       /swap           btrfs           
 /swap/swapfile none swap defaults 0 0
 ```
 
-
-
 ##### 设置时区
 
 ```bash
@@ -2536,7 +2585,7 @@ $ echo KEYMAP="us" >> /etc/vconsole.conf  # 标准美式键盘（中国最常见
 ```bash
 # 3.5网络配置 https://wiki.archlinuxcn.org/wiki/Systemd-networkd
 $ echo <Alpha(yourhostname)> >> /etc/hostname  
-$ vim /etc/hosts  # 127.0.0.1	node01.archlinux.local	node01 
+$ vim /etc/hosts  # 127.0.0.1 node01.archlinux.local node01 
 
 $ ip addr  # 查看网络接口名称、静态IP还是DHCP
 $ ls /etc/systemd/network
@@ -3100,7 +3149,7 @@ vim /etc/fstab
 # /dev/vda2  /.snapshots    btrfs  subvol=@snapshots,noatime,compress=zstd,space_cache=v2,x-mount.mkdir 0 0
 # 分区 子卷的挂载点 文件系统 subvol=@子卷,参数 dump命令参数 fsck命令参数
 # /dev/vda3 LABEL=arch
-UUID=<vda3_uuid>	/.snapshots     btrfs	rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@snapshots                                  0 0
+UUID=<vda3_uuid> /.snapshots     btrfs rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvol=/@snapshots                                  0 0
 mount -o subvol=/@snapshots /dev/vda3 /.snapshots
 
 
@@ -3166,8 +3215,6 @@ Filename                                Type            Size            Used    
 /dev/zram0                              partition       457212          0               100  # 优先级高
 ```
 
-
-
 ##### 收尾
 
 ```bash
@@ -3216,8 +3263,6 @@ lsattr -d /var/log
 chattr +C /var/cache
 chattr +C /tmp
 ```
-
-
 
 ##### 不打算做的
 

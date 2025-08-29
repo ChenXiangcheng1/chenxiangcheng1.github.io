@@ -17,9 +17,108 @@ cover: https://cdn.jsdelivr.net/gh/ChenXiangcheng1/image-hosting1/img/2023_03_28
 
 
 
-# PostgreSQL16.3
+# PostgreSQL17.4
 
 [官方文档](https://www.postgresql.org/docs/)
+
+
+
+安装
+
+[archlinux#PostgreSQL](https://wiki.archlinux.org/title/PostgreSQL)
+
+```bash
+# 不打算修改data目录，因为要改postgresql.service麻烦
+pacman -S postgresql
+sudo -iu postgres
+initdb --help  # 使用postgres用户在空目录初始化db。创建postgres用户角色(密码 postgres)、系统，PGROOT=/var/lib/postgres
+initdb --locale=C.UTF-8 --encoding=UTF8 -D /var/lib/postgres/data --data-checksums  
+exit
+# /usr/lib/systemd/system/postgresql.service
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+sudo -u postgres pg_ctl --help  # 控制postgres服务
+# sudo -u postgres pg_ctl -D /var/lib/postgres/data -l /var/lib/postgres/data17/logfile status
+
+############################################################
+pacman -S postgresql
+sudo -iu postgres
+mkdir -p /var/lib/postgres/data17  # 由于PostgreSQL大版本升级需要建议使用data<version>作为目录
+# chattr +C /var/lib/postgres/data17  # btrfs需要关闭COW
+# lsattr -d /var/lib/postgres/data17
+chown -R postgres:postgres /var/lib/postgres/data17
+initdb --locale=C.UTF-8 --encoding=UTF8 -D /var/lib/postgres/data17 --data-checksums  
+# vim /etc/systemd/system/postgresql.service.d/PGROOT.conf  # 如果是在/var/lib/postgres则不需要  # systemctl edit
+# [Service]
+# Environment=PGROOT=/var/lib/postgres
+# PIDFile=/var/lib/postgres/data17/postmaster.pid
+# ExecStartPre=
+# ExecStartPre=/usr/bin/postgresql-check-db-dir ${PGROOT}/data17
+# ExecStart=
+# ExecStart=/usr/bin/postgres -D ${PGROOT}/data17
+# sudo passwd postgres  # 设置密码
+exit
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+sudo mkdir -p /run/postgresql
+sudo chown postgres:postgres /run/postgresql
+sudo chmod 775 /run/postgresql
+# pg_ctl -D /var/lib/postgres/data17 -l /var/lib/postgres/data17/logfile start
+# pg_ctl -D /var/lib/postgres/data17 -l /var/lib/postgres/data17/logfile status
+```
+
+
+
+配置
+
+postgresql.conf
+
+
+
+目录
+
+| 目录                                   | 释义                                                         |
+| -------------------------------------- | ------------------------------------------------------------ |
+| /var/lib/postgres/data                 | 数据文件                                                     |
+| /var/lib/postgres/data/pg_hba.conf     | Host-Based Authentication<br />[pg docs#pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) |
+| /var/lib/postgres/data/postgresql.conf |                                                              |
+
+```bash
+TYPE
+连接类型：local（Unix socket）、host（TCP/IP）
+DATABASE
+允许访问的数据库名，all 表示所有数据库
+USER
+允许连接的数据库用户，all 表示所有用户
+ADDRESS
+IP 地址范围，仅对 host 类型有效
+METHOD
+认证方式，如 trust、md5(单次哈希)、peer、scram-sha-256(推荐) 等
+```
+
+
+
+命令
+
+|                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| psql -U <user_name> -d <db_name> -c <cmd>                    | db_name默认是当前Linux用户名(所以常创建一个同名数据库来占位) |
+|                                                              |                                                              |
+| \help                                                        | SQL帮助                                                      |
+| \?                                                           | psql帮助                                                     |
+| \du                                                          | 查看所有roles                                                |
+| \l+                                                          | 查看所有数据库                                               |
+| \dt pg_catalog.*                                             | 查看系统表relation(系统目录catalog)                          |
+| \conninfo                                                    |                                                              |
+| \q                                                           |                                                              |
+|                                                              |                                                              |
+| **以下需要使用postgres用户**                                 |                                                              |
+| initdb --locale=C.UTF-8 --encoding=UTF8 -D /var/lib/postgres/data --data-checksums |                                                              |
+| pg_ctl                                                       |                                                              |
+| createuser --interactive                                     | 为了使用方便，常创建一个和常用Linux用户同名的PostgreSQL用户  |
+| createdb -t <tempalte1> <db_name>                            |                                                              |
+| pg_checksums -D <data_dir> -e                                |                                                              |
+| pg_upgrade -b /usr/bin -d <data_dir> -D <new_data_dir> --check | 在运行 `pg_upgrade` 之前，需要重命名现有数据目录并迁移到新目录。新的数据库集群必须使用与旧数据库集群相同的参数进行初始化 |
 
 
 

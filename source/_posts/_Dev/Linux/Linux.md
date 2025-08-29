@@ -447,6 +447,7 @@ deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
 |                                                |                                                              | e         | 打印明确安装的软件包                                         |
 |                                                |                                                              | u         | **打印可用更新**                                             |
 |                                                |                                                              | o         | 查询该文件属于哪个包                                         |
+|                                                |                                                              | dt        | d显示作为依赖安装的包、t显示没别需要的包                     |
 | -R                                             | 删除                                                         | s         | 删除不需要的依赖项                                           |
 |                                                |                                                              | n         | 移除配置文件                                                 |
 | -U                                             | `pacman -U 本地软件包路径.pkg.tar.xz` <br />`pacman -U http://www.example.com/repo/example.pkg.tar.xz` |           |                                                              |
@@ -552,8 +553,18 @@ pacman封装：不能root安装软件包
 | --------------------- | -------------------------- | ---- | -------------- |
 | -P                    | show                       | s    | 系统软件包信息 |
 | -Sss                  | 相比-Ss 多显示URL、AUR URL |      |                |
-|                       |                            |      |                |
+| -Sc                   | 清理                       |      |                |
 | **pacman operations** | 扩展pacman支持AUR          |      |                |
+
+
+
+```bash
+# 当遇到paru -Syu 错误，查看错误日志
+cd /tmp/makepkg/<err_pkg_name>/src/gcc-build
+cat config.log
+```
+
+
 
 ### Linux高级使用
 
@@ -1243,7 +1254,7 @@ TODO: [iwd](https://wiki.archlinuxcn.org/wiki/Iwd)
 
 |                      | ext4                                            | vfat                                             | XFS                  | Btrfs(推荐)                                                  | openZFS                                     |
 | -------------------- | ----------------------------------------------- | ------------------------------------------------ | -------------------- | ------------------------------------------------------------ | ------------------------------------------- |
-| **磁盘空间分配机制** | 日志文件系统Journaling<br />类似关系型数据库log | 文件分配表FAT(File Allocation Table)<br />索引表 | 日志Journaling       | CoW<br />**Copy on Write** 修改不就地覆盖数据而是写入新位置，之后更新文件指向新位置 (复制 更新 替换指针) (对数据库 日志文件可关闭) (算btrfs的核心特性)<br />目的：提高数据的一致性和可靠性 | CoW、存储池(整合了逻辑卷管理+文件系统)      |
+| **磁盘空间分配机制** | 日志文件系统Journaling<br />类似关系型数据库log | 文件分配表FAT(File Allocation Table)<br />索引表 | 日志Journaling       | CoW<br />**Copy on Write** 修改不就地覆盖数据而是写入新位置，之后更新文件指向新位置 (复制 更新 替换指针) (**对数据库 日志文件要关闭**) (算btrfs的核心特性)<br />`chattr +C /pathto` `lsattr -d /pathto`<br />目的：提高数据的一致性和可靠性 | CoW、存储池(整合了逻辑卷管理+文件系统)      |
 | 透明压缩             | 不支持                                          | 不支持                                           | 不支持               | 支持多种                                                     | 支持多种                                    |
 | 快照                 | 不支持                                          | 不支持                                           | 不支持               | 支持                                                         | 支持                                        |
 | 碎片整理             | 需要定期                                        | 需要定期                                         | 需要定期             | 不需要，COW替换比原地修改减少了磁盘碎片                      | 不需要                                      |
@@ -1251,6 +1262,18 @@ TODO: [iwd](https://wiki.archlinuxcn.org/wiki/Iwd)
 | 缓存                 |                                                 |                                                  |                      |                                                              | ARC(Adaptive Replacement Cache 一级缓存)    |
 | 主要应用场景         | 大多数Linux发行版的默认、资源占用低             | U盘，FAT32最大4GB                                | 文件服务器、io性能优 | 高级功能丰富                                                 | 高级功能丰富、**巨吃内存**(1GB+4GB每TB RAW) |
 | RAID                 |                                                 |                                                  |                      |                                                              | 软件RAID                                    |
+
+
+
+> 如果数据库驻留在 Btrfs 文件系统上，则应考虑在创建任何数据库之前禁用目录的写入时复制功能。
+> ```bash
+> chattr +C /var/lib/postgres/data17  # btrfs需要关闭COW
+> lsattr -d /var/lib/postgres/data17
+> ```
+>
+> 如果数据库驻留在 [ZFS](https://wiki.archlinux.org/title/ZFS) 文件系统上，则应在创建任何数据库之前查阅 [ZFS#Databases](https://wiki.archlinux.org/title/ZFS#Databases) 。
+
+
 
 #### btrfs
 
@@ -2044,7 +2067,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | df                                                           | 打印**文件系统使用情况**(已用 可用 挂载点)<br />fdisk 打印**磁盘分区情况**或操作<br />lsblk 打印**块设备信息** | -h 人类可读                                                  |
 | dmesg<br />dmesg \| grep 'iommu'                             | 显示kernel ring buffer(内核日志)(和 io_uring ring buffer不是同个东西)消息 | -HTK 人类可读 人类可读时间戳 内核消息                        |
 | echo $HADOOP_HOME                                            | 可以看一些软件的安装路径                                     |                                                              |
-| env                                                          | 查看环境变量<br />env \|grep -i poxy #查看系统代理配置情况   |                                                              |
+| env                                                          | 查看环境变量<br />env \|grep -i poxy #查看系统代理配置情况<br />`env CC=/usr/bin/gcc CXX=/usr/bin/g++ paru -S gcc12`<br />env是当前命令有效，export是当前会话有效 |                                                              |
 | fdisk                                                        | 打印磁盘分区情况或操作<br />df 打印文件系统使用情况(已用 可用 挂载点)<br />lsblk 打印块设备信息 | -l 打印磁盘分区情况                                          |
 | file <file>                                                  | 识别文件类型(看elf file的动态加载器是什么)                   |                                                              |
 | **find** [path] [options] expression                         | 在指定目录下递归查找文件路径<br />find / -name "head*"<br />-iname 对大小写不敏感 |                                                              |
@@ -2101,13 +2124,13 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | sshd -t                                                      | 测试`~/.ssh`配置                                             |                                                              |
 | ssh-keygen                                                   | [arch wiki#SSH_keys](https://wiki.archlinux.org/title/SSH_keys)<br />`shh-keygen -A`<br />`ssh-keygen -t ed25519 -C "xxyy"`  <br/>Enter passphrase通信短语 (empty for no passphrase):<br />[github#关于SSH密钥的通信短语](https://docs.github.com/zh/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#about-passphrases-for-ssh-keys) | -A # 在Server端执行，在**`/etc/ssh`**目录下生成` ssh_host_<ed25519|dsa|ecdsa|rsa>_key`私钥 和` .pub`**服务端host临时公钥**  <br /># 用于启动sshd.service服务  <br /># 用于Client首次连接到Server, Client将Server公钥保存到`~/.ssh/known_hosts`<br /><br /># 在Client端执行，在**`~/.ssh`**目录下生成id_rsa私钥 和 .pub 公钥 <br />-t 算法<br />-b 密钥长度bits, 推荐4096<br />-C 注释信息<br />-f /etc/ssh/ssh_host_xxx_key |
 | sshd                                                         |                                                              | -t 检查sshd配置文件                                          |
-| sudo -i                                                      | 切换到root用户                                               |                                                              |
+| sudo -i                                                      | 切换到root用户                                               | -iu 登录                                                     |
 | su xxyy                                                      | 换到普通用户                                                 |                                                              |
 | sysctl                                                       | 运行时检查和更改内核参数的工具                               | -a 显式所有变量 (/proc/sys/xxx)<br />--system 手动加载所有配置文件<br />-p/--load=<file.conf> 加载单个配置文件<br />-w k=v 临时写入变量值<br /><br />配置文件：`/etc/sysctl.d/99-sysctl.conf` `/usr/lib/sysctl.d/xxx`<br />net.ipv4.ip_local_port_range = 30000 65535 临时端口范围<br />net.core.default_qdisc = cake <br />net.ipv4.tcp_congestion_control = bbr<br />增加net.ipv4.tcp_max_tw_buckets可放DOS攻击 |
 | systemctl [OPTIONS...] COMMAND ...                           | 查询或发送控制命令到系统管理器<br />UNIT服务单元：network,mysql,firewalld,mongod,mysqld<br />q 退出<br />本质是启动 unit.service | status [PATTERN...\|PID...] 显示正在运行的该服务状态<br />start UNIT...<br />enable<br />stop UNIT...<br />disable UNIT... 开机不启动<br />reload UNIT... 重载配置文件<br />restart UNIT... 重启服务<br />**list-unit-files --type=service 列出所有服务单元文件**<br />**daemon-reload 用于重新加载缓存的systemd配置、unit文件** |
 | sz xxyy                                                      | 导出xxyy到本地快速访问download中                             |                                                              |
 | tail -n 20 filename                                          | 查看文件最后末尾20行                                         |                                                              |
-| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tzf <file> | head -10`                                 | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法(能自动检测)  |
+| tar –zcvf a.tar.gz<br />tar –xzvf a.tar.gz -C /target_dir    | `tar -tzf <file> | head -10`                                 | v：verbose<br />f：指定文件<br />c压缩、x解压、t查看压缩包内容不解压<br />z：gzip、j：bzip压缩算法(能自动检测) |
 | tee                                                          | 将stdin写入文件，常配合\|管道使用                            | -a 追加                                                      |
 | telnet                                                       | 远程登入，可以测试端口的连通性 **应用层**                    |                                                              |
 | timedatectl                                                  | 查看系统时间                                                 |                                                              |

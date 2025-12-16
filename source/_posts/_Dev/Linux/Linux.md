@@ -466,7 +466,11 @@ deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
 
 `/etc/pacman.d/mirrorlist`
 
-[软件包列表](https://archlinux.org/mirrorlist/) Use mirror status:按status排序
+[软件包列表](https://archlinux.org/mirrorlist/) Use mirror status:按status排序，不建议自动更新免得出问题，推荐手动更新
+
+```bash
+sudo reflector --threads 20 --country China --age 6 -l 35 -p https --sort rate --save /etc/pacman.d/mirrorlist
+```
 
 `/etc/pacman.conf`
 [arch wiki#pacman](https://wiki.archlinuxcn.org/wiki/Pacman#) | [man#pacman](https://man.archlinux.org/man/pacman.conf.5) | [man#pacman](https://pacman.archlinux.page/pacman.conf.5.html)
@@ -556,15 +560,11 @@ pacman封装：不能root安装软件包
 | -Sc                   | 清理                       |      |                |
 | **pacman operations** | 扩展pacman支持AUR          |      |                |
 
-
-
 ```bash
 # 当遇到paru -Syu 错误，查看错误日志
 cd /tmp/makepkg/<err_pkg_name>/src/gcc-build
 cat config.log
 ```
-
-
 
 ### Linux高级使用
 
@@ -1252,28 +1252,26 @@ TODO: [iwd](https://wiki.archlinuxcn.org/wiki/Iwd)
 >
 >块设备：数据块，如硬盘、USB存储
 
-|                      | ext4                                            | vfat                                             | XFS                  | Btrfs(推荐)                                                  | openZFS                                     |
-| -------------------- | ----------------------------------------------- | ------------------------------------------------ | -------------------- | ------------------------------------------------------------ | ------------------------------------------- |
-| **磁盘空间分配机制** | 日志文件系统Journaling<br />类似关系型数据库log | 文件分配表FAT(File Allocation Table)<br />索引表 | 日志Journaling       | CoW<br />**Copy on Write** 修改不就地覆盖数据而是写入新位置，之后更新文件指向新位置 (复制 更新 替换指针) (**对数据库 日志文件要关闭**) (算btrfs的核心特性)<br />`chattr +C /pathto` `lsattr -d /pathto`<br />目的：提高数据的一致性和可靠性 | CoW、存储池(整合了逻辑卷管理+文件系统)      |
-| 透明压缩             | 不支持                                          | 不支持                                           | 不支持               | 支持多种                                                     | 支持多种                                    |
-| 快照                 | 不支持                                          | 不支持                                           | 不支持               | 支持                                                         | 支持                                        |
-| 碎片整理             | 需要定期                                        | 需要定期                                         | 需要定期             | 不需要，COW替换比原地修改减少了磁盘碎片                      | 不需要                                      |
-| 加密分区             |                                                 |                                                  |                      | 不支持                                                       |                                             |
-| 缓存                 |                                                 |                                                  |                      |                                                              | ARC(Adaptive Replacement Cache 一级缓存)    |
-| 主要应用场景         | 大多数Linux发行版的默认、资源占用低             | U盘，FAT32最大4GB                                | 文件服务器、io性能优 | 高级功能丰富                                                 | 高级功能丰富、**巨吃内存**(1GB+4GB每TB RAW) |
-| RAID                 |                                                 |                                                  |                      |                                                              | 软件RAID                                    |
-
-
+|                                  | ext4                                            | vfat                                             | XFS                  | Btrfs(推荐)                                                  | openZFS                                     |
+| -------------------------------- | ----------------------------------------------- | ------------------------------------------------ | -------------------- | ------------------------------------------------------------ | ------------------------------------------- |
+| **磁盘空间分配机制**             | 日志文件系统Journaling<br />类似关系型数据库log | 文件分配表FAT(File Allocation Table)<br />索引表 | 日志Journaling       | CoW<br />**Copy on Write** 修改不就地覆盖数据而是写入新位置，之后更新文件指向新位置 (复制 更新 替换指针) (**对数据库 日志文件要关闭**) (算btrfs的核心特性)<br />`chattr +C /pathto` `lsattr -d /pathto`<br />目的：提高数据的一致性和可靠性 | CoW、存储池(整合了逻辑卷管理+文件系统)      |
+| 透明压缩                         | 不支持                                          | 不支持                                           | 不支持               | 支持多种                                                     | 支持多种                                    |
+| 快照                             | 不支持                                          | 不支持                                           | 不支持               | 支持                                                         | 支持                                        |
+| 碎片整理                         | 需要定期                                        | 需要定期                                         | 需要定期             | 不需要，COW替换比原地修改减少了磁盘碎片                      | 不需要                                      |
+| 加密分区                         |                                                 |                                                  |                      | 不支持                                                       |                                             |
+| 缓存                             |                                                 |                                                  |                      |                                                              | ARC(Adaptive Replacement Cache 一级缓存)    |
+| 主要应用场景                     | 大多数Linux发行版的默认、资源占用低             | U盘，FAT32最大4GB                                | 文件服务器、io性能优 | 高级功能丰富                                                 | 高级功能丰富、**巨吃内存**(1GB+4GB每TB RAW) |
+| RAID                             |                                                 |                                                  |                      |                                                              | 软件RAID                                    |
+| TRIM(通知底层存储磁盘资源可释放) | 支持                                            | 不支持                                           | 支持                 | 支持                                                         | 支持                                        |
 
 > 如果数据库驻留在 Btrfs 文件系统上，则应考虑在创建任何数据库之前禁用目录的写入时复制功能。
+>
 > ```bash
 > chattr +C /var/lib/postgres/data17  # btrfs需要关闭COW
 > lsattr -d /var/lib/postgres/data17
 > ```
 >
 > 如果数据库驻留在 [ZFS](https://wiki.archlinux.org/title/ZFS) 文件系统上，则应在创建任何数据库之前查阅 [ZFS#Databases](https://wiki.archlinux.org/title/ZFS#Databases) 。
-
-
 
 #### btrfs
 
@@ -1903,7 +1901,7 @@ sudo make install
 | /dev                                                         | 存放设备文件.                                                |
 | **/etc（etcetera附加物表示配置）**                           | 存放软件的全局配置文件                                       |
 | /etc/bash.bashrc                                             | 系统级bashrc<br />对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile`<br />export PATH="/root/goroot/bin:$PATH"  # 前面的优先级高 |
-| /etc/fstab                                                   | 配置开机自动挂载配                                           |
+| /etc/fstab                                                   | 配置开机自动挂载配<br />强烈建议用UUID配置，防止设备名变化   |
 | **/etc/group**                                               | 查看所有组，配置 组名:密码占位符(x或*):组ID(GID):组成员列表（逗号分隔） |
 | /etc/hosts                                                   | DNS解析，配置映射关系hostname:IP                             |
 | **/etc/hostname**                                            | 配置 hostname                                                |
@@ -1926,6 +1924,7 @@ sudo make install
 | **/opt/modules/software**                                    | 软件的安装目录                                               |
 | /opt/modules/source                                          | 软件的安装包的目录                                           |
 | /proc                                                        | 虚拟进程文件系统，当前内存中的映射文件.启动时,产生,关机时消失. |
+| /proc/cpuinfo                                                |                                                              |
 | /proc/swaps                                                  | 虚拟交换空间(zram、swapfile)                                 |
 | /proc/$pid/environ                                           | 存储进程环境变量。环境变量是一组键值对，用于存储进程运行时所需的配置信息、系统路径、用户设置等。 |
 | /root                                                        | 超级管理员根目录.                                            |
@@ -1992,6 +1991,8 @@ search .  # 搜索域
 `/etc/fstab`
 [arch wiki#fatab](https://wiki.archlinuxcn.org/wiki/Fstab)
 
+强烈建议用UUID配置，防止设备名变化
+
 ```/etc/fstab
 # Static information about the filesystems.
 # See fstab(5) for details.
@@ -2025,6 +2026,15 @@ genfstab -U /mnt >> /mnt/etc/fstab  # genfstab检查所有挂载点，一般只�
 ::1    localhost
 127.0.0.1  arch.localdomain  arch  
 # IP地址 域名 别名
+```
+
+`/etc/sysctl.conf`
+
+```conf
+# User defined entries should be added to this file not to /etc/sysctl.d/* as
+# that directory is not backed-up by default and will not survive a reimage
+net.ipv4.ip_forward = 1 # 1启动IP Forwarding(默认)
+net.ipv4.conf.all.rp_filter=2  # 反向路径校验 0关闭(默认) 1严格 2宽松
 ```
 
 ## Shell
@@ -2087,6 +2097,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | **info**                                                     | 显示帮助文档<br />q 退出                                     |                                                              |
 | install                                                      | 复制文件                                                     | -D 递归创建<br />-m 设置权限                                 |
 | ip                                                           | 显示配置网卡参数                                             | addr 查看网络层信息(动态IP(DHCP)、静态IP(子网掩码、网关))<br /><br />link 查看链路层信息(MAC)<br />`<接口编号>: <接口类型(lo本地回环接口|eth有限以太网接口)>:<接口状态(回环|广播,多播,up启用)> mtu最大传输单元 qdisc state mode group qlen`<br /><br />route 查看路由表信息 |
+| iperf3                                                       |                                                              | -s<br />-c<br />-R                                           |
 | journalctl                                                   | 查询systemd日志                                              | x 添加消息解释<br />e 跳至结尾<br />-u <xx.service><br />-f 实时 |
 | jps                                                          | 由JDK提供，查看Java进程                                      | # MAC地址 广播地址                                           |
 | kill -9 Pid                                                  | 强制杀死进程                                                 |                                                              |
@@ -2096,6 +2107,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | ls -lath<br />**ll -ath**                                    | 展示当前目录下的文件与目录.并根据颜色区分类型.<br />–a显示隐藏文件<br />-i显示inode编号 <br /> -l 附加显示详细信息<br />-t 按时间排序<br />-r 反序<br />-h 文件大小单位变为kb<br />白(一般文件)、蓝(目录)、浅蓝(链接文件)、绿(可执行)、红(压缩)<br />黄背景(Set Group ID)、红背景(Set User ID)、绿背景(粘滞位) |                                                              |
 | **lsblk**                                                    | 打印**块设备信息**<br />如果MOUNTPOINTS为空则可以直接拔出U盘 | -f 多打印一列文件系统信息                                    |
 | lsmod                                                        | 显示当前加载的内核模块                                       |                                                              |
+| lspci                                                        | 显示PCI设备(显卡、声卡、网卡)信息                            | -s <总线bus>:<slot>.<func> 查看特定设备信息                  |
 | man <section> <page>                                         | manual page, 可以用info命令替代<br />`pacman -S man-db man-pages-zh_cn`<br />`alias cman='LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 man'`<br />[Online_man_pages](https://wiki.archlinux.org/title/Man_page#Online_man_pages) \| [kernel#man page version](https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/refs/tags)<br />[archlinux#man page(推荐)](https://man.archlinux.org/) \| [archlinux#man page version](https://archlinux.org/packages/?name=man-pages)<br />man7.org(不推荐 更新慢) | 1shell命令 2内核提供的系统调用 3库函数 4特殊文件 5file format and config file 6游戏 7Miscellaneous宏(需要`#define MISC`) 8系统管理命令 9kernel routines |
 | mkdir myfloder                                               | 创建空目录.  <br />mkdir –p myfloder:  如果已经存在,也不报错提示. <br />mkdir无法创建多层目录,所以可以用 : mkdir –p a/b/c ) |                                                              |
 | modinfo <modulename\|fielname>                               | 显示内核模块信息                                             |                                                              |
@@ -2105,6 +2117,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | nc -l 9001                                                   | 开放9001TCP，等待客户端连接，可以传输字符串                  |                                                              |
 | **neofetch**                                                 | new fetch 显示系统信息和Logo                                 |                                                              |
 | ~~netstat -tulpn~~ 弃用                                      | 用ss命令更好用，查看占用的端口                               |                                                              |
+| nft                                                          | nft add table ip nat  # 地址族类型 表名 链名<br/>nft list tables  # 查看所有表(规则的容器)<br/>nft list table ip nat  # 查看地址族类型ip为名为nat的表  # 地址族(address family)类型ip、ip6、inet(双栈)<br/>nft add chain ip nat postrouting { type nat hook postrouting priority 100 \; }  # 添加名为postrouting的链(NAT类型 用于出站前伪装)<br/>nft add rule ip nat postrouting ip saddr 192.168.1.0/24 ip daddr 192.168.191.0/24 masquerade  # 对源saddr目的daddr的数据包执行masquerade操作<br/>nft list tables |                                                              |
 | pgrep                                                        | process global rep 就是对 ps \| grep \| awk 的封装 用于打印pid | -f full process name match<br />-a <br />-v 反向匹配         |
 | ping                                                         | ping 指定主机 **网络层ICMP**                                 |                                                              |
 | ps -ef \| grep “tomcat” \| grep -v “grep”                    | 查看当前时刻活动进程信息<br />root      21772  21674  0 15:59 pts/3    00:00:00 grep --color=auto tomcat<br />UID         PID   PPID  C STIME TTY  TIME CMD<br />PPID：父进程的<br />C：CPU使用的资源百分比<br />TTY：与进程关联的终端（tty）<br />TIME：使用掉的 CPU 时间<br />CMD：所下达的指令名称 | –e 所有进程<br />-f 完整格式<br />--forest 进程树<br />-o pid,command |
@@ -2118,7 +2131,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | shutdown [option] [time] [message]                           |                                                              |                                                              |
 | shutdown <time><br />shutdown -h now                         | 马上关机                                                     |                                                              |
 | **source <file>** (等价于. <file>)                           | 在当前shell环境，执行脚本文件中的命令                        |                                                              |
-| **ss**                                                       | 显示sockets                                                  | t 显示TCP sockets<br />u 实现 udp<br />n 显示端口，不解析为服务名称<br />l 显示正在监听的 |
+| **ss**                                                       | 显示sockets<br />取代netstat                                 | t 显示TCP sockets<br />u 实现 udp<br />n 显示端口，不解析为服务名称<br />l 显示正在监听的 |
 | **ssh 用户名@ip**                                            | ssh登录远程主机                                              | -T                                                           |
 | ssh-add <私钥文件>                                           | 向ssh-agent添加私钥身份identity<br />OpenSSH要求私钥文件不能被其他用户访问 | -L 打印所有公钥<br />-l 打印所有fingerprints <br />-D 删除所有<br />-d 删除该密钥<br />-v Verbose<br />-K 从FIDO验证器操作常驻密钥 |
 | sshd -t                                                      | 测试`~/.ssh`配置                                             |                                                              |
@@ -2126,7 +2139,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | sshd                                                         |                                                              | -t 检查sshd配置文件                                          |
 | sudo -i                                                      | 切换到root用户                                               | -iu 登录                                                     |
 | su xxyy                                                      | 换到普通用户                                                 |                                                              |
-| sysctl                                                       | 运行时检查和更改内核参数的工具                               | -a 显式所有变量 (/proc/sys/xxx)<br />--system 手动加载所有配置文件<br />-p/--load=<file.conf> 加载单个配置文件<br />-w k=v 临时写入变量值<br /><br />配置文件：`/etc/sysctl.d/99-sysctl.conf` `/usr/lib/sysctl.d/xxx`<br />net.ipv4.ip_local_port_range = 30000 65535 临时端口范围<br />net.core.default_qdisc = cake <br />net.ipv4.tcp_congestion_control = bbr<br />增加net.ipv4.tcp_max_tw_buckets可放DOS攻击 |
+| sysctl                                                       | 运行时检查和更改内核参数的工具<br />`/etc/sysctl.conf`       | -a 显式所有变量 (/proc/sys/xxx)<br />--system 手动加载所有配置文件<br />-p/--load=<file.conf> 加载单个配置文件<br />-w k=v 临时写入变量值<br /><br />配置文件：`/etc/sysctl.d/99-sysctl.conf` `/usr/lib/sysctl.d/xxx`<br />net.ipv4.ip_local_port_range = 30000 65535 临时端口范围<br />net.core.default_qdisc = cake <br />net.ipv4.tcp_congestion_control = bbr<br />增加net.ipv4.tcp_max_tw_buckets可放DOS攻击 |
 | systemctl [OPTIONS...] COMMAND ...                           | 查询或发送控制命令到系统管理器<br />UNIT服务单元：network,mysql,firewalld,mongod,mysqld<br />q 退出<br />本质是启动 unit.service | status [PATTERN...\|PID...] 显示正在运行的该服务状态<br />start UNIT...<br />enable<br />stop UNIT...<br />disable UNIT... 开机不启动<br />reload UNIT... 重载配置文件<br />restart UNIT... 重启服务<br />**list-unit-files --type=service 列出所有服务单元文件**<br />**daemon-reload 用于重新加载缓存的systemd配置、unit文件** |
 | sz xxyy                                                      | 导出xxyy到本地快速访问download中                             |                                                              |
 | tail -n 20 filename                                          | 查看文件最后末尾20行                                         |                                                              |
@@ -2860,6 +2873,7 @@ ls -athl  # 校验权限、所属用户组正确
 
 ```bash
 # 服务端执行:
+sudo sshd -t
 systemctl enable sshd
 systemctl status sshd
 

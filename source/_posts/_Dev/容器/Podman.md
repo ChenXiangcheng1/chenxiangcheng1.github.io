@@ -511,6 +511,18 @@ podman run -it --rm --net host --name hadoop-single-node docker.io/apache/hadoop
 
 
 
+
+
+#### TODO
+
+ddns-go：DDNS
+
+portainer：容器管理，看还有哪些同类应用
+
+KVM：破解windows、office(非订阅版)
+
+
+
 ### container 容器
 
 容器状态：Created、Up XX minutes、Exited(1) XX seconds age        // restarting

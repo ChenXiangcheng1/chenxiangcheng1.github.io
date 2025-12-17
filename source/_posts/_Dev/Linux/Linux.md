@@ -860,9 +860,10 @@ systemctl  # 发送控制命令给系统管理器
 | `systemctl list-unit-files`                                  | 列出已安装的单元文件，显示UNIT FILE、STATE、PRESET | --state=[masked\|failed]<br />--type=[service\|] |                |
 | `systemctl is-enabled [UNIT...]`                             | 检查单元文件是否自动启动(enabled)                  |                                                  |                |
 | `systemctl enable [UNIT...]`                                 | 自动启用单元文件                                   | --now                                            | 立即启用       |
-| `systemctl disable [UNIT...]`                                | 取消自动启动单元文件                               |                                                  |
+| `systemctl disable [UNIT...]`                                | 取消自动启动单元文件                               |                                                  ||
 | `systemctl mask [UNIT...]` <br />`systemctl unmask [UNIT...]` | 屏蔽单元文件，使其无法启动(用于防止误启动)         |                                                  |                |
-|                                                              |                                                    |                                                  |                |
+| **systemctl edit [unit]** | (重要)创建一个systemd drop-in 文件，不要直接编辑原始单元文件，systemd 解析这些文件并将其应用到原始单元之上 | --drop-in=drop_in_name | 省略则使用默认文件名 |
+| | | | |
 | **Manager State Commands**                                   |                                                    |                                                  |                |
 | `systemctl daemon-reload`                                    | 重载systemd配置                                    |                                                  |                |
 
@@ -1527,6 +1528,15 @@ alias: tcp-ulp-tls(Upper Layer Protocol)、ktls
 
 ```
 
+### br_netfilter
+
+[br_netfilter官网](https://ebtables.netfilter.org/documentation/bridge-nf.html)
+
+```bash
+modprobe br_netfilter  # 手动临时加载br_netfilter模块
+sudo echo "br_netfilter" >> /etc/modules-load.d/br_netfilter.conf  # 自动
+```
+
 ## 系统调用
 
 > ### Fork()
@@ -1905,6 +1915,7 @@ sudo make install
 | **/etc/group**                                               | 查看所有组，配置 组名:密码占位符(x或*):组ID(GID):组成员列表（逗号分隔） |
 | /etc/hosts                                                   | DNS解析，配置映射关系hostname:IP                             |
 | **/etc/hostname**                                            | 配置 hostname                                                |
+| /etc/modules-load.d                                          | 自动加载内核模块                                             |
 | /etc/my.cnf                                                  | mysql配置文件                                                |
 | **/etc/passwd**                                              | 查看所有用户，配置 用户名:密码占位符(x或*):用户ID(UID):组ID(GID):用户描述:家目录:登录Shell |
 | **/etc/profile**                                             | 环境变量，注释符 #，<br />更改完环境变量使用source profile命令<br />推荐去改 /etc/profile.d/custom.sh |
@@ -1912,11 +1923,12 @@ sudo make install
 | /etc/resolv.conf                                             | 手动配置DNS服务器地址，也可以用网络管理器(systemd-resolved等)替代 |
 | /etc/services                                                | 服务及其端口                                                 |
 | /etc/shadow                                                  | 存储用户加密密码信息                                         |
-| /etc/yum.repos.d/xx                                          | yum.repo源                                                   |
 | /etc/subuid                                                  | 在容器、沙箱中可能需要使用subuid(范围uint32)、subgid<br/># root uid是0不需要分配<br/>nemesis:100000:65536  <br/>user2:165536:65536 |
 | /etc/subgid                                                  |                                                              |
 | /etc/sysconfig/network                                       | 配置hostname                                                 |
+| /etc/sysctl.d                                                | 持久化内核参数配置文件目录                                   |
 | /etc/sysconfig/network-scripts/ifcfg-eth0_or_33              | 网络接口配置文件，修改需要root权限                           |
+| /etc/yum.repos.d/xx                                          | yum.repo源                                                   |
 | /home                                                        | 用于存储非root的其他用户根目录.<br />\home\<UserName>\XXX    |
 | /lib                                                         | lib 静态链接库，是系统中的运行程序和内核模块<br />DLL 动态链接库，是程序接口，当需要时才会调用的模块 |
 | /mnt                                                         | 挂载目录.                                                    |
@@ -2067,6 +2079,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | arp                                                          | 显示和修改动态IP地址转换表(ARP缓存表) **数据链路层**         | -a 显示当前ARP缓存表项<br />-s 添加IP地址-Mac地址记录(entry) |
 | **awk** [options] ‘program’ file                             | 逐行处理，一次读取一行文本，按输入分隔符进行**切片**，切成多个组成部分。适合处理表格数据<br/>将切片直接保存在内建的变量中，`$1`，`$2`(`$0` 表示行的全部)<br/>支持对单个切片的判断，支持循环判断，默认分隔符为空格<br/><br/>`awk '{print $1, $4}' filename`  打印列1列4<br/>NR表示当前数据行数<br/>`awk '($1=="tcp" && $2==1) || NR==1 {print $0}' filename` 打印列1为tcp列2为1的行和第一行 | -F "," 指定 "," 为分隔符                                     |
+| bridge {link 端口设备(网络接口) \| fdb 转发数据库 \| mdb 多播数据库  \| mst(MSTP多生成树协议) \| vlan \| vni \| monitor} | 网桥相关命令<br />网络桥接器用于在多个网段之间转发数据包<br />STP、MSTP是数据链路层的协议用于阻塞冗余链路防止网络环路<br /> | `bridge link show 5: veth696cffe@ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br-20ca6ec28b91 state forwarding priority 32 cost 2   # 虚拟以太网veth网络接口veth696cffe被连接到网桥br-20ca6ec28b91上` |
 | cat                                                          | less更好用。cat f1 f2连接多个文件内容并打印                  |                                                              |
 | chgrp 组名 文件                                              | 改变文件的用户组用命令                                       |                                                              |
 | chown 拥有者名称 文件                                        | 更改文件拥有者和所属组<br />`chown $USER:$USER ~/.ssh/authorized_keys` | -R 递归                                                      |
@@ -2120,7 +2133,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | nft                                                          | nft add table ip nat  # 地址族类型 表名 链名<br/>nft list tables  # 查看所有表(规则的容器)<br/>nft list table ip nat  # 查看地址族类型ip为名为nat的表  # 地址族(address family)类型ip、ip6、inet(双栈)<br/>nft add chain ip nat postrouting { type nat hook postrouting priority 100 \; }  # 添加名为postrouting的链(NAT类型 用于出站前伪装)<br/>nft add rule ip nat postrouting ip saddr 192.168.1.0/24 ip daddr 192.168.191.0/24 masquerade  # 对源saddr目的daddr的数据包执行masquerade操作<br/>nft list tables |                                                              |
 | pgrep                                                        | process global rep 就是对 ps \| grep \| awk 的封装 用于打印pid | -f full process name match<br />-a <br />-v 反向匹配         |
 | ping                                                         | ping 指定主机 **网络层ICMP**                                 |                                                              |
-| ps -ef \| grep “tomcat” \| grep -v “grep”                    | 查看当前时刻活动进程信息<br />root      21772  21674  0 15:59 pts/3    00:00:00 grep --color=auto tomcat<br />UID         PID   PPID  C STIME TTY  TIME CMD<br />PPID：父进程的<br />C：CPU使用的资源百分比<br />TTY：与进程关联的终端（tty）<br />TIME：使用掉的 CPU 时间<br />CMD：所下达的指令名称 | –e 所有进程<br />-f 完整格式<br />--forest 进程树<br />-o pid,command |
+| ps aux<br />ps -ef \| grep “tomcat” \| grep -v “grep”        | 查看当前时刻活动process status进程信息<br />root      21772  21674  0 15:59 pts/3    00:00:00 grep --color=auto tomcat<br />UID         PID   PPID  C STIME TTY  TIME CMD<br />PPID：父进程的<br />C：CPU使用的资源百分比<br />TTY：与进程关联的终端（tty）<br />TIME：使用掉的 CPU 时间<br />CMD：所下达的指令名称 | –e 所有进程<br />-f 完整格式<br />--forest 进程树<br />-o pid,command<br /><br />aux BSD风格显示USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND<br />-ef UNIX风格显示UID          PID    PPID  C STIME TTY          TIME CMD |
 | pstree [pid]                                                 | 显示进程树                                                   | -h 高亮当前进程及其父进程<br />-a 显示命令行参数<br />-l 不截断长行<br />-p 显示pid<br />-s 显示指定进程的父进程 |
 | rm                                                           | 删除xxyy文件                                                 | -r<br />-f force 忽略文件不存在时的删除失败提示              |
 | rpm -ivh xxx.rpm<br />rpm -qa \| grep xxxx                   | RedHat Package Manager<br />只能安装已经下载到本地机器上的 rpm 包，没有解决软件包依赖问题。<br />参数 i-install、v-verbose可视、u-Update、q-Query、p-Package、l-list、e删除、a-all、h-hash哈希后人可读、--nodeps忽略依赖关系<br /><br />yum remove 若你要移除的包被别的软件包需要的话，yum会把其他软件包一起移除<br />rpm -e 会告诉你该包被别的包需要，所以无法移除 |                                                              |
@@ -2132,7 +2145,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | shutdown <time><br />shutdown -h now                         | 马上关机                                                     |                                                              |
 | **source <file>** (等价于. <file>)                           | 在当前shell环境，执行脚本文件中的命令                        |                                                              |
 | **ss**                                                       | 显示sockets<br />取代netstat                                 | t 显示TCP sockets<br />u 实现 udp<br />n 显示端口，不解析为服务名称<br />l 显示正在监听的 |
-| **ssh 用户名@ip**                                            | ssh登录远程主机                                              | -T                                                           |
+| **ssh 用户名@ip**                                            | ssh登录远程主机<br />exit退出                                | -T                                                           |
 | ssh-add <私钥文件>                                           | 向ssh-agent添加私钥身份identity<br />OpenSSH要求私钥文件不能被其他用户访问 | -L 打印所有公钥<br />-l 打印所有fingerprints <br />-D 删除所有<br />-d 删除该密钥<br />-v Verbose<br />-K 从FIDO验证器操作常驻密钥 |
 | sshd -t                                                      | 测试`~/.ssh`配置                                             |                                                              |
 | ssh-keygen                                                   | [arch wiki#SSH_keys](https://wiki.archlinux.org/title/SSH_keys)<br />`shh-keygen -A`<br />`ssh-keygen -t ed25519 -C "xxyy"`  <br/>Enter passphrase通信短语 (empty for no passphrase):<br />[github#关于SSH密钥的通信短语](https://docs.github.com/zh/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#about-passphrases-for-ssh-keys) | -A # 在Server端执行，在**`/etc/ssh`**目录下生成` ssh_host_<ed25519|dsa|ecdsa|rsa>_key`私钥 和` .pub`**服务端host临时公钥**  <br /># 用于启动sshd.service服务  <br /># 用于Client首次连接到Server, Client将Server公钥保存到`~/.ssh/known_hosts`<br /><br /># 在Client端执行，在**`~/.ssh`**目录下生成id_rsa私钥 和 .pub 公钥 <br />-t 算法<br />-b 密钥长度bits, 推荐4096<br />-C 注释信息<br />-f /etc/ssh/ssh_host_xxx_key |
@@ -2167,6 +2180,7 @@ TTY(Teletypewriter)：指终端设备，可以是串口、终端窗口、伪终�
 | &                                                            | 表示在后台执行                                               |                                                              |
 | &&                                                           | 表示前一条命令执行成功才执行后一条命令                       |                                                              |
 | $()                                                          | `$()` 捕获括号内的stdout<br />powershell：${}，例如${pwd}    |                                                              |
+| {}<br />echo a{b,c}                                          | 花括号扩展，生成多个字符串                                   |                                                              |
 
 # 安装系统
 

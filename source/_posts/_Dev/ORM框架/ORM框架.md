@@ -6,6 +6,40 @@ ORM面向状态
 
 
 
+## Common
+
+### SQL注入
+
+问题：字面量直接拼接
+解决：预编译传值/绑定参数
+
+
+
+### N+1问题
+
+问题：懒加载
+解决：级联查询
+
+```python
+# sqlalchemy的解决方案
+addresses: Mapped[list['Address']] = relationship(
+    back_populates='user',
+    lazy='selectin',  # Loader Strategies: selectin raise_on_sql
+)
+```
+
+| lazy值             | 加载时机            | 加载方式         | N+1 问题                                                     | 使用场景               |
+| ------------------ | ------------------- | ---------------- | ------------------------------------------------------------ | ---------------------- |
+| **'select'**       | 访问属性时          | 单条 SELECT      | ❌ **有**                                                     | 默认，简单场景         |
+| **'joined'**       | 加载主对象时        | LEFT JOIN        | ✅ 无<br />**一对一**                                         | 一对一关系             |
+| **'selectin'**     | 访问属性时          | SELECT IN 子查询 | ✅ 无<br />**1+1个查询**<br />**一对多**                      | 一对多关系（推荐）     |
+| **'raise_on_sql'** | 访问属性 + 需要 SQL | ❌ 抛异常         | **强制预加载**<br />需要加载关系但没有预加载，且**触发 SQL 查询** | 推荐，防止隐式 SQL     |
+| **'raise'**        | 访问属性时          | ❌ 抛异常         | 关系未被加载，**任何情况**                                   | 过于严格，防止隐式 SQL |
+| **'noload'**       | 永不加载            | 不执行 SQL       | **N/A**                                                      | 明确不需要             |
+|                    |                     |                  |                                                              |                        |
+
+
+
 ## Java
 
 ### Mybatis
@@ -48,6 +82,10 @@ ORM面向状态
 
 
 ### sqlalchemy2.1
+
+[文档](https://docs.sqlalchemy.org/en/20/)
+
+[DBAPI Support PEP249](https://peps.python.org/pep-0249/): psycopy2、psycopy、pg8000、asyncpg、psycopycffi
 
 
 

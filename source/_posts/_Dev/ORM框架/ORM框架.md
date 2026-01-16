@@ -18,7 +18,7 @@ ORM面向状态
 ### N+1问题
 
 问题：懒加载
-解决：级联查询
+解决：使用急加载/预加载 eager loading，级联查询，设置load策略
 
 ```python
 # sqlalchemy的解决方案

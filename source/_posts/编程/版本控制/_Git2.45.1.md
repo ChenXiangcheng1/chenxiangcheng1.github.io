@@ -155,6 +155,14 @@ eval "$(ssh-agent -s)"  # eval将环境遍历
 ssh-add ~/.ssh/id_ed25519_github  # 对私钥高速缓存
 ```
 
+```bash
+systemctl --user status ssh-agent
+systemctl --user enable --now ssh-agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"  # ~/.bashrc
+```
+
+
+
 **for powershell**
 
 ```powershell
@@ -325,13 +333,21 @@ Connection closed by UNKNOWN port 65535
 
 原因：**大多数机场会封22端口** 或 代理没配置好
 解决1：不开代理
-解决2：配置通过443端口的SSH访问github，[官方文档](https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port)	|	[flowercloud文档](https://help.huacloud.dev/huacloud/GITHUB-22-464e1622cc92460b9a419bba45a60f75)
+解决2：修改ssh客户端配置，配置通过443端口的SSH访问github，[官方文档](https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port)	|	[flowercloud文档](https://help.huacloud.dev/huacloud/GITHUB-22-464e1622cc92460b9a419bba45a60f75)
 
 ```~/.ssh/config
-Host github.com
-Hostname ssh.github.com  # 实际IP地址
-Port 443
-User git
+Host github.com  # 通过443端口走SSH协议  # 有些机场会封22端口
+    Hostname ssh.github.com  
+    Port 443
+    User git
+
+# Host name-of-ssh-host-here
+#     HostName host-fqdn-or-ip-goes-here
+#     Port 39224  # 实际IP地址
+#     User your-user-name-on-host
+#     IdentityFile ~/.ssh/id_ed25519-remote-ssh
+#     IdentityFile C:\\path\\to\\my\\id_ed25519
+#     LocalForward 127.0.0.1:3000 127.0.0.1:3000
 ```
 
 **6最终测试**
@@ -381,6 +397,8 @@ nc -vz 172.30.208.1 7890
 | **git status**                                               | 查看工作树状态                      |                                                     |                                                           |
 | git ls-files                                                 | 查看暂存区中文件                    |                                                     |                                                           |
 | git config --list --show-origin<br />git config --global http.proxy 'socks5://host.docker.internal:7890'<br />git config --global https.proxy 'socks5://host.docker.internal:7890'<br />git config --global --unset http.proxy<br />git config --global --unset https.proxy | 查看所有配置                        |                                                     |                                                           |
+|                                                              |                                     |                                                     |                                                           |
+| git diff                                                     |                                     |                                                     |                                                           |
 
 
 
@@ -1415,6 +1433,13 @@ git config --global user.name "……" | 配置全局的用户名
 git config --global user.email "……" | 配置全局的用户邮件
 git config --list | 查看配置列表
 git [--help] <command> [<args>] | 查看Manual命令手册
+
+```bash
+git config --global http.proxy http://192.168.1.253:7890
+git config --global https.proxy http://192.168.1.253:7890
+git config --global --unset http.proxy
+git config --global --get http.proxy
+```
 
 
 

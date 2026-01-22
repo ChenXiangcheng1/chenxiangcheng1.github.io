@@ -117,8 +117,8 @@ ssh-keygen -t <ed25519|dsa|ecdsa|rsa> -b 4096 -C "xxyy"  # 在Client端执行，
 
 ```bash
 ssh-keygen -A  # 在Server端执行，在/etc/ssh目录下生成 ssh_host_<ed25519|dsa|ecdsa|rsa>_key私钥 和 .pub公钥  
-# 用于启动sshd.service服务，所需的生成服务端host临时公钥  
-# 用于Client首次连接到Server, Client将Server公钥保存到~/.ssh/known_hosts
+# 用于启动sshd.service服务，所需的生成服务端host临时公钥
+# 用于Client首次连接到Server, Client将Server公钥保存到~/.ssh/known_hosts  # Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
 
 ```bash

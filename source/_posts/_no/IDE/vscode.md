@@ -682,17 +682,83 @@ Python Languase Server ，基于**类型检查器 pyright**
 
 F2 重构
 
-##### Ruff(推荐)
 
-[vscode 插件](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
 
-TODO: [github](https://github.com/astral-sh/ruff) | [文档](https://docs.astral.sh/ruff/configuration/#fix-safety)
+##### Ruff 0.14.13 (推荐)
 
-核心是ruff-lsp，代替 flake8、isort、bandit
+~~[github](https://github.com/astral-sh/ruff)~~	|	[文档](https://docs.astral.sh/ruff/configuration/#fix-safety)
+linter代码检查 和 formatter格式化工具
 
-**配置：**
+
+
+###### 使用
+
+```bash
+# 作为命令行使用
+uv tool install ruff@latest  # 推荐使用uv安装ruff
+uvx ruff check <path/to/code/*.py>  # linter当前目录
+uvx ruff check --fix  # 自动修复
+uvx ruff check --select UP035 --add-noqa .  # 给所有现有的 UP035 违规添加`# noqa`指令
+
+uvx ruff format <path/to/code/*.py>  # format当前目录
+ruff help [check|format]
+```
+
+```python
+ruff: noqa: UP035  # 整个文件中忽略lint_UP035规则  # No Quality Assurance不进行质量保证
+# noqa: UP035  # 该行忽略lint_UP035规则
+```
+
+
+
+
+
+作为插件使用
+~~[github](https://github.com/astral-sh/ruff-vscode)~~	|	 [vscode插件](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+
+编辑器集成核心是ruff server(替代过去的ruff-lsp)，代替 flake8、isort、bandit
+
+```bash
+Ruff: Fix all auto-fixable problems  # 修复安全的修复, Quick fix可以手动修复不安全的修复
+Ruff: Format document
+Ruff: Format imports
+```
+
+
+
+[ruff-pre-commit](https://github.com/astral-sh/ruff-pre-commit)：结合 git 使用，作为 [pre-commit](https://pre-commit.com/) hook
+
+```yaml
+# .pre-commit-config.yaml
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.14.13
+  hooks:
+    # Run the linter.
+    - id: ruff-check
+    # Run the formatter.
+    - id: ruff-format
+```
+
+
+
+###### 配置
 
 ```toml
+# pyproject.toml  # pyproject.toml配置略有不同
+[project]
+# Support Python 3.10+.
+requires-python = ">=3.10"
+
+[tool.ruff]
+
+[tool.ruff.lint]
+```
+
+
+
+```toml
+# ruff.toml  # .ruff.toml
 # Exclude a variety of commonly ignored directories.
 exclude = [
     ".bzr",
@@ -723,6 +789,7 @@ exclude = [
     "venv",
 ]
 
+# Same as Black(88).
 line-length = 88
 indent-width = 4
 
@@ -731,14 +798,13 @@ target-version = "py311"
 
 [lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
-# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
-# McCabe complexity (`C901`) by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or McCabe complexity (`C901`) by default.
+# Flake8 的 F 规则以及 E 规则的子集
 select = [
  "E4", "E7", "E9", "F",  # 默认
  "I",
  "UP",
  "W",
-
 ]
 ignore = []  # lint时忽略
 
@@ -750,6 +816,7 @@ unfixable = ["F401"]  # 格式化时忽略F401
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [format]
+# Like Black, use double quotes for strings.
 quote-style = "single"
 
 # Like Black, indent with spaces, rather than tabs.
@@ -776,17 +843,20 @@ docstring-code-format = false
 docstring-code-line-length = "dynamic"
 ```
 
-| --extend-select<br />[lint] select | 命令行库                     | 简介                           |
-| ---------------------------------- | ---------------------------- | ------------------------------ |
-| F                                  | pyflakes                     | 提供了一些比较基础的问题检查。 |
-| I                                  | isort                        | 对 import 语句进行排序。       |
-| UP                                 | pyupgrade                    | 提示新版本的 Python 语法。     |
-|                                    |                              |                                |
-| E,W                                | pycodestyle errors, warnings | PEP8 检查。                    |
-| N                                  | pep8-naming                  | PEP8 命名规范检查。            |
-| PL                                 | Pylint                       | 知名静态代码检查器。           |
-| PERF                               | pyperf                       | 检测一些性能问题。             |
-| RUF                                | Ruff                         | Ruff 社区自己实现的一些规则。  |
+| --extend-select<br />[lint] select | 命令行库                     | 简介                                              |
+| ---------------------------------- | ---------------------------- | ------------------------------------------------- |
+| F                                  | pyflakes                     | 提供了一些比较基础的问题检查。<br />Flake8的F规则 |
+| I                                  | isort                        | 对 import 语句进行排序。                          |
+| UP                                 | pyupgrade                    | 提示新版本的 Python 语法。                        |
+|                                    |                              |                                                   |
+| E,W                                | pycodestyle errors, warnings | PEP8 检查。<br />Flake8的E规则                    |
+| N                                  | pep8-naming                  | PEP8 命名规范检查。                               |
+| PL                                 | Pylint                       | 知名静态代码检查器。                              |
+| PERF                               | pyperf                       | 检测一些性能问题。                                |
+| RUF                                | Ruff                         | Ruff 社区自己实现的一些规则。                     |
+| D                                  | pydocstyle                   | 强制所有函数都必须有文档字符串                    |
+
+
 
 #### linter
 
@@ -811,6 +881,8 @@ docstring-code-line-length = "dynamic"
 <https://github.com/psf/black>
 
 统一的格式化标准，约定大于配置
+
+
 
 #### 类型检查
 
@@ -961,6 +1033,74 @@ $x^2$
 
 应该需要配置一个 host.docker.internal:7890 的代理
 有空再 find / --name "git"，看以下git配置是如何从宿主机传递的
+
+## 远程开发
+
+[文档](https://www.jetbrains.com/help/idea/2023.2/remote.html)
+
+
+
+[remote/overview](https://code.visualstudio.com/docs/remote/remote-overview)
+[remote/ssh](https://code.visualstudio.com/docs/remote/ssh)：对远程开发dev_contaienr、tunnel、ssh的总体介绍
+[Remote Development with Linux](https://code.visualstudio.com/docs/remote/linux)：主要讲了前置条件prerequisites
+
+[remote/ssh tutorials#Remote development over SSH](https://code.visualstudio.com/docs/remote/ssh-tutorial)
+	[remote-ssh插件](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)：要求已在客户端和服务端配置好ssh，赋予vscode当作ssh客户端的能力
+[Tips and Tricks](https://code.visualstudio.com/docs/remote/troubleshooting)
+
+> Remote-SSH插件
+> 会安装vscode-server到服务器的~/.vscode-server目录
+> 默认会监听服务器上的一个随机 TCP 端口，然后将该端口转发到您的本地计算机，可以使用"remote.SSH.remoteServerListenOnSocket": true配置改为使用Unix socket监听而不是随机TCP端口，Unix socket会禁用连接复用
+
+[FAQ](https://code.visualstudio.com/docs/remote/faq)
+
+
+
+```vscode
+# vscode命令
+Remote-SSH: Connect to Host  # ssh -p xxx nemesis@192.168.xx.xx
+Remote-SSH: Open Configuration File
+Remote-SSH: Uninstall VS Code Server from Host
+```
+
+
+
+```bash
+$ code --help
+code 1.108.0
+Usage: code [options] [paths...]
+
+To read from stdin, append '-' (e.g. 'ps aux | grep code | code -')
+
+Options
+  -d --diff <file> <file>                    Compare two files with each other.
+  -m --merge <path1> <path2> <base> <result> Perform a three-way merge by providing paths for two modified versions of a file, the common origin of both
+                                             modified versions and the output file to save merge results.
+  -a --add <folder>                          Add folder(s) to the last active window.
+  -g --goto <file:line[:character]>          Open a file at the path on the specified line and character position.
+  -n --new-window                            Force to open a new window.
+  -r --reuse-window                          Force to open a file or folder in an already opened window.
+  -w --wait                                  Wait for the files to be closed before returning.
+  -h --help                                  Print usage.
+
+Extensions Management
+  --list-extensions                   List the installed extensions.
+  --show-versions                     Show versions of installed extensions, when using --list-extensions.
+  --category <category>               Filters installed extensions by provided category, when using --list-extensions.
+  --install-extension <ext-id | path> Installs or updates an extension. The argument is either an extension id or a path to a VSIX. The identifier of an
+                                      extension is '${publisher}.${name}'. Use '--force' argument to update to latest version. To install a specific version
+                                      provide '@${version}'. For example: 'vscode.csharp@1.2.3'.
+  --uninstall-extension <ext-id>      Uninstalls an extension.
+  --update-extensions                 Update the installed extensions.
+
+Troubleshooting
+  -v --version                            Print version.
+  --verbose                               Print verbose output (implies --wait).
+  -s --status                             Print process usage and diagnostics information.
+  --locate-shell-integration-path <shell> Print the path to a terminal shell integration script. Allowed values are 'bash', 'pwsh', 'zsh' or 'fish'.
+```
+
+
 
 ## 问题
 

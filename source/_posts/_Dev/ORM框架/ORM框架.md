@@ -83,9 +83,11 @@ addresses: Mapped[list['Address']] = relationship(
 
 ### sqlalchemy2.1
 
-[文档](https://docs.sqlalchemy.org/en/20/)
+[文档](https://docs.sqlalchemy.org/en/20/)	|	[youtube#SQLAlchemy 2.0 by Mike Bayer 2022](https://www.youtube.com/watch?v=1Va493SMTcY&t=7413s)
 
 [DBAPI Support PEP249](https://peps.python.org/pep-0249/): psycopy2、psycopy、pg8000、asyncpg、psycopycffi
+
+
 
 
 

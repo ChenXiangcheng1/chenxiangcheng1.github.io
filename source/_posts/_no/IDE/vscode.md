@@ -664,23 +664,43 @@ TODO: 看文档 [lldb#doc](https://lldb.llvm.org/)
 
 [lldb-dap#github](https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-dap)
 
+
+
+### Vibe Coding
+
+GitHub Copilot：inline
+	inline：(next edit suggestions)NES
+
+GitHub Copilot Chat：Chat
+	ask、
+	agent：自主 思考 打地基
+	edit：精修
+
+
+
 ### Python
 
-TODO：看vscode文档#Python  (quick start看完了)
+TODO：
+看vscode文档#Python
+	[quick start](https://code.visualstudio.com/docs/python/python-quick-start) 看完了，剩下的感觉也不需要，就 [settings reference](https://code.visualstudio.com/docs/python/settings-reference) 看配置
+有需要的话看pylance配置 [marketplace#Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
 
-TODO：Python Debug插件、pytest
+
+
+#### jupyter
+
+vscode-jupyter插件+`uv add --dev ipykernel`
+
+vscode-jupyter插件还会安装插件：Jupyter Keymap、Jupyter Notebook Renderers、~~Jupyter Cell Tags、Jupyter Slide Show~~
+	Jupyter Cell Tags、Jupyter Slide Show 对我来说没用，是用于nbconvert导出的slide幻灯片的
+	推荐再安装 Jupyter PowerToys插件：支持group、左侧activity bar的jupyter-contextual help折叠栏、kernel管理
+	vscode-jupyter用法：下方还会显示jupyter variables、jupyter不仅支持Python还支持Julia, R, and C#
+
+
 
 #### LSP
 
 Language Server Protocol：将静态分析服务与IDE解耦
-
-##### Pylance
-
-[vscode插件](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
-
-Python Languase Server ，基于**类型检查器 pyright**
-
-F2 重构
 
 
 
@@ -688,6 +708,35 @@ F2 重构
 
 ~~[github](https://github.com/astral-sh/ruff)~~	|	[文档](https://docs.astral.sh/ruff/configuration/#fix-safety)
 linter代码检查 和 formatter格式化工具
+
+vscode-ruff插件还会安装插件：Python、Pylance(IntelliSense)、~~Python Debugger、Python Environment~~
+	**最佳实践：使用pylance作为智能感知+ruff作为linter和formatter**
+
+
+
+> vscode-Python插件
+>
+> Python: Select Interpreter
+> Python: Start Terminal REPL
+> Python: Run Python File in Terminal
+> Python: Configure Tests  # 支持unittest、pytest  # TODO: 这部分有需求再看
+> Python: Create Terminal
+
+> ~~vscode-Python Environment(preview)插件~~
+> 为特定文件、文件夹、项目指定虚拟环境
+> 	插件支持的环境管理工具：venv、conda、pyenv、poetry、system、pipenv
+> 包管理
+> 总：用conda可以用，用uv不需要该插件
+
+> Python Debugger
+> 通过Debug Activity Bar在.vscode/launch.json创建下就好了
+
+> [marketplace#Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
+> Python Languase Server ，基于类型检查器 pyright
+> 	~~vscode还在推IntelliCode(最后更新在2024)作为智能感知~~
+> 使用：
+> 	"python.analysis.autoImportCompletions": true,  // 自动导入建议居然默认是false
+> 	F2 重构
 
 
 
@@ -864,6 +913,8 @@ docstring-code-line-length = "dynamic"
 
 ##### pyline
 
+
+
 #### format
 
 ##### autopep8
@@ -886,13 +937,11 @@ docstring-code-line-length = "dynamic"
 
 #### 类型检查
 
-alpha阶段：  
-Pyrefly from Meta  
-Ty from Ruff's Astral Labs  
+alpha阶段： 
+Pyrefly from Meta
+Ty from Ruff's Astral Labs
 
-[pyrefly#vscode插件](https://marketplace.visualstudio.com/items?itemName=meta.pyrefly)
-[pyrefly#官网](https://pyrefly.org/)
-[pyrefly#github](https://github.com/facebook/pyrefly)
+[pyrefly#vscode插件](https://marketplace.visualstudio.com/items?itemName=meta.pyrefly)	|	[pyrefly#官网](https://pyrefly.org/)	|	[pyrefly#github](https://github.com/facebook/pyrefly)
 
 ##### pyright
 
@@ -903,6 +952,8 @@ vscode-python类型检查默认就使用pyright
 [个人 github](https://github.com/matangover/mypy-vscode)
 
 据说pylance比mypy快
+
+
 
 ### Golang
 
@@ -1195,6 +1246,14 @@ json打开方式：ctrl+shift+p keyboard.json
     "when": "canNavigateBack"
 }
 ```
+
+问题1：quick fix的 `ctrl + .` 和 windows切换 。. 的快捷键冲突
+解决：修改windows按键设置中/英文标点切换为无
+
+问题2：vscode terminal的 `ctrl + space` 和windows快捷键冲突
+解决：修改windows按键设置中/英文切换为无
+
+
 
 ## 以下是我还没整理的
 

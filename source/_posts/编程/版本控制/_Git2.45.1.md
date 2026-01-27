@@ -449,9 +449,9 @@ rebase：嫁接
 ```bash
 git init
 git add ./README.md
-git commit -m "Initial commit"
+git commit -m "initial commit"
 git remote add origin git@github.com:TrackyTian/testSSH.git  # 添加远程主机名
-git branch -m main  # 分支重命名
+git branch -M main  # 分支重命名
 git push origin main:main  # 需要credentials(推荐使用person access token)
 git checkout -b dev  # 切换并根据当前分支创建分支
 ```

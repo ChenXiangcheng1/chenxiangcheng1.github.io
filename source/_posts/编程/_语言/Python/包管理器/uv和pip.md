@@ -207,9 +207,10 @@ Use `uv help <command>` for more information on a specific command.
 |                               |        | --index-url                                                  | Deprecated弃用                                               |
 | uv remove <packages>          |        |                                                              | 从项目中移除依赖                                             |
 |                               |        | --dev                                                        | 添加需求requirements到开发依赖组                             |
-| uv sync                       |        |                                                              | 同步项目的依赖项和虚拟环境.venv<br />只有在手动、git修改了pyproject.toml后才需要手动调用`uv lock`、再调用`uv sync` |
+| uv sync                       |        |                                                              | 基于uv.lock同步项目的依赖项和虚拟环境.venv<br />只有在手动、git修改了pyproject.toml后才需要手动调用`uv lock`、再调用`uv sync` |
 |                               |        | --no-dev                                                     |                                                              |
 |                               |        | --only-dev                                                   |                                                              |
+|                               |        | --dry-run                                                    | 试运行                                                       |
 | uv lock                       |        |                                                              | 为项目依赖创建lockfile<br />更新依赖版本生成lockfile，但不动.venv，用于检测包冲突 |
 |                               |        | --check                                                      | up-to-date                                                   |
 |                               |        | --check-exists                                               |                                                              |
@@ -241,7 +242,7 @@ Use `uv help <command>` for more information on a specific command.
 |                               |        | check                                                        | 检查当前环境中的包是否兼容                                   |
 |                               |        | tree                                                         | 查看环境的依赖关系树                                         |
 |                               |        | compile<br />uv pip compile pyproject.toml requirements-dev.in -o requirements-dev.txt | 将依赖项编译到 lockfile 中                                   |
-| uv venv <path>                |        |                                                              | 创建虚拟环境.venv<br />`source <.venv>/bin/activate` 激活虚拟环境 |
+| uv venv <path>                |        |                                                              | 创建虚拟环境.venv<br />`source <.venv>/bin/activate` 激活虚拟环境<br />`<.venv>/bin/pip list` 查看虚拟环境中已安装包 |
 |                               |        | --python <version>                                           | 在site-packages中指定python版本                              |
 | uv build <SRC>                |        |                                                              | 编译python包 distribution archives                           |
 |                               |        | --out-dir <OUT_DIR>                                          |                                                              |
@@ -264,6 +265,13 @@ python -m venv .venv
 source .venv/bin/activate
 edit pyproject.toml
 pip install -e .
+```
+
+```bash
+# 常用命令
+uv sync
+uv python pin 3.13
+uv run python main.py
 ```
 
 

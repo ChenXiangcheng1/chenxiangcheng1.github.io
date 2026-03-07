@@ -8,6 +8,7 @@
 
 优点：节约内存、自定义工具链
 
+
 ## 配置
 
 对env起作用的配置文件顺序：`/etc/bash.bashrc`、`~/.bashrc`、`~/.bash_profile`

@@ -841,6 +841,15 @@ Untracked files:
 
 
 
+问题7：windows gitbash 中 执行 `source D:/xx/mambaforge/current/Scripts/activate mamba_python312`, 遇到Unicode抛出 `UnicodeEncodeError: 'gbk' codec can't encode character '\ue0a0'`
+
+```C:\Users\xxx\.bashrc
+# C:\Users\xxx\.bashrc
+export PYTHONIOENCODING=utf-8  # 原来是空
+```
+
+
+
 # Github
 
 [docs](https://docs.github.com/zh)  | [skills.github.com](https://skills.github.com/)

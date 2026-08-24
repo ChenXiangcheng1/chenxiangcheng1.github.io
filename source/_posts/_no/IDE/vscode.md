@@ -940,6 +940,8 @@ docstring-code-line-length = "dynamic"
 
 alpha阶段： 
 Pyrefly from Meta
+
+beta阶段:
 Ty from Ruff's Astral Labs
 
 [pyrefly#vscode插件](https://marketplace.visualstudio.com/items?itemName=meta.pyrefly)	|	[pyrefly#官网](https://pyrefly.org/)	|	[pyrefly#github](https://github.com/facebook/pyrefly)

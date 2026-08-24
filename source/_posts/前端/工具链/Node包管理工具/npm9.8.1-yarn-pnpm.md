@@ -43,7 +43,7 @@ pnpm 原理是利用了软硬连接，因为硬链接不能跨盘符，所以会
 
 [pnpm官方文档](https://pnpm.io/zh/cli/add)
 
-最佳实践：`npx pnpm install`
+最佳实践：`npx pnpm install`, npx 非常适合脚手架、一次性工具
 
 
 
@@ -72,3 +72,52 @@ pnpm 原理是利用了软硬连接，因为硬链接不能跨盘符，所以会
 [github](https://github.com/raineorshine/npm-check-updates)
 
 `npx npm-check-updates`
+
+
+
+## skills
+
+[官网](https://www.skills.sh/trending)
+
+[skills#github](https://github.com/vercel-labs/skills): 对 `skills/<category>/<category>/<name>/SKILL.md` 搜索skill
+
+```package.json
+"bin": {
+  "skills": "./bin/cli.mjs",
+  "add-skill": "./bin/cli.mjs"
+}  # 表示该npm package暴露了两个CLI命令skills、add-skill(等价)
+```
+
+入口: src/cli.ts
+
+
+
+> 还不支持 deepseek harness
+
+
+
+使用
+
+```bash
+npx skills --help
+
+npx skills list
+
+npx skills find --owner vercel --full-depth  # 交互式搜索
+
+# package: https://github.com/vercel-labs/agent-skills git@github.com:vercel-labs/agent-skills.git ./my-local-skills
+npx skills add <package> --list  # 不安装列出目标仓库里可用skill
+GITHUB_TOKEN=xxx npx skills add <package> -g --skill <skills> --agent claude-code  # 默认安装到./<agent>/skills/，全局安装到~/<agent>/skills/	
+
+npx skills use <package> --skill <skill> --agent claude-code
+npx skills use <package>@<skill>  # 输出prompt
+
+npx skills remove  # 交互式移除
+
+npx skills update # 交互式升级
+
+npx skills init <sub_dir>  # 在sub_dir创建一个SKILL.md模板
+```
+
+
+

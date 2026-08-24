@@ -89,8 +89,8 @@ General Options:
 | ------------------------------------- | ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | pip install  <package \| path>        |              |                                                              |                                                              |
 |                                       |              | -r <requirements.txt>                                        | 从给定的 requirements file下载包                             |
-|                                       |              | -e<br />pip install -e .                                     | 可编辑模式<br />site-packages是python软件包的安装目录，一般来说其中会存放一份代码副本，而-e可编辑模式会存放一份指向项目源代码的软连接(符号链接) |
-|                                       |              | --index-url https://pypi.tuna.tsinghua.edu.cn/simple<br />默认 https://pypi.org/simple |                                                              |
+|                                       |              | -e<br />pip install -e .                                     | 可编辑模式<br />site-packages是python软件包的安装目录，一般来说其中会存放一份**代码副本**，而-e可编辑模式会存放一份指向项目源代码的**软连接**(符号链接) |
+|                                       |              | --index-url <https://pypi.tuna.tsinghua.edu.cn/simple><br />默认 <https://pypi.org/simple> |                                                              |
 | pip freeze > requirements.txt         |              |                                                              | 输出已安装的包和位置，可重定向为requirements文件             |
 | pip list                              |              |                                                              | 输出已安装的包和版本                                         |
 |                                       |              | -o                                                           | 显示Outdated Packages过期包                                  |
@@ -203,11 +203,11 @@ Use `uv help <command>` for more information on a specific command.
 | **uv add <packages>**         |        |                                                              | 添加到项目的虚拟环境中，会修改pyproject.toml并sync同步.venv<br />source .venv/bin/active 后可调用 |
 |                               |        | -r <requirements.txt>                                        | 从给定的 requirements file下载包                             |
 |                               | -      | --dev                                                        | 添加需求requirements到开发依赖组<br />**推荐 ruff、ipykernel** |
-|                               |        | --default-index https://pypi.tuna.tsinghua.edu.cn/simple<br />默认 https://pypi.org/simple<br />https://mirrors.aliyun.com/pypi/simple/ |                                                              |
+|                               |        | --default-index <https://pypi.tuna.tsinghua.edu.cn/simple><br />默认 <https://pypi.org/simple><br /><https://mirrors.aliyun.com/pypi/simple/> |                                                              |
 |                               |        | --index-url                                                  | Deprecated弃用                                               |
 | uv remove <packages>          |        |                                                              | 从项目中移除依赖                                             |
 |                               |        | --dev                                                        | 添加需求requirements到开发依赖组                             |
-| uv sync                       |        |                                                              | 基于uv.lock同步项目的依赖项和虚拟环境.venv<br />只有在手动、git修改了pyproject.toml后才需要手动调用`uv lock`、再调用`uv sync` |
+| uv sync                       |        |                                                              | 同步项目的依赖项和虚拟环境.venv、`uv pip install -e .  # editable install`<br />基于uv.lock同步项目的依赖项和虚拟环境.venv<br />只有在手动、git修改了pyproject.toml后才需要手动调用`uv lock`、再调用`uv sync` |
 |                               |        | --no-dev                                                     |                                                              |
 |                               |        | --only-dev                                                   |                                                              |
 |                               |        | --dry-run                                                    | 试运行                                                       |
@@ -260,6 +260,16 @@ Use `uv help <command>` for more information on a specific command.
 |                               |        |                                                              |                                                              |
 
 ```bash
+执行方式不同:  
+- lib项目: 作为 SDK import 执行
+    [build-system]
+- package项目: 非python package表示可安装包, 作为CLI工具, `pip install -e .  # editable安装`, hello-uv-package执行hello_uv_package.main()  
+    [build-system]
+    [project.scripts]
+- app项目: `python main.py` 脚本
+```
+
+```bash
 # 原始方式
 python -m venv .venv
 source .venv/bin/activate
@@ -268,9 +278,10 @@ pip install -e .
 ```
 
 ```bash
-# 常用命令
+# 常用命令 现代方式 创pyproject.toml
 uv sync
 uv python pin 3.13
+# source .venv/bin/activate
 uv run python main.py
 ```
 

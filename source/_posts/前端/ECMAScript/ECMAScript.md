@@ -1,9 +1,9 @@
 # ECMAScript
 
->历史：
+>历史：  
 >1996 年 11 月，JavaScript 的创造者 Netscape 公司(倒闭已被收购)，决定将 JavaScript 提交给标准化组织 ECMA，希望这种语言能够成为国际标准。次年，ECMA 发布 262 号标准文件（ECMA-262）的第一版，规定了浏览器脚本语言的标准，并将这种语言称为 ECMAScript，这个版本就是 1.0 版。JavaScript 是语言，ECMAScript 是标准化组织规定的**标准**。
 
-ECMAScript 的新特性由 ECMA TC39 委员会进行组织工作
+ECMAScript 的新特性由 ECMA TC39 委员会进行组织工作  
 Proposals提案：[tc39/proposals](https://github.com/tc39/proposals)
 
 >- Stage 0/Strawperson： 潜在的可能被纳入规范的一些想法。
@@ -11,7 +11,6 @@ Proposals提案：[tc39/proposals](https://github.com/tc39/proposals)
 >- Stage 2/Draft：经过上一步验证讨论后，这一阶段开始起草语言层面的语义语法，准备正式的规范文档。
 >- Stage 3/Candidate：提案进入到了候选阶段。开始接收一些反馈对提案进行完善。
 >- Stage 4/Finished：可以被纳入到正式的 ECMAScript 语言规范中了。
-
 
 
 ## ECMAScript2015 (ES6)
@@ -33,7 +32,7 @@ let obj1 = {
     str: "123",
     1: 12  // 数字键
 }
-console.log(obj1[1]); // 输出数字键要使用[]
+console.log(obj1[1]); // 输出数字键要使用[]索引
 obj1.myfunc();  // 其他键使用.
 ```
 
@@ -43,7 +42,7 @@ obj1.myfunc();  // 其他键使用.
 
 |       | ~~不用修饰符~~ | ~~var~~                                                      | let            | const                        |
 | ----- | -------------- | ------------------------------------------------------------ | -------------- | ---------------------------- |
-| 语义  |                |                                                              |                | 声明只读常量，必须初始化赋值 |
+| 语义  |                |                                                              |                | 声明只读常量(可原地变化)，必须初始化赋值 |
 | 机制  |                | 变量提升                                                     | 不存在变量提升 | 不存在变量提升               |
 | scope | 全局作用域     | 在函数外声明为全局作用域(会变量泄露)<br />在函数内声明为局部作用域 | 块级作用域     |                              |
 |       |                |                                                              |                |                              |
@@ -58,6 +57,8 @@ obj1.myfunc();  // 其他键使用.
 
 
 ### 解构赋值
+
+Destructuring: ES6允许按照一定模式，从**数组**和**对象**中提取值，对变量进行赋值
 
 对数组解构赋值
 
@@ -411,4 +412,242 @@ var result = fun();
 result(); // 打印：999
 ```
 
+
+# 需要再次整理的内容
+
+#### 方法调用的三种方式（重点、常用）
+
+>三种调用方式：
+>
+>- 同步调用：一种阻塞式调用，**调用方/客户方要等待对方执行完毕才返回**，它是一种单向调用；
+>- 回调：一种双向调用模式，也就是说，**被调用方在接口被调用时也会调用对方的接口**；
+>- 异步调用：一种类似消息或事件的机制，不过它的调用方向刚好相反，**接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（即调用客户方的接口）**。
+>
+>回调和异步调用的关系非常紧密：**使用回调来实现异步消息的注册，通过异步调用来实现消息的通知。**
+
+##### 回调函数
+
+回调函数，解决 this 指向问题，回调函数一般使用箭头函数
+
+此时回调函数中的 this是从她们的语法范围内获取她们的值，不在乎叫什么，不在乎在哪里定义
+
+也就是指向了定义时的对象
+
+```javascript
+// 解决方法2 使用回调函数调用this
+let obj3 = {
+    param1: "111",
+    myfunc: function() {
+        setTimeout(() => {
+            console.log(this.param1)
+        }, 1000);
+    }
+}
+obj3.myfunc();
+```
+
+###### 定时器
+
+异步回调
+
+Interval：(时间上的) 间隔
+
+- setTimeout(回调函数, 时间) 		一个定时器
+- setInterval(回调函数, 时间) 		循环定时器，返回 intervalID
+- clearInterval(intervalID) 			根据intervalID取消定时器
+
+##### Promise对象
+
+Promise对象，表示一个异步操作。对象和函数的区别就是对象可以保存状态，函数不可以（闭包除外）并未剥夺函数return的能力，因此无需层层传递callback，进行回调获取数据
+
+```javascript
+new Promise( // new时，不用调用，Promise中的函数就已经执行了
+  function (resolve, reject) {
+    // 一段耗时的异步操作
+    resolve('要返回的数据可以任何数据例如接口返回数据') // 数据处理完成
+    // reject('失败') // 数据处理出错
+  }
+).then(
+  (res) => {console.log(res)},  // 成功
+  (err) => {console.log(err)} // 失败
+)
+```
+
+Promise有三种状态：pending、fulfilled、rejected
+
+resolve：在异步操作成功时调用，将Promise对象的状态从“pending”变为“fulfilled”，并将异步操作的结果，作为参数传递出去；
+reject：在异步操作失败时调用，将Promise对象的状态从“pending”变为“rejected”，并将异步操作报出的错误，作为参数传递出去；
+
+then方法：其中有箭头函数，参数是resolve返回的结果，then和回调函数一个意思
+
+###### 回调和Promise异步比较
+
+```javascript
+/***
+   第一步：找到北京的id
+   第二步：根据北京的id -> 找到北京公司的id
+   第三步：根据北京公司的id -> 找到北京公司的详情
+   目的：模拟链式调用、回调地狱
+ ***/
+ 
+ // 回调地狱
+ // 请求第一个API: 地址在北京的公司的id
+ $.ajax({
+   url: 'https://www.easy-mock.com/mock/5a52256ad408383e0e3868d7/lagou/city',
+   success (resCity) {
+     let findCityId = resCity.filter(item => {
+       if (item.id == 'c1') {
+         return item
+       }
+     })[0].id
+     
+     $.ajax({
+       //  请求第二个API: 根据上一个返回的在北京公司的id “findCityId”，找到北京公司的第一家公司的id
+       url: 'https://www.easy-mock.com/mock/5a52256ad408383e0e3868d7/lagou/position-list',
+       success (resPosition) {
+         let findPostionId = resPosition.filter(item => {
+           if(item.cityId == findCityId) {
+             return item
+           }
+         })[0].id
+         // 请求第三个API: 根据上一个API的id(findPostionId)找到具体公司，然后返回公司详情
+         $.ajax({
+           url: 'https://www.easy-mock.com/mock/5a52256ad408383e0e3868d7/lagou/company',
+           success (resCom) {
+             let comInfo = resCom.filter(item => {
+               if (findPostionId == item.id) {
+                 return item
+               }
+             })[0]
+             console.log(comInfo)
+           }
+         })
+       }
+     })
+   }
+ })
+```
+
+```javascript
+doSomething(function(result) {
+  doSomethingElse(result, function(newResult) {
+    doThirdThing(newResult, function(finalResult) {
+      console.log('Got the final result: ' + finalResult);
+    }, failureCallback);
+  }, failureCallback);
+}, failureCallback);
+```
+
+
+
+```javascript
+    // Promise 写法
+    // 第一步：获取城市列表
+    const cityList = new Promise((resolve, reject) => {
+        $.ajax({
+            url: 'https://www.easy-mock.com/mock/5a52256ad408383e0e3868d7/lagou/city',
+            success (res) {
+                resolve(res)
+            }
+        })
+    })
+
+    // 第二步：找到城市是北京的id
+    cityList.then(res => {
+        let findCityId = res.filter(item => {
+            if (item.id == 'c1') {
+                return item
+            }
+        })[0].id
+        findCompanyId().then(res => {
+            // 第三步（2）：根据北京的id -> 找到北京公司的id
+            let findPostionId = res.filter(item => {
+                if(item.cityId == findCityId) {
+                    return item
+                }
+            })[0].id
+            // 第四步（2）：传入公司的id
+            companyInfo(findPostionId)
+        })
+    })
+
+    // 第三步（1）：根据北京的id -> 找到北京公司的id
+    function findCompanyId () {
+        let aaa = new Promise((resolve, reject) => {
+            $.ajax({
+                url: 'https://www.easy-mock.com/mock/5a52256ad408383e0e3868d7/lagou/position-list',
+                success (res) {
+                    resolve(res)
+                }
+            })
+        })
+        return aaa
+    }
+
+    // 第四步：根据上一个API的id(findPostionId)找到具体公司，然后返回公司详情
+    function companyInfo (id) {
+        let companyList = new Promise((resolve, reject) => {
+            $.ajax({
+                url: 'https://www.easy-mock.com/mock/5a52256ad408383e0e3868d7/lagou/company',
+                success (res) {
+                    let comInfo = res.filter(item => {
+                        if (id == item.id) {
+                            return item
+                        }
+                    })[0]
+                    console.log(comInfo)
+                }
+            })
+        }
+    }
+```
+
+```javascript
+// Promise chain 链
+doSomething().then(function(result) {
+  return doSomethingElse(result);
+})
+.then(function(newResult) {
+  return doThirdThing(newResult);
+})
+.then(function(finalResult) {
+  console.log('Got the final result: ' + finalResult);
+})
+.catch(failureCallback);
+```
+
+##### ES7 async await 协程
+
+async 用于**定义异步函数**，该函数一定会**返回Promise**。
+
+await 操作符用于**等待一个Promise 对象**。它只能在异步函数 async function 中使用。
+
+###### 比较 Promise和 async
+
+```javascript
+function getProcessedData(url) {
+  return downloadData(url) // returns a promise
+    .catch(e => {
+      return downloadFallbackData(url)  // returns a promise
+        .then(v => {
+          return processDataInWorker(v); // returns a promise
+        }); 
+    })
+    .then(v => {
+      return processDataInWorker(v); // returns a promise
+    });
+}
+```
+
+```javascript
+async function getProcessedData(url) {
+  let v;
+  try {
+    v = await downloadData(url); 
+  } catch (e) {
+    v = await downloadFallbackData(url);
+  }
+  return processDataInWorker(v);
+}
+```
 

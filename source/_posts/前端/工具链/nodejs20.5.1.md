@@ -13,7 +13,6 @@ cover:
 ---
 
 
-
 # Node.js20.5.1
 
 Node.js 是一个开源、跨平台的事件驱动 I/O 的服务端  JavaScript 运行时环境，基于 Google 的 V8 引擎。后端
@@ -29,6 +28,11 @@ V8 引擎：执行 Javascript 的速度非常快性能非常好、单线程运�
 [Node.js ECMAScript2015 兼容性表](https://node.green/#ES2015)
 
 [Node.js ECMAScript2024 兼容性表](https://node.green/#ES2024)
+
+## corepack
+
+nodejs分发包括npm、corepack
+
 
 
 
@@ -54,7 +58,6 @@ An asynchronous event driven JavaScript runtime designed to build scalable netwo
 | node .\demo.js                           | 执行                                               |
 | node                                     | 进入node环境                                       |
 | .exit                                    | 退出node环境                                       |
-
 
 
 ### Node 结合 ES6的语法特点

@@ -342,7 +342,7 @@ RSA handshake:
 
 1. 客户端发送Client Hello消息，并将支持的cipher suite发送给服务器
 2. 服务器选择一套浏览器支持的加密算法，并将**SSL证书(服务器公钥)**发送给客户端
-3. 客户端通过**CA数字签名**验证SSL证书合法性，并生成预主密钥(Pre-Master Secret)(派生出会话密钥 对称密钥)，**使用服务器公钥加密加密预主密钥发送给服务器**
+3. 客户端通过**CA(Certificate Authority)数字签名**验证SSL证书合法性，并生成预主密钥(Pre-Master Secret)(派生出会话密钥 对称密钥)，**使用服务器公钥加密加密预主密钥发送给服务器**
 4. 服务器使用**服务器私钥解密**得到预主密钥(派生出会话密钥 对称密钥)，验证哈希，预主密钥加密响应消息回发客户端
 5. 客户端解密响应消息，并对消息进行验真(对源服务器的身份进行身份验证)，之后进行加密交互数据
 
@@ -451,6 +451,64 @@ openssl dgst -sha256 test1.txt
 openssl s_client -connect investorservice.cfmmc.com:443  # 连接服务器并显示完整TLS握手信息
 openssl s_client -connect investorservice.cfmmc.com:443 -tls1_3  # 测试是否支持TLSv1.3
 ```
+
+#### 实战
+
+上面都是理论看看实战
+
+证书标准: X.509  
+
+##### 生成证书
+
+Fiddler自建证书
+
+
+pve自建证书:  
+/etc/pve/pve-root-ca.pem  # X.509数字证书文件,含有公钥  # 根证书(需要被客户端信任)
+/etc/pve/priv/pve-root-ca.key
+/etc/pve/local/pve-ssl.pem  # 指向node01/pve-ssl.pem
+/etc/pve/local/pve-ssl.key
+/etc/pve/nodes/node01/pve-ssl.pem  # node01服务器数字证书
+/etc/pve/nodes/node01/pve-ssl.key
+
+```conf
+# /etc/nginx/conf.d/default.conf
+server {
+    charset utf-8;
+    listen 443 ssl;
+    server_name node01.pve.local;  # Common Name(CN)(PVE CN默认是主机名)
+
+    ssl_certificate "/etc/pve/local/pve-ssl.pem"  # 服务器数字证书(如果是自签名证书还需要客户端添加根证书到信任列表, 信任后客户端使用数字证书中的公钥来解密数字签名)
+    ssl_certificate_key "/etc/pve/local/pve-ssl.key"  # 私钥(用于解密会话密钥)
+
+    location / {
+        root /var/www/html;
+    }
+}
+```
+
+公共CA(客户端自动受信):  
+    ACME(Automated Certificate Management Environment)服务端  
+        challenge type: http-01(需要公网IP)、dns-01(需要配置DNS记录)  
+        Let's Encrypt V2  
+        ZeroSSL  
+    ACME客户端  
+        acme.sh  
+            [acme.sh#archlinux](https://wiki.archlinux.org/title/Acme.sh)  
+            [acme.sh#github wiki](https://github.com/acmesh-official/acme.sh/wiki/dnsapi)  
+        关于PVE的ACME dns-01配置是通过: 
+            Datacenter-ACME-Challenge Plugins(添加ACME DNS插件 创建PluginID), 指定对应域名解析商的DNS API  
+            再到node01-System-Certificates-ACME-add: ChallengeType=DNS,Plugin=PluginID,Domain=xx.com  
+    中间CA证书
+
+
+#####  管理证书
+
+windows管理自签名证书:  
+* win+r+mmc(windows管理控制台) - 文件 - 添加/删除管理单元 - 证书  
+* certmgr.msc - 受信任的根证书颁发机构 - 证书 (当前用户)
+* 管理计算机证书cerlm - 受信任的根证书颁发机构 - 证书 (本地计算机)(推荐)
+
 
 ### quic
 

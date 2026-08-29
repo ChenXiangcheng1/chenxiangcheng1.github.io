@@ -3,6 +3,7 @@
 **现在不推荐使用**
 nvm-windows 是 **node 版本管理工具**，目前项目开发组转去开发新工具 [Runtime](https://github.com/coreybutler/nvm-windows/wiki/Runtime) 了
 
+[用法](https://github.com/coreybutler/nvm-windows#usage)
 
 
 ## 配置
@@ -11,7 +12,6 @@ nvm-windows 是 **node 版本管理工具**，目前项目开发组转去开发�
 nvm node_mirror https://npmmirror.com/mirrors/node/
 nvm npm_mirror https://npmmirror.com/mirrors/npm/
 ```
-
 
 
 ## 用法
@@ -23,4 +23,10 @@ nvm npm_mirror https://npmmirror.com/mirrors/npm/
 ## 其他Node版本管理工具
 
 [各种Node版本管理工具](https://nodejs.org/en/download/package-manager)：
-推荐：Scoop、Docker、fnm
+推荐：
+    Scoop、Docker
+    fnm(二进制程序)、mise
+不推荐
+    nvm(每次启动shell source一段脚本 慢)  
+    [nvs](https://github.com/jasongin/nvs/)  
+

@@ -124,13 +124,11 @@ trusted-host=mirrors.aliyun.com  # 不推荐，建议临时换源
 [github](https://github.com/astral-sh/uv)	|	[docs](https://docs.astral.sh/uv/guides/)
 
 
-
 ```bash
 # 安装后可以配置Shell autocompletion
 echo 'eval "$(uv generate-shell-completion bash)"' >> ~/.bashrc  # bash
 echo 'uv generate-shell-completion fish | source' > ~/.config/fish/completions/uv.fish  # fish
 ```
-
 
 
 ### 命令
@@ -238,7 +236,7 @@ Use `uv help <command>` for more information on a specific command.
 |                               |        | uninstall                                                    |                                                              |
 |                               |        | freeze                                                       | 列出虚拟环境中已安装包(requirements格式)                     |
 |                               |        | list                                                         | 列出虚拟环境中已安装包(表格格式)                             |
-|                               |        | show <package>                                               |                                                              |
+|                               |        | show <package>                                               | 显示已安装包的信息 |
 |                               |        | check                                                        | 检查当前环境中的包是否兼容                                   |
 |                               |        | tree                                                         | 查看环境的依赖关系树                                         |
 |                               |        | compile<br />uv pip compile pyproject.toml requirements-dev.in -o requirements-dev.txt | 将依赖项编译到 lockfile 中                                   |
@@ -259,6 +257,7 @@ Use `uv help <command>` for more information on a specific command.
 | uv help                       |        |                                                              |                                                              |
 |                               |        |                                                              |                                                              |
 
+
 ```bash
 执行方式不同:  
 - lib项目: 作为 SDK import 执行
@@ -277,6 +276,7 @@ edit pyproject.toml
 pip install -e .
 ```
 
+
 ```bash
 # 常用命令 现代方式 创pyproject.toml
 uv sync
@@ -284,7 +284,6 @@ uv python pin 3.13
 # source .venv/bin/activate
 uv run python main.py
 ```
-
 
 
 ### 项目

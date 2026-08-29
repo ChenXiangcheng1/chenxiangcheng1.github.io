@@ -259,7 +259,28 @@ launch进行调试
 
 ### Comment Translate
 
-能够翻译悬浮窗口中的API文档 (强烈推荐)
+浏览: Hover悬浮翻译(Translate Hover Content 好用)、注释浏览模式(支持对照显示 占位显示)、Markdown翻译预览
+翻译: 翻译变量命名、全文替换翻译、翻译剪切板、GitHub Copilot Chat: @translate  # 使用大模型翻译
+
+```json
+//================commentTranslate 插件Start================
+"commentTranslate.hover.enabled": true,
+"commentTranslate.hover.concise": false,
+"commentTranslate.hover.string": true,
+"commentTranslate.hover.content": true,
+"commentTranslate.multiLineMerge": true,
+"commentTranslate.targetLanguage": "zh-CN",
+"commentTranslate.source": "Google",
+"commentTranslate.maxTranslationLength": 1000,
+"commentTranslate.browse.enabled": false,
+"commentTranslate.markdown.scopeFallback": true,
+// "deeplTranslate.apiFree": false,
+// "deeplTranslate.authKey": "n_568590ZQSNQ3AGZtNp9kpI-VaamX1Wv5ThyRR39EQ",
+// "deeplTranslate.preserveFormatting": "1",
+// "deeplTranslate.formality": "default",
+//================commentTranslate 插件 End================
+```
+
 
 ### Vim
 

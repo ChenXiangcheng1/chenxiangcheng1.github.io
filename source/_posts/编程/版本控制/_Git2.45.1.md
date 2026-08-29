@@ -53,6 +53,7 @@
 	quotepath = false  # 取消文件名字符转义，使 git status 能显示中文
 	editor = vim
 	# git config --global core.editor "'E:/Applications/Scoop\apps/notepadplusplus/current/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"  # 设置默认编辑器为notepad++
+  # fscache = false  # 禁用缓存会实时检查文件系统状态, 延迟换一致性
 [http]
     proxy = socks5://127.0.0.1:7890  # 可删，因为若docker内应用host.docker.internal
 [https]
@@ -69,6 +70,10 @@
 #	provider = generic
 [init]
 	defaultBranch = main  # 默认master
+[gc]
+  auto = 0  # 怀疑边清理边更新时触发unlink of file idx failed, 禁用.git空间占用会变大
+[pack]
+  threads = 1  # 单现场处理pack-xx.idx
 ```
 
 ```bash
@@ -413,6 +418,24 @@ git switch  # 替代 git checkout
 git restore  # 丢弃所有更改，恢复到最新提交状态(HEAD)
 ```
 
+### git fetch详解
+
+`git fetch [<options>] <repository> <refspec>`:  
+    释意: 从repositoty branch.main.remote下载objects(逻辑概念 blob tree commit tag) 和 refs(逻辑概念 branch tag remote.origin.fetch)  
+    使用: git fetch origin main
+
+repository: 
+    默认使用分支配置的上游(git config list --show-origin(branch.main.remote=origin表示main的remote repository是origin))  
+    未配置则使用默认remote repository名origin(git remote -v)  
+    可自定义叫upstream 还可以是gitURL  
+refspec: [+(远程仓库发生git push --force, 允许非fast-forward)]<远程src>[:<本地dst(默认refs/remotes/origin/main)>] 就是分支的tag  main:main 默认是所有(git config get --all remote.origin.fetch)  
+
+objects: .git/objects/(objects database)  
+
+refs(本地分支和远程分支):  
+    .git/HEAD 存储指向的ref: refs/heads/main  
+    .git/refs/heads/main 存commit hash  
+    .git/refs/remotes/origin/HEAD 存储指向的ref: refs/remotes/origin/main  
 
 
 ### git merge 和 rebase 的区别
@@ -631,15 +654,37 @@ git fetch origin  # 更新远程仓库分支的最新状态(引用) .git/refs/he
 git checkout -b new-branch origin/main
 ```
 
-
-
 ```bash
-git branch -d feature/baseinfo  # 删除本地分支
+git branch -d feature/baseinfo  # 删除本地分支  # # -d(safe delete已merge才能删) -D(强制删除)
 git push origin :feature/baseinfo  # 删除远程分支
 ```
 
 
+#### worktree管理
 
+```bash
+# 创建worktree
+
+CLAUDE_CODE_NEW_INIT=1 claude --tmux --worktree <worktree_name(feature-xx)> --permission-mode auto  # 一个tmux会话对应一个worktree  # 创建一个git worktree目录git_repo/.claude/worktrees/<worktree_name>/<project> checkout到 worktree-<worktree_name>分支 (branch分支解决代码版本隔离问题 + worktree解决多feature任务并行开发问题 = 给分支不同的文件视图)  # 核心命令starts an interactive session(两层tmux session>claude session)  
+
+git worktree add ../feature-auth worktree-feature-auth  # 创建一个git worktree目录 ../feature-auth/<project> checkout到 worktree-feature-auth 分支
+
+git worktree add ../temp-agent --detach HEAD  # 分离的 没有分支的 用于测试
+```
+
+```bash
+git worktree list  # 查看worktree
+/home/nemesis/projects/src/hello-python                                2162424 [main]
+/home/nemesis/projects/src/hello-python/.claude/worktrees/feature-test 2162424 [worktree-feature-test]
+
+git branch -vv 
+* main                  2162424 [origin/main] sync(sqlalchemy): 20260123 from work_computer
++ worktree-feature-test 2162424 (/home/nemesis/projects/src/hello-python/.claude/worktrees/feature-test) sync(sqlalchemy): 20260123 from work_computer
+
+# 删除worktree
+git worktree remove --force .claude/worktrees/<worktree_name>
+git branch -d worktree-<worktree_name>
+```
 
 
 #### commit

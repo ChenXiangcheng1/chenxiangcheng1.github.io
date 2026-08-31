@@ -530,7 +530,7 @@ git checkout dev
 git stash
 git pull --rebase origin main  # 拉取远程主分支的最新更新并合并到本地分支。如果有冲突则需要手动解决冲突
 # 若有冲突，手动解决冲突:
-# 1 解决冲突后 git rebase --continue
+# 1 解决冲突后 git rebase --continue  # 确认下msg,基本不需要修改COMMIT_EDITMSG,可直接:wq
 # 2 跳过冲突的提交 git rebase --skip
 # 3 中止rebase，回到变基前 git rebase --abort
 git stash pop  # 本质上是 git stash apply、git stash drop  # 冲突时不执行drop，再次pop确保 git stash list 为空

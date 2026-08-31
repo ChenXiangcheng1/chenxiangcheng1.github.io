@@ -1,21 +1,11 @@
-# TypeScript
+# TypeScript7.0.2
 
-Array<Record<string, any>>
-
-
-
-type UserGenderEnum = 'MALE' | 'FEMALE';  // 类型别名
-可用enum替换
-
-
-
-
-
-
-as
+[wiki](https://github.com/microsoft/TypeScript/wiki)
 
 
 ## tsc
+
+### 命令
 
 ```bash
 # 创建typescript项目(mise已经安装npm)
@@ -24,19 +14,30 @@ npx pnpm init  # 创建package.json
 mise install  # 安装pnpm
 pnpm add -D typescript
 pnpm exec tsc --help
-pnpm exec tsc --init  # 创建tsconfig.json(tsc配置文件)
+pnpm exec tsc --init
 ```
 
+```bash
+tsc --help
+tsc --ignoreConfig app.ts
+tsc --init  # 创建tsconfig.json(tsc配置文件)
+```
+
+
+### 配置
+
 ```json
+// tsconfig.json
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
     // "rootDir": "./src",
-    // "outDir": "./dist",
+    "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
+    // nodenext(CJS+ESM 新Node.js都支持) esnext CommonJS(老Node.js) preserve
     "module": "nodenext",
     "target": "esnext",
     "types": [],
@@ -46,6 +47,7 @@ pnpm exec tsc --init  # 创建tsconfig.json(tsc配置文件)
     // and npm install -D @types/node
 
     // Other Outputs
+    // 创建xxx.js.map源映射文件用于调试
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -81,17 +83,13 @@ tsc: The TypeScript Compiler - Version 7.0.2
                                                                                                                      TS 
 COMMON COMMANDS
 
-  tsc
-  Compiles the current project (tsconfig.json in the working directory.)
 
-  tsc app.ts util.ts
-  Ignoring tsconfig.json, compiles the specified files with default compiler options.
+
+
 
   tsc -b
   Build a composite project in the working directory.
 
-  tsc --init
-  Creates a tsconfig.json with the recommended settings in the working directory.
 
   tsc -p ./path/to/tsconfig.json
   Compiles the TypeScript project located at the specified path.
@@ -115,9 +113,6 @@ COMMAND LINE FLAGS
 
 
    --version, -v  Print the compiler's version.
-
-
-          --init  Initializes a TypeScript project and creates a tsconfig.json file.
 
 
    --project, -p  Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'.
@@ -259,4 +254,18 @@ COMMON COMPILER OPTIONS
 
 You can learn about all of the compiler options at https://aka.ms/tsc
 ```
+
+
+# 未整理
+
+
+Array<Record<string, any>>
+
+
+
+type UserGenderEnum = 'MALE' | 'FEMALE';  // 类型别名
+可用enum替换
+
+
+as
 

@@ -746,7 +746,7 @@ vscode-ruff插件还会安装插件：Python、Pylance(IntelliSense)、~~Python 
 
 > ~~vscode-Python Environment(preview)插件~~
 > 为特定文件、文件夹、项目指定虚拟环境
-> 	插件支持的环境管理工具：venv、conda、pyenv、poetry、system、pipenv
+> 插件支持的环境管理工具：venv、conda、pyenv、poetry、system、pipenv
 > 包管理
 > 总：用conda可以用，用uv不需要该插件
 
@@ -755,10 +755,10 @@ vscode-ruff插件还会安装插件：Python、Pylance(IntelliSense)、~~Python 
 
 > [marketplace#Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
 > Python Languase Server ，基于类型检查器 pyright
-> 	~~vscode还在推IntelliCode(最后更新在2024)作为智能感知~~
+> ~~vscode还在推IntelliCode(最后更新在2024)作为智能感知~~
 > 使用：
-> 	"python.analysis.autoImportCompletions": true,  // 自动导入建议居然默认是false
-> 	F2 重构
+> "python.analysis.autoImportCompletions": true,  // 自动导入建议居然默认是false
+> F2 重构
 
 
 
@@ -959,7 +959,7 @@ docstring-code-line-length = "dynamic"
 
 #### 类型检查
 
-alpha阶段： 
+alpha阶段：
 Pyrefly from Meta
 
 beta阶段:
@@ -1056,6 +1056,22 @@ $x^2$
 - second
 - third
 ````
+
+
+### typescript
+
+Transpiling TypeScript - Use VS Code's powerful task system for compiling TypeScript.
+<https://code.visualstudio.com/docs/typescript/typescript-transpiling>
+
+Editing TypeScript - Specific editing features for TypeScript.
+<https://code.visualstudio.com/docs/typescript/typescript-editing>
+
+Refactoring TypeScript - Useful refactorings from the TypeScript language service.
+<https://code.visualstudio.com/docs/typescript/typescript-refactoring>
+
+Debugging TypeScript - Configure the debugger for your TypeScript project.
+<https://code.visualstudio.com/docs/typescript/typescript-debugging>
+
 
 ## 开发容器
 
